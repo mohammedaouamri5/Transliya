@@ -6,38 +6,62 @@ function Login() {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    // Appel à votre API de connexion ici
-    // Pour l'exemple, nous allons simuler une connexion réussie
-    setTimeout(() => {
-      if (email === 'admin@example.com' && password === 'password') {
-        // Connexion réussie, rediriger vers la page d'accueil
-        window.location.href = '/';
+
+    try {
+      // Replace with your actual API call
+      const response = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        // Handle successful login (e.g., store token, redirect)
+        console.log('Login successful:', data);
       } else {
-        setError('Email ou mot de passe incorrect');
+        setError('Invalid email or password'); // Or handle other errors
       }
+    } catch (error) {
+      console.error('Error during login:', error);
+      setError('An error occurred. Please try again later.');
+    } finally {
       setLoading(false);
-    }, 2000);
-  }
+    }
+  };
 
   return (
-    <div className="login-container">
-      <h1>Connexion</h1>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="email">Email:</label>
-        <input type="email" id="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-        <br />
-        <label htmlFor="password">Mot de passe:</label>
-        <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-        <br />
-        {error && <div style={{ color: 'red' }}>{error}</div>}
-        <button type="submit" disabled={loading}>
-          {loading ? 'Connexion en cours...' : 'Connexion'}
-        </button>
-      </form>
-    </div>
+    <>
+      <div className="login-container">
+        <h1>Connexion</h1>
+        <form onSubmit={handleSubmit}>
+          <label htmlFor="email">Email:</label>
+          <input
+            type="email"
+            id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            // Add validation if needed (e.g., using regular expressions)
+          />
+          <br />
+          <label htmlFor="password">Mot de passe:</label>
+          <input
+            type="password"
+            id="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)} // Correction ici
+          />
+          <br />
+          {error && <div style={{ color: 'red' }}>{error}</div>}
+          <button type="submit" disabled={loading}>
+            {loading ? 'Connexion en cours...' : 'Connexion'}
+          </button>
+        </form>
+      </div>
+    </>
   );
 }
 
