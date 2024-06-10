@@ -2,27 +2,22 @@ from django.contrib.gis.db import models as gis_models
 from django.db import models
 from django.contrib.auth.hashers import make_password
 
-class Person(models.Model):
-    id_p = models.AutoField(primary_key=True)
-    asm_p = models.CharField(max_length=255)
-    lo9ma_p = models.CharField(max_length=255)
-    is_deleted_p = models.BooleanField(default=False)
-    email_p = models.EmailField(max_length=255)
-    phone_number_p = models.BigIntegerField()
-    mot_de_pass_p = models.CharField(max_length=64)
+from django.contrib.auth.models import User
 
-    # def save(self, *args, **kwargs):
-    #     if not self.pk:
-    #         self.mot_de_pass_p = make_password(self.mot_de_pass_p)
-    #     super().save(*args, **kwargs)
+class Person(User):
+    is_deleted_p = models.BooleanField(default=False)
+    phone_number_p = models.BigIntegerField(unique=True)
+    
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            self.set_password(self.password)  # Hash the password when saving
+        super().save(*args, **kwargs)
 
 
 class Employer(models.Model):
     id_employer = models.OneToOneField(Person, on_delete=models.CASCADE, primary_key=True)
     driving_license = models.IntegerField(unique=True)
-    # id_employer = models.AutoField()
     ta9yim_employer = models.FloatField()
-    # is_working = models.BooleanField(default=True)
     is_allowed = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
 
@@ -38,7 +33,7 @@ class Car5adam(models.Model):
     id_employer = models.ForeignKey(Employer, on_delete=models.CASCADE)
     id_type_car = models.ForeignKey(CarType, on_delete=models.CASCADE)
     matricule = models.IntegerField(primary_key=True)
-    is_deleted = models.BooleanField(default=False)
+    is_deleted_Car5adam = models.BooleanField(default=False)
 
 class Tewsila(models.Model):
     id_Tewsila = models.AutoField(primary_key=True)

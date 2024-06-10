@@ -38,9 +38,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     
+    'rest_framework',
+    'rest_framework.authtoken',
     
-    
-    'BDD',
+    # 'BDD',
+    'API',
 ]
 
 MIDDLEWARE = [
@@ -87,7 +89,7 @@ WSGI_APPLICATION = 'Transliya.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'Transliya',
+        'NAME': 'transliya',
         'USER': 'postgres',
         'PASSWORD': 'MOHAMMED.ADMIN',
         'HOST': 'localhost',
