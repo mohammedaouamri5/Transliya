@@ -17,7 +17,7 @@ const Navbar = () => {
                 <div className='h-[60px] w-[108px]'>
                     <img className='h-full w-full' src={logo} alt="logo" />
                 </div>
-                <div className= {`absolute sm:relative sm:top-0 sm:left-0 sm:z-0 sm:w-fit sm:min-h-fit ${visible ? 'min-h-[50vh] w-full p-4 top-[65px] flex justify-center text-[18px] left-0 bg-background duration-500 z-[-1] ' : 'z-[-1] w-full left-0 duration-500 top-[-300%] bg-background'}`} >
+                <div className= {`absolute sm:relative sm:top-0 sm:left-0 sm:z-0 sm:w-fit sm:min-h-fit ${visible ? 'min-h-[50vh] w-full p-4 top-[65px] flex justify-center text-[18px] left-0 bg-background duration-500 z-[1] ' : 'z-[1] w-full left-0 duration-500 top-[-300%] bg-background'}`} >
                     <ul className='flex flex-col gap-8 text-center items-center sm:flex-row'>
                         <li className='hover:text-accent duration-300'><Link to={'/'}> Home </Link></li>
                         <li className='hover:text-accent duration-300'><Link to={'/vehicles'}> Vehicles </Link></li>
