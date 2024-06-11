@@ -5,11 +5,11 @@ const Home = () => {
     <>
       <div className="relative h-[90vh] bg-hero w-full bg-cover z-0]">
         <div class="absolute inset-0 bg-black opacity-60"></div>
-        <div className="h-full w-full flex items-center relative">
-          <div className="w-[85%] h-[70%] flex items-center justify-end text-end">
-            <div className="w-[50%]">
+        <div className="h-full w-full flex items-center relative md:justify-normal justify-center ">
+          <div className="w-[85%] h-[70%] flex items-center md:justify-end md:text-end text-center justify-center">
+            <div className="md:w-[60%] lg:[50%] w-full">
               <div className="flex-col">
-                <h1 className="text-white text-5xl font-bold leading-snug ">
+                <h1 className="text-white text-4xl md:text-5xl font-bold leading-snug ">
                   This is a placeholder for some header for later Maybe
                 </h1>
                 <br />
