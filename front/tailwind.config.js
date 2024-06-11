@@ -13,7 +13,7 @@ module.exports = {
           light: '#e0e1dd',
       },
       backgroundImage: {
-        'hero': "url('./src/assets/home-background.png')",
+        'hero': "url('./src/assets/home-background.jpg')",
       },
     },
   },
