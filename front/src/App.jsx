@@ -7,12 +7,12 @@ import { Signup  } from './components/Signup.jsx'
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navbar from './components/Navbar.jsx'
-import Login_page from './pages/Login.jsx'
+import Login_page from './pages/Login_page.jsx'
 
 export default function App() {
   return (
 
-    <Login_page/>
+    <Navbar/>
   );
 
 

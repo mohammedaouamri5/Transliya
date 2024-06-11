@@ -38,23 +38,14 @@ export function Login() {
       <div className="login-container">
         <h1>Connexion</h1>
         <form onSubmit={handleSubmit}>
-          <label htmlFor="email">Email:</label>
-          <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            // Add validation if needed (e.g., using regular expressions)
-          />
-          <br />
-          <label htmlFor="password">Mot de passe:</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)} // Correction ici
-          />
-          <br />
+          <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" value={email} onChange={(e) => setEmail(e.target.value)} />
+            <label for="floatingInput">Email address</label>
+          </div>
+          <div class="form-floating">
+            <input type="password" class="form-control" id="floatingPassword" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} />
+            <label for="floatingPassword">Password</label>
+          </div>
           {error && <div style={{ color: 'red' }}>{error}</div>}
           <button type="submit" disabled={loading}>
             {loading ? 'Connexion en cours...' : 'Connexion'}
