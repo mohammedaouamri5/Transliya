@@ -1,13 +1,14 @@
+
+
 POST http://127.0.0.1:8000/API/signup
 Content-Type: application/json
 
 { 
-    "username": "ddDEDEddddddd", 
+    "username": "cdcdcd", 
     "password": "Pass1234!", 
     "email": "JJJJJJJDEJJJJJJ@mail.com" , 
-    "phone_number_p": 2233
+    "phonenumberp": 1221
 } 
-
 ###
 
 POST http://127.0.0.1:8000/API/login  
@@ -15,15 +16,100 @@ Content-Type: application/json
 
 { 
     "password": "Pass1234!", 
-    "phone_number_p": 23
+    "username": "cdcdcd" 
 
 }  
 
 ###
 
-GET http://127.0.0.1:8000/API/test_token 
-Content-Type: application/json Authorization: 
-Authorization: token 
+POST http://127.0.0.1:8000/API/test_token 
+Authorization: token 28440a6c175cd58e5365cc2c37c316f5402ed530
+Content-Type: application/json
 
+{
+    "info": "106"
+}
+###
+
+
+GET  http://127.0.0.1:8000/API/get_person 
+Authorization: token 28440a6c175cd58e5365cc2c37c316f5402ed530
+Content-Type: application/json
+
+{
+    "phonenumberp": 1221
+}
+###
+# Authorization: token 28440a6c175cd58e5365cc2c37c316f5402ed530 # 5dam
+GET  http://127.0.0.1:8000/API/get_person 
+Authorization: token 28440a6c175cd58e5365cc2c37c316f5402ed530
+Content-Type: application/json
+
+{
+    "email": "JJJJJJJDEJJJJJJ@mail.com" 
+}
+
+
+###
+POST  http://127.0.0.1:8000/API/create_employer 
+Authorization: token 28440a6c175cd58e5365cc2c37c316f5402ed530
+Content-Type: application/json
+
+{
+    "id" : 1, 
+    "driving_license" : 23453 
+}
+###
 GET http://127.0.0.1:8000/API/hello 
 Content-Type: application/json
+
+
+
+###
+# Authorization: token 28440a6c175cd58e5365cc2c37c316f5402ed530 # 5dam
+GET  http://127.0.0.1:8000/API/get_persons_services 
+Authorization: token 28440a6c175cd58e5365cc2c37c316f5402ed530
+Content-Type: application/json
+
+{
+    "email": "JJJJJJJDEJJJJJJ@mail.com" 
+}
+
+
+### 
+
+POST  http://127.0.0.1:8000/API/create_car_type 
+Authorization: token 28440a6c175cd58e5365cc2c37c316f5402ed530
+Content-Type: application/json
+
+{
+    "Tewsila_prix_car_type":34.3, 
+    "Kerya_prix_car_type":34.3, 
+    "name_car_type":"SMALL"
+}
+### 
+
+POST  http://127.0.0.1:8000/API/create_service 
+Authorization: token 28440a6c175cd58e5365cc2c37c316f5402ed530
+Content-Type: application/json
+
+{
+
+    "name_service" : "Tawsila"
+}
+###
+
+POST  http://127.0.0.1:8000/API/create_caremployer
+Authorization: token 28440a6c175cd58e5365cc2c37c316f5402ed530
+Content-Type: application/json
+
+{
+    "id_employer" : 1, 
+    "id_type_car" : 1, 
+    "matricule_car" : 1
+
+}
+
+
+
+

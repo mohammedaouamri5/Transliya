@@ -14,7 +14,7 @@ class ModelsTransactionTestCase(TransactionTestCase):
         self.person1 = Person.objects.create(
             username='person1',
             password=make_password('password123'),
-            phone_number_p=1234567890
+            phonenumberp=1234567890
         )
         
         # Create an employer
@@ -42,7 +42,7 @@ class ModelsTransactionTestCase(TransactionTestCase):
         self.person2 = Person.objects.create(
             username='person2',
             password=make_password('password123'),
-            phone_number_p=1234567891
+            phonenumberp=1234567891
         )
         
         # Create Tewsila
