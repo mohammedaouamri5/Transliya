@@ -53,7 +53,7 @@ class Tewsila(models.Model):
     
     id_zaboun = models.ForeignKey(Person, on_delete=models.CASCADE)
     
-    comment_Tewsila = models.TextField() # ! <===
+    comment_Tewsila = models. TextField() # ! <===
     ta9yim_Tewsila = models.FloatField() # ! <===
 
 
@@ -110,7 +110,7 @@ class Notify(models.Model):
     )
     
     id_notification_type = models.ForeignKey(
-        Person, 
+        NotificationType, 
         on_delete=models.CASCADE, 
         related_name='notification_types'
     )
