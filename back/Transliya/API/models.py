@@ -42,14 +42,19 @@ class CarEmployer(models.Model):
 
 class Tewsila(models.Model):
     id_Tewsila = models.AutoField(primary_key=True)
+    
     t_started = models.TimeField()
-    t_ended = models.TimeField()
+    t_ended = models.TimeField() # ! <===
+    
     from_location = gis_models.PointField(geography=True)
     to_location = gis_models.PointField(geography=True)
+    
     matricule_car = models.ForeignKey(CarEmployer, on_delete=models.CASCADE)
+    
     id_zaboun = models.ForeignKey(Person, on_delete=models.CASCADE)
-    comment_Tewsila = models.TextField()
-    ta9yim_Tewsila = models.FloatField()
+    
+    comment_Tewsila = models. TextField() # ! <===
+    ta9yim_Tewsila = models.FloatField() # ! <===
 
 
 class CarService(models.Model):
@@ -91,16 +96,25 @@ class NotificationType(models.Model):
     name_notification_type = models.CharField(max_length=255)    
 
 class Notify(models.Model): 
-    id_Notify = models.AutoField(primary_key=True)
+    id_notify = models.AutoField(primary_key=True)
     
-    id_from = models.ForeignKey(Person, on_delete=models.CASCADE)
-    id_to = models.ForeignKey(Person, on_delete=models.CASCADE)
+    id_from = models.ForeignKey(
+        Person, 
+        on_delete=models.CASCADE, 
+        related_name='notifications_sent'
+    )
+    id_to = models.ForeignKey(
+        Person, 
+        on_delete=models.CASCADE, 
+        related_name='notifications_received'
+    )
     
-    id_notification_type =  models.ForeignKey(Person , on_delete=models.CASCADE)
+    id_notification_type = models.ForeignKey(
+        NotificationType, 
+        on_delete=models.CASCADE, 
+        related_name='notification_types'
+    )
     
     time = models.DateTimeField(auto_now_add=True)
     
     is_readed = models.BooleanField(default=False)
-    
-    
-    

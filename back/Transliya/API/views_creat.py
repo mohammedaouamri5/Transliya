@@ -18,6 +18,9 @@ from API.serializers  import *
 import API.models as models
 
 
+DEBUG = True
+
+
 @api_view(['POST'])
 def signup(request):
     serializer = PersonSerializer(data=request.data)
@@ -57,12 +60,17 @@ def create_employer(request):
 
 # ? TODO : test this shit
 # ? TODO : and auth0 shit
-def notify(data):
+@api_view(['POST'])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def create_notification(request: Request):
+    data = request.data
+    
     try:
         # Retrieve related objects using get_object_or_404
         id_from = get_object_or_404(models.Person, id=data['id_from'])
         id_to = get_object_or_404(models.Person, id=data['id_to'])
-        id_notification_type = get_object_or_404(models.NotificationType, id=data['id_notification_type'])
+        id_notification_type = get_object_or_404(models.NotificationType, id_notification_type=data['id_notification_type'])
 
         # Create a new Notify instance
         notification = models.Notify(
@@ -79,30 +87,40 @@ def notify(data):
     except Exception as e:
         return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-def marck_as_readed(request):
-    data = request.data
+@api_view(['POST'])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def mark_as_readed(request):
     
-    # Check for required parameters
-    if not ("id_person" in data): 
-        return Response({"error": "you must enter (id_person)"}, status=status.HTTP_400_BAD_REQUEST)
-    if not ("id_notification" in data): 
-        return Response({"error": "you must enter (id_notification)"}, status=status.HTTP_400_BAD_REQUEST)
     
-    id_person = data["id_person"]
-    id_notification = data["id_notification"]
-    
-    try:
-        # Retrieve the notification
-        notification = Notify.objects.get(id_Notify=id_notification, id_to=id_person)
-    except Notify.DoesNotExist:
-        return Response({"error": "Notification not found"}, status=status.HTTP_404_NOT_FOUND)
-    
-    # Update the is_readed field
-    notification.is_readed = True
-    notification.save()
-    
-    return Response({"success": "Notification marked as read"}, status=status.HTTP_200_OK)
+    try : 
+        data = request.data
+        
+        # Check for required parameters
 
+        if not ("id_notification" in data): 
+            return Response({"error": "you must enter (id_notification)"}, status=status.HTTP_400_BAD_REQUEST)
+        
+        id_person = data["id_person"]
+        id_notification = data["id_notification"]
+        
+        try:
+            # Retrieve the notification
+            notification = models.Notify.objects.get(id_notify=id_notification, id_to=id_person)
+        except models.Notify.DoesNotExist:
+            return Response({"error": "Notification not found"}, status=status.HTTP_404_NOT_FOUND)
+        
+        # Update the is_readed field
+        notification.is_readed = True
+        notification.save()
+        
+        return Response({"success": "Notification marked as read"}, status=status.HTTP_200_OK)
+    except Exception as e : 
+        if DEBUG:
+            return Response({"error": f"{e}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        else:
+            return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            
 # FIXME : THIS JUST FOR THE ADMIN 
 
 
