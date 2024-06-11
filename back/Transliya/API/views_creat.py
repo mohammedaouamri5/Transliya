@@ -57,6 +57,9 @@ def create_employer(request):
 
 # ? TODO : test this shit
 # ? TODO : and auth0 shit
+@api_view(['POST'])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def notify(data):
     try:
         # Retrieve related objects using get_object_or_404
@@ -79,6 +82,9 @@ def notify(data):
     except Exception as e:
         return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+@api_view(['POST'])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
 def marck_as_readed(request):
     data = request.data
     
