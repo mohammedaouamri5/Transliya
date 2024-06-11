@@ -111,10 +111,9 @@ def get_persons_services(request: Request):
 @permission_classes([IsAuthenticated])
 def get_my_notification(request: Request):
     try : 
-        data = request.data
-        notifications = models.Notify.objects.filter(id_to=data['id'])
-        notification_list = list(notifications.values())
-        return Response({"notification" : notification_list} , status=status.HTTP_200_OK)
+        notifications = models.Notify.objects.filter(id_to=2).select_related('id_notification_type')
+        serializer = NotifySerializer(notifications, many=True)
+        return Response({"notification" : serializer.data} , status=status.HTTP_200_OK)
     except Exception as e : 
         if DEBUG:
             return Response({"error": f"{e}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

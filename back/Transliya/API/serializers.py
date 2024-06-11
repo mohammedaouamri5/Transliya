@@ -58,3 +58,20 @@ class NotifySerializer(serializers.ModelSerializer):
     class Meta(object):
         model = models.Notify 
         fields = '__all__'
+        
+
+class NotifySerializer(serializers.ModelSerializer):
+    id_notification_type = serializers.IntegerField(source='id_notification_type.id_notification_type')
+    name_notification_type = serializers.CharField(source='id_notification_type.name_notification_type')
+
+    class Meta:
+        model = models.Notify
+        fields = [
+            'id_notify',
+            'id_from',
+            'id_to',
+            'id_notification_type',
+            'name_notification_type',
+            'time',
+            'is_readed'
+        ]

@@ -149,9 +149,7 @@ Authorization: token c5d1b11508f641d914ad2b5c88011e10117e08d3
 Content-Type: application/json
 
 {
-    "id" : 2, 
-    "id_notification" : 5
-
+    "id" : 2
 }
 
 
