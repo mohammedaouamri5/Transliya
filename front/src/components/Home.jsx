@@ -6,6 +6,9 @@ import { MdLocalShipping } from "react-icons/md";
 import { Link } from "react-router-dom";
 
 const Home = () => {
+
+  const user = localStorage.getItem("user")
+  console.log(user)
   return (
     <>
       <div className="relative h-[90vh] bg-hero w-full bg-cover z-0]">
