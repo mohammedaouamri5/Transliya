@@ -21,7 +21,7 @@ const Navbar = () => {
         <div className='w-full bg-background text-light flex items-center justify-center text-md h-[65px] relative shadow inset shadow-top-2'>
             <div className='w-[90%] h-full flex items-center justify-between '>
             <div className='flex items-center gap-4'>
-                { isAuthenticated ?  <Link to={'/login'} onClick={logout} className='px-4 py-2 rounded flex bg-white text-background text-sm font-bold hover:bg-light duration-500'>Logout</Link> :  <Link to={'/login'} className='px-4 py-2 rounded flex bg-white text-background text-sm font-bold hover:bg-light duration-500'>تسجيل الدخول</Link>}
+                { isAuthenticated ?  <Link to={'/login'} onClick={logout} className='px-4 py-2 rounded flex bg-white text-background text-sm font-bold hover:bg-light duration-500'>تسجيل الخروج</Link> :  <Link to={'/login'} className='px-4 py-2 rounded flex bg-white text-background text-sm font-bold hover:bg-light duration-500'>تسجيل الدخول</Link>}
                     
                     <IoMenu className='w-7 h-7 sm:hidden cursor-pointer' onClick={onToggle} />
                 </div>

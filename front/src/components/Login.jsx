@@ -49,14 +49,14 @@ const Login = () => {
           <div className="w-full bg-white rounded-lg shadow  md:mt-0 sm:max-w-md xl:p-0">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
               <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl ">
-                Sign in to your account
+                     تسجيل الدخول إلى حسابك  
               </h1>
               <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
                 <div>
                   <label
                     className="block mb-2 text-sm font-medium text-gray-900 "
                   >
-                    Your email
+                    بريدك الإلكتروني
                   </label>
                   <input
                     type="email"
@@ -73,7 +73,7 @@ const Login = () => {
                   <label
                     className="block mb-2 text-sm font-medium text-gray-900 "
                   >
-                    Password
+                    كلمة السر
                   </label>
                   <input
                     type="password"
@@ -102,7 +102,7 @@ const Login = () => {
                     </div>
                     <div className="ml-3 text-sm">
                       <label className="text-primary-600 ">
-                        Remember me
+                      ذكرني
                       </label>
                     </div>
                   </div>
@@ -110,22 +110,22 @@ const Login = () => {
                     href="#"
                     className="text-sm font-medium text-primary-600 hover:underline "
                   >
-                    Forgot password?
+                    نسيت كلمة المرور؟
                   </a>
                 </div>
                 <button
                   type="submit"
                   className="w-full text-white bg-background hover:bg-secondary duration-300 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center "
                 >
-                  Sign in
+                  تسجيل الدخول
                 </button>
                 <p className="text-sm font-light text-gray-500 ">
-                  Don’t have an account yet?{" "}
+                ليس لديك حساب حتى الآن؟{" "}
                   <Link
                     to="/signup"
                     className="font-medium text-primary-600 hover:underline "
                   >
-                    Sign up
+                    إنشاء حساب
                   </Link>
                 </p>
               </form>

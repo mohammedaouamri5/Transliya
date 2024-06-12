@@ -6,7 +6,7 @@ const ReviewCard = () => {
       <section className="bg-white">
         <div className="mx-auto max-w-screen-xl px-4 py-12 sm:px-6 lg:px-8 lg:py-16">
           <h2 className="text-center text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
-            Read trusted reviews from our customers
+          اطلع على تقييمات العملاء الموثوقة
           </h2>
 
           <div className="mt-8 grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-8">
@@ -63,16 +63,15 @@ const ReviewCard = () => {
                   </div>
 
                   <p className="mt-0.5 text-lg font-medium text-gray-900">
-                  susan smith
+                  احمد بركاني 
                   </p>
                 </div>
               </div>
 
               <p className="mt-4 text-gray-700">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Culpa
-                sit rerum incidunt, a consequuntur recusandae ab saepe illo est
-                quia obcaecati neque quibusdam eius accusamus error officiis
-                atque voluptates magnam!
+          خدمة ممتازة في نقل مواد البناء! أوصي بشدة بشركة ترانسليا لأي شخص يحتاج إلى نقل مواد البناء. كانت العملية سلسة وفعالة، وكان السائقون محترفين للغاية. لقد وفر لي الكثير من الوقت والجهد، وسأستخدمهم بالتأكيد مرة أخرى في المستقبل.
+
+
               </p>
             </blockquote>
 
@@ -129,16 +128,15 @@ const ReviewCard = () => {
                   </div>
 
                   <p className="mt-0.5 text-lg font-medium text-gray-900">
-                    Paul Starr
+                    مولود بن خليفة 
                   </p>
                 </div>
               </div>
 
               <p className="mt-4 text-gray-700">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Culpa
-                sit rerum incidunt, a consequuntur recusandae ab saepe illo est
-                quia obcaecati neque quibusdam eius accusamus error officiis
-                atque voluptates magnam!
+              استأجرت شاحنة من لنقل بعض الأثاث الثقيل، وكانت تجربتي رائعة. كانت الشاحنة في حالة جيدة، وكان السعر معقولاً، وكان الموظفون مفيدين للغاية. سأستخدمهم ترانسليا بالتأكيد مرة أخرى لاحتياجاتي القادمة
+
+
               </p>
             </blockquote>
 
@@ -195,16 +193,15 @@ const ReviewCard = () => {
                   </div>
 
                   <p className="mt-0.5 text-lg font-medium text-gray-900">
-                  anna johnson
+                  سيلونة رائد 
                   </p>
                 </div>
               </div>
 
               <p className="mt-4 text-gray-700">
-                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Culpa
-                sit rerum incidunt, a consequuntur recusandae ab saepe illo est
-                quia obcaecati neque quibusdam eius accusamus error officiis
-                atque voluptates magnam!
+              كنت بحاجة إلى نقل كمية كبيرة من مواد البناء في وقت قصير، ونجحت ترانسليا في تلبية احتياجاتي بشكل مثالي. لقد وفر لي المال والوقت، وساعدني فريق العمل في تحميل وتفريغ المواد. شكرًا لكم على الخدمة الرائعة!
+
+
               </p>
             </blockquote>
           </div>
