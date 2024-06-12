@@ -4,6 +4,7 @@ import Login from './components/Login.jsx'
 import { Routes, Route } from 'react-router-dom'
 import Home from './components/Home.jsx'
 import Signup from './components/Signup.jsx'
+import Booking from './components/Booking.jsx'
 
 function App() {
 
@@ -14,6 +15,7 @@ function App() {
         <Route path='/' element={<Home />}/>
         <Route path='/login' element={<Login />}/>
         <Route path='/signup' element={<Signup />}/>
+        <Route path='/booking' element={<Booking />}/>
 
 
       </Routes>

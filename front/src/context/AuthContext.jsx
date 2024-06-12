@@ -2,11 +2,13 @@ import React, { useState, useContext, createContext } from "react";
 import axios from "axios";
 
 
+
 const AuthContext = createContext({
   user: null,
   accessToken: null,
   isAuthenticated: false,
   login: (email, password) => Promise.resolve(undefined),
+  signup: (formData) => Promise.resolve(undefined),
   logout: () => {},
 });
 
@@ -25,6 +27,7 @@ export const AuthProvider = ({ children }) => {
   });
 
   const login = async (email, password) => {
+
     try {
       const res = await axios.post(
         "https://bl44wdcn-8000.euw.devtunnels.ms/API/login",
@@ -36,7 +39,7 @@ export const AuthProvider = ({ children }) => {
       if (res.status === 200) {
         setUser(res.data.user);
         setIsAuthenticated(true);
-        setAccessToken(res.data["token"]);
+        setAccessToken(res.data["token"]); 
         localStorage.setItem("token", res.data["token"]);
         localStorage.setItem("user", JSON.stringify(res.data.user));
         localStorage.setItem("isAuthenticated", "1");
@@ -54,6 +57,30 @@ export const AuthProvider = ({ children }) => {
       }
     }
   };
+ 
+  const signup = async (formData) =>{
+    if (formData.password !== formData.confirmPassword) {
+      console.log('Signup error: password');
+    } else {
+      try {
+        const response = await fetch('https://bl44wdcn-8000.euw.devtunnels.ms/API/signup', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(formData),
+        });
+  
+        if (!response.ok) {
+          throw new Error(`Error: ${response.statusText}`);
+        }
+  
+        const data = await response.json();
+        console.log('Signup successful:', data);
+  
+      } catch (error) {
+        console.error('Signup failed:', error);
+      }
+    }
+  }
 
   const logout = () => {
     setUser(null);
@@ -65,7 +92,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ user, accessToken, isAuthenticated, login, logout }}
+      value={{ user, accessToken, isAuthenticated, login, logout, signup }}
     >
       {children}
     </AuthContext.Provider>
