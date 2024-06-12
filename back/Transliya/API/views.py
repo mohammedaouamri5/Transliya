@@ -127,7 +127,28 @@ def get_my_notification(request: Request):
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def search_by_name(request: Request):
-    name = request.data['name']
-    persons = Person.objects.filter(name__icontains=name)
-    serializer = PersonSerializer(persons, many=True)
+    
+    
+    # FIXME :use the request.data 
+     
+    # if not ("cars_type_id" in request.data): 
+    #     return Response({"error":"you must enter one of  (cars_type_id)" } , status=status.HTTP_400_BAD_REQUEST) 
+
+
+    name_filter = request.data.get('name')
+    car_id_filter = request.data.get('cars_type_id')
+
+    # name_filter =  [1, 2]
+    # car_id_filter = ""
+
+    persons = Person.objects.filter(
+        first_name__icontains=name_filter,
+        last_name__icontains=name_filter,
+        username__icontains=name_filter,
+        employer__caremployer__id_type_car__in=car_id_filter
+    )
+
+    # Serialize the queryset
+    serializer = FullPersonSerializer(persons, many=True)    # persons = Person.objects.filter(name__icontains=name_filter)
+    # serializer = PersonSerializer(persons, many=True)
     return Response(serializer.data)
