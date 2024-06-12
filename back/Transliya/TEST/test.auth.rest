@@ -1,0 +1,162 @@
+
+
+POST http://127.0.0.1:8000/API/signup
+Content-Type: application/json
+
+{ 
+    "username": "BRUDDH", 
+    "password": "Pass1234!", 
+    "email": "WDDOW@mail.com" , 
+    "phonenumberp": 32332
+} 
+###
+POST https://bl44wdcn-8000.euw.devtunnels.ms/API/login  
+Content-Type: application/json
+
+{ 
+    "password": "Pass1234!", 
+    "email": "WDDOW@mail.com" 
+
+}  
+
+###
+
+POST http://127.0.0.1:8000/API/test_token 
+Authorization: token c5d1b11508f641d914ad2b5c88011e10117e08d3
+Content-Type: application/json
+
+{
+    "infxsqxsxo": "1xqsxsq06"
+}
+###
+
+POST http://127.0.0.1:8000/API/test_end_point 
+Content-Type: application/json
+
+{
+    "infxsqxsxo": "1xqsxsq06"
+}
+###
+
+
+GET  http://127.0.0.1:8000/API/get_person 
+Authorization: token c5d1b11508f641d914ad2b5c88011e10117e08d3
+Content-Type: application/json
+
+{
+    "phonenumberp": 1221
+}
+###
+# Authorization: token c5d1b11508f641d914ad2b5c88011e10117e08d3 # 5dam
+GET  http://127.0.0.1:8000/API/get_person 
+Authorization: token c5d1b11508f641d914ad2b5c88011e10117e08d3
+Content-Type: application/json
+
+{
+    "id": 1 
+}
+
+
+###
+POST  http://127.0.0.1:8000/API/create_employer 
+Authorization: token ece464232061f533094ac1270463b7262b804c4e
+Content-Type: application/json
+
+{
+    "id" : 1, 
+    "driving_license" : 23232 
+}
+###
+GET http://127.0.0.1:8000/API/hello 
+Content-Type: application/json
+
+
+
+###
+# Authorization: token c5d1b11508f641d914ad2b5c88011e10117e08d3 # 5dam
+POST  http://127.0.0.1:8000/API/login 
+Content-Type: application/json
+
+{
+    "email": "WDDOW@mail.com" 
+
+}
+
+
+### 
+
+POST  http://127.0.0.1:8000/API/create_car_type 
+Authorization: token c5d1b11508f641d914ad2b5c88011e10117e08d3
+Content-Type: application/json
+
+{
+    "Tewsila_prix_car_type":34.3, 
+    "Kerya_prix_car_type":34.3, 
+    "name_car_type":"SMALL"
+}
+### 
+
+POST  http://127.0.0.1:8000/API/create_service 
+Authorization: token c5d1b11508f641d914ad2b5c88011e10117e08d3
+Content-Type: application/json
+
+{
+
+    "name_service" : "Tawsila"
+}
+###
+
+POST  http://127.0.0.1:8000/API/create_caremployer
+Authorization: token c5d1b11508f641d914ad2b5c88011e10117e08d3
+Content-Type: application/json
+
+{
+    "id_employer" : 1, 
+    "id_type_car" : 1, 
+    "matricule_car" : 1
+
+}
+
+###
+
+POST  http://127.0.0.1:8000/API/127.0.0.1:8000/API/127.0.0.1:8000/API/create_notificationtype
+Authorization: token c5d1b11508f641d914ad2b5c88011e10117e08d3
+Content-Type: application/json
+
+{
+    "name_notification_type" : "jatek-5adma"
+}
+
+###
+
+POST  http://127.0.0.1:8000/API/create_notification
+Authorization: token c5d1b11508f641d914ad2b5c88011e10117e08d3
+Content-Type: application/json
+
+{
+    "id_from" : 1, 
+    "id_to" : 2, 
+    "id_notification_type" : 1
+    
+}
+
+
+###
+
+GET http://127.0.0.1:8000/API/get_my_notification
+Authorization: token ece464232061f533094ac1270463b7262b804c4e
+Content-Type: application/json
+
+{
+    "id" : 2
+}
+
+
+
+
+
+
+
+
+
+
