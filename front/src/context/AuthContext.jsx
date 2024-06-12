@@ -1,5 +1,7 @@
 import React, { useState, useContext, createContext } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
 
 
 const AuthContext = createContext({
@@ -36,7 +38,7 @@ export const AuthProvider = ({ children }) => {
       if (res.status === 200) {
         setUser(res.data.user);
         setIsAuthenticated(true);
-        setAccessToken(res.data["token"]);
+        setAccessToken(res.data["token"]); 
         localStorage.setItem("token", res.data["token"]);
         localStorage.setItem("user", JSON.stringify(res.data.user));
         localStorage.setItem("isAuthenticated", "1");

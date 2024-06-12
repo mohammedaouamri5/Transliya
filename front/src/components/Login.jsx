@@ -1,8 +1,13 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 const Login = () => {
+
+
+  const navigate = useNavigate()
+
+  
   const { login, isAuthenticated } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -16,24 +21,31 @@ const Login = () => {
     try {
       await login(email, password);
       setErrorMessage(null); // Clear any previous errors
+      navigate('/')
     } catch (err) {
       setErrorMessage(err.message); // Display error message
     } finally {
-      setEmail(""); // Clear form fields after submit
+      setEmail("");
       setPassword("");
     }
   };
 
+  console.log("auth: ", isAuthenticated)
+
   return (
-    <>
-      <section className="bg-hero bg-cover">
-        <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-          <a
-            href="#"
-            className="flex items-center mb-6 text-2xl font-semibold text-gray-900 "
+    <>          
+
+      <section className="bg-hero bg-cover relative">
+    <div className="absolute inset-0 bg-black opacity-60"></div>
+
+        <div className="flex flex-col items-center relative justify-center px-6 py-8 mx-auto md:h-screen lg:py-0 ">
+          <h1             className="flex items-center mb-6 text-2xl font-semibold text-white "
           >
             Transilya
-          </a>
+
+          </h1>
+
+
           <div className="w-full bg-white rounded-lg shadow  md:mt-0 sm:max-w-md xl:p-0">
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
               <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl ">
@@ -73,6 +85,9 @@ const Login = () => {
                     className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                     required=""
                   />
+                </div>
+                <div>
+                  {errorMessage}
                 </div>
                 <div className="flex items-center justify-between">
                   <div className="flex items-start">

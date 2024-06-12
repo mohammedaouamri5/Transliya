@@ -5,7 +5,7 @@ const Home = () => {
   return (
     <>
       <div className="relative h-[90vh] bg-hero w-full bg-cover z-0]">
-        <div class="absolute inset-0 bg-black opacity-60"></div>
+        <div className="absolute inset-0 bg-black opacity-60"></div>
         <div className="h-full w-full flex items-center relative md:justify-normal justify-center ">
           <div className="w-[85%] h-[70%] flex items-center md:justify-end md:text-end text-center justify-center">
             <div className="md:w-[60%] lg:[50%] w-full">
