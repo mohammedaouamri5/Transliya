@@ -120,3 +120,5 @@ class Notify(models.Model):
     time = models.DateTimeField(auto_now_add=True)
     
     is_readed = models.BooleanField(default=False)
+    
+    

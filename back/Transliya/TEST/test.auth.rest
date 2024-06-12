@@ -4,11 +4,22 @@ POST http://127.0.0.1:8000/API/signup
 Content-Type: application/json
 
 { 
-    "username": "BRUDDH", 
+    "username": "WWWW", 
     "password": "Pass1234!", 
-    "email": "WDDOW@mail.com" , 
-    "phonenumberp": 32332
+    "email": "s@mail.com" , 
+    "phonenumberp": 23
 } 
+
+###
+POST  http://127.0.0.1:8000/API/create_employer 
+Authorization: token e8ed8982feba0614f5b8b2c1a1947e0ce4b928ed
+Content-Type: application/json
+
+{
+    "id" : 3, 
+    "driving_license" : 90887
+}
+
 ###
 POST https://bl44wdcn-8000.euw.devtunnels.ms/API/login  
 Content-Type: application/json
@@ -58,15 +69,6 @@ Content-Type: application/json
 
 
 ###
-POST  http://127.0.0.1:8000/API/create_employer 
-Authorization: token ece464232061f533094ac1270463b7262b804c4e
-Content-Type: application/json
-
-{
-    "id" : 1, 
-    "driving_license" : 23232 
-}
-###
 GET http://127.0.0.1:8000/API/hello 
 Content-Type: application/json
 
@@ -86,18 +88,18 @@ Content-Type: application/json
 ### 
 
 POST  http://127.0.0.1:8000/API/create_car_type 
-Authorization: token c5d1b11508f641d914ad2b5c88011e10117e08d3
+Authorization: token ece464232061f533094ac1270463b7262b804c4e
 Content-Type: application/json
 
 {
     "Tewsila_prix_car_type":34.3, 
     "Kerya_prix_car_type":34.3, 
-    "name_car_type":"SMALL"
+    "name_car_type":"S2222MARRRRLL"
 }
 ### 
 
 POST  http://127.0.0.1:8000/API/create_service 
-Authorization: token c5d1b11508f641d914ad2b5c88011e10117e08d3
+Authorization: token ece464232061f533094ac1270463b7262b804c4e
 Content-Type: application/json
 
 {
@@ -107,15 +109,33 @@ Content-Type: application/json
 ###
 
 POST  http://127.0.0.1:8000/API/create_caremployer
-Authorization: token c5d1b11508f641d914ad2b5c88011e10117e08d3
+Authorization: token e8ed8982feba0614f5b8b2c1a1947e0ce4b928ed
 Content-Type: application/json
 
 {
-    "id_employer" : 1, 
-    "id_type_car" : 1, 
-    "matricule_car" : 1
+    "id_employer" : 3, 
+    "id_type_car" : 2, 
+    "matricule_car" : 232
 
 }
+###
+
+GET  http://127.0.0.1:8000/API/search_by_name
+Authorization: token e8ed8982feba0614f5b8b2c1a1947e0ce4b928ed
+Content-Type: application/json
+
+{
+"name" : "", 
+"cars_type_id" : [1 , 2]
+}
+###
+
+GET  http://127.0.0.1:8000/API/search_by_name
+Content-Type: application/json
+
+{
+}
+
 
 ###
 

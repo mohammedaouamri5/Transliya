@@ -20,4 +20,9 @@ urlpatterns = [
     re_path('create_service', views.create_service),
     re_path('create_notificationtype', views.create_notificationtype),
     re_path('create_notification', views.create_notification),
+    
+    
+    
+    
+    re_path('search_by_name', views.search_by_name),
 ]
