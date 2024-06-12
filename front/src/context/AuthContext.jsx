@@ -1,12 +1,14 @@
 import React, { useState, useContext, createContext } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
 
 
 const AuthContext = createContext({
   user: null,
   accessToken: null,
   isAuthenticated: false,
-  login: (username, password) => Promise.resolve(undefined),
+  login: (email, password) => Promise.resolve(undefined),
   logout: () => {},
 });
 
@@ -24,28 +26,31 @@ export const AuthProvider = ({ children }) => {
     return storedAccessToken ? storedAccessToken : null;
   });
 
-  const login = async (username, password) => {
+  const login = async (email, password) => {
     try {
       const res = await axios.post(
-        "https://pbc34zvg-8000.euw.devtunnels.ms/auth/token/login/",
+        "https://bl44wdcn-8000.euw.devtunnels.ms/API/login",
         {
-          username,
+          email,
           password,
         }
       );
       if (res.status === 200) {
         setUser(res.data.user);
         setIsAuthenticated(true);
-        setAccessToken(res.data["access-token"]);
-        localStorage.setItem("access-token", res.data["access-token"]);
+        setAccessToken(res.data["token"]); 
+        localStorage.setItem("token", res.data["token"]);
         localStorage.setItem("user", JSON.stringify(res.data.user));
         localStorage.setItem("isAuthenticated", "1");
+        console.log("user: ",user)
+        console.log("token: ",res.data["token"])
+        console.log("auth: " ,isAuthenticated)
       } else {
         throw new Error("Something went wrong");
       }
     } catch (err) {
       if (err.response && err.response.status === 400) {
-        return "Invalid username or password, please try again";
+        return "Invalid email or password, please try again";
       } else {
         return "Something went wrong";
       }
