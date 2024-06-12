@@ -10,9 +10,7 @@ const Home = () => {
             <div className="w-[50%]">
               <div className="flex-col">
               <h4 className="text-white text-5xl font-bold leading-snug arabic-text">
-              هل تبحث عن طريقة سهلة وسريعة لنقل مواد البناء الخاصة بك؟ 
-              موقع ترانسليا هو الحل الأمثل!
-              نقدم خدمة ربط العملاء بموردي نقل مواد البناء الموثوق بهم في منطقتك.
+               هل تبحث عن شاحنة للنقل او الكراء؟ ترانسليا توفر لك حلولاً سهلة وسريعة من اجل ذلك
             </h4>
                 <br />
                 <p className="text-light arabic-text">
@@ -77,25 +75,25 @@ const Home = () => {
               <div className="sm:w-1/4 w-1/2 px-2 mb-2">
                 <div className="px-2 py-9  bg-white text-background text-center leading-loose rounded-lg">
                     <h2 className="text-accent text-3xl mb-1">2000</h2>
-                    <p>Completed Orders</p>
+                    <p>الطلبات المكتملة </p>
                 </div>
               </div>
               <div className="sm:w-1/4 w-1/2 px-2 mb-2">
                 <div className="px-2 py-9  bg-white text-background text-center leading-loose rounded-lg">
                     <h2 className="text-accent text-4xl mb-1">15</h2>
-                    <p>Years Experience</p>
+                    <p>سنوات الخبرة</p>
                 </div>
               </div>
               <div className="sm:w-1/4 w-1/2 px-2 mb-2">
                 <div className="px-2 py-9  bg-white text-background text-center leading-loose rounded-lg">
                     <h2 className="text-accent text-4xl mb-1">8745</h2>
-                    <p>Happy Customers</p>
+                    <p>عملاء يثقون بنا</p>
                 </div>
               </div>
               <div className="sm:w-1/4 w-1/2 px-2 mb-2">
                 <div className="px-2 py-9  bg-white text-background text-center leading-loose rounded-lg">
                     <h2 className="text-accent text-4xl mb-1">235</h2>
-                    <p>Vehicles Fleet</p>
+                    <p>أسطول المركبات</p>
                 </div>
               </div>
           </div>
