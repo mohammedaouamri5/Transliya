@@ -31,7 +31,7 @@ def signup(request):
         person.save()
         token = Token.objects.create(user=person)
         return Response({'token': token.key, 'person': serializer.data})
-    return Response(serializer.errors, status=status.HTTP_200_OK)
+    return Response(serializer.errors, status=status.HTTP_201_CREATED)
 
 
 
@@ -133,7 +133,7 @@ def create_service(request):
     serializer = ServiceSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
-        return Response({'service': serializer.data}, status=status.HTTP_200_OK)
+        return Response({'service': serializer.data}, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -184,3 +184,37 @@ def create_notificationtype(request):
         serializer.save()
         return Response({'NotificationType': serializer.data}, status=status.HTTP_201_CREATED )
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+@api_view(['POST'])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def start_working(request):
+    try : 
+        employer = get_object_or_404(Employer, id_employer=request.data['id'])
+        employer.is_working = True
+        employer.save()
+        return Response(status=status.HTTP_200_OK)
+    except Exception as e :
+        if DEBUG:
+            return Response({"error": f"{e}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        else:
+            return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+@api_view(['POST'])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def stop_working(request):
+    try : 
+        employer = get_object_or_404(Employer, id_employer=request.data['id'])
+        employer.is_working = False
+        employer.save()
+        return Response(status=status.HTTP_200_OK)
+    except Exception as e :
+        if DEBUG:
+            return Response({"error": f"{e}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+        else:
+            return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+

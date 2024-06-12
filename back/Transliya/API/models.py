@@ -18,9 +18,11 @@ class Employer(models.Model):
     id_employer = models.OneToOneField(Person, on_delete=models.CASCADE, primary_key=True)
     driving_license = models.IntegerField(unique=True)
     ta9yim_employer = models.IntegerField(default=10)
+    
     is_allowed = models.BooleanField(default=False)
+    is_working = models.BooleanField(default=False)
+    
     created_at = models.DateTimeField(auto_now_add=True)
-
 
 class CarType(models.Model):
     id_car_type = models.AutoField(primary_key=True)

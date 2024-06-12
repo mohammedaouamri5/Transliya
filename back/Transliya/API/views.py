@@ -21,23 +21,24 @@ from API.views_creat import *
 @api_view(['POST'])
 def login(request):
     #  TODO : PHONE NUMBER
-    user = get_object_or_404(Person, username=request.data['username'])
+    user = get_object_or_404(Person, email=request.data['email'])
     if not user.check_password(request.data['password']):
         return Response("missing user", status=status.HTTP_404_NOT_FOUND)
     token, created = Token.objects.get_or_create(user=user)
     serializer = PersonSerializer(user)
     return Response({'token': token.key, 'user': serializer.data})
 
-    #  TODO : send the Employer
-    person_serializer = PersonSerializer(person)
+    # #  TODO : send the Employer
+    # person_serializer = PersonSerializer(person)
     try:
-        id_person = person_serializer.data['id']
-        employer = Employer.objects.get(id_employer=id_person) 
+        id_person = serializer.data
+        employer = models.Employer.objects.get(id_employer=id_person) 
         employer_serializer = EmpoyerSerializer(employer)
     except:
-        return Response({
-            'person': person_serializer.data ,
-                     } , status=status.HTTP_200_OK)
+        return Response({'token': token.key, 'user': serializer.data})
+        # return Response({
+        #     'person': person_serializer.data ,
+        #              } , status=status.HTTP_200_OK)
     
     
     return Response({
@@ -119,3 +120,14 @@ def get_my_notification(request: Request):
             return Response({"error": f"{e}"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         else:
             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+
+@api_view(['GET'])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def search_by_name(request: Request):
+    name = request.data['name']
+    persons = Person.objects.filter(name__icontains=name)
+    serializer = PersonSerializer(persons, many=True)
+    return Response(serializer.data)

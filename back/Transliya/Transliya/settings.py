@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-dnf@77_)&1_62bp&5t9!=_88_^6p)n1=b6)7&sa*3sy)@p-6(v
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     
+    'django.contrib.gis',
+    'corsheaders',    
     'rest_framework',
     'rest_framework.authtoken',
     
@@ -53,9 +55,18 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'Transliya.urls'
+
+
+CORS_ALLOW_ALL_ORIGINS = True 
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+    "https://gv7j4t31-5173.euw.devtunnels.ms"    
+]
 
 TEMPLATES = [
     {

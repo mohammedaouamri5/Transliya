@@ -4,19 +4,18 @@ POST http://127.0.0.1:8000/API/signup
 Content-Type: application/json
 
 { 
-    "username": "BRUH", 
+    "username": "BRUDDH", 
     "password": "Pass1234!", 
-    "email": "WOW@mail.com" , 
-    "phonenumberp": 332
+    "email": "WDDOW@mail.com" , 
+    "phonenumberp": 32332
 } 
 ###
-
-POST http://127.0.0.1:8000/API/login  
+POST https://bl44wdcn-8000.euw.devtunnels.ms/API/login  
 Content-Type: application/json
 
 { 
     "password": "Pass1234!", 
-    "username": "cdcdcd" 
+    "email": "WDDOW@mail.com" 
 
 }  
 
@@ -54,18 +53,18 @@ Authorization: token c5d1b11508f641d914ad2b5c88011e10117e08d3
 Content-Type: application/json
 
 {
-    "email": "JJJJJJJDEJJJJJJ@mail.com" 
+    "id": 1 
 }
 
 
 ###
 POST  http://127.0.0.1:8000/API/create_employer 
-Authorization: token c5d1b11508f641d914ad2b5c88011e10117e08d3
+Authorization: token ece464232061f533094ac1270463b7262b804c4e
 Content-Type: application/json
 
 {
     "id" : 1, 
-    "driving_license" : 23453 
+    "driving_license" : 23232 
 }
 ###
 GET http://127.0.0.1:8000/API/hello 
@@ -75,12 +74,12 @@ Content-Type: application/json
 
 ###
 # Authorization: token c5d1b11508f641d914ad2b5c88011e10117e08d3 # 5dam
-GET  http://127.0.0.1:8000/API/get_persons_services 
-Authorization: token c5d1b11508f641d914ad2b5c88011e10117e08d3
+POST  http://127.0.0.1:8000/API/login 
 Content-Type: application/json
 
 {
-    "email": "JJJJJJJDEJJJJJJ@mail.com" 
+    "email": "WDDOW@mail.com" 
+
 }
 
 
@@ -145,12 +144,14 @@ Content-Type: application/json
 ###
 
 GET http://127.0.0.1:8000/API/get_my_notification
-Authorization: token c5d1b11508f641d914ad2b5c88011e10117e08d3
+Authorization: token ece464232061f533094ac1270463b7262b804c4e
 Content-Type: application/json
 
 {
     "id" : 2
 }
+
+
 
 
 
