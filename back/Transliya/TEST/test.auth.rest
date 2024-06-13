@@ -4,10 +4,12 @@ POST http://127.0.0.1:8000/API/signup
 Content-Type: application/json
 
 { 
-    "username": "WWWW", 
+    "username": "WW", 
     "password": "Pass1234!", 
-    "email": "s@mail.com" , 
-    "phonenumberp": 23
+    "email": "DEs@mail.com" , 
+    "phonenumberp": 2332,
+    "first_name": "DEPDEKE"
+
 } 
 
 ###

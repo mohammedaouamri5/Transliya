@@ -30,8 +30,10 @@ def signup(request):
         person.set_password(request.data['password'])
         person.save()
         token = Token.objects.create(user=person)
-        return Response({'token': token.key, 'person': serializer.data})
-    return Response(serializer.errors, status=status.HTTP_201_CREATED)
+        return Response({'token': token.key, 'person': serializer.data}, status=status.HTTP_201_CREATED)
+    print(serializer.errors)
+    print(request.data)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 
