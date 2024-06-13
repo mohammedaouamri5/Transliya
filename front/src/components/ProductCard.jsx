@@ -8,11 +8,11 @@ const ProductCard = () => {
 
   return (
     <>
-      <div className="w-[300px] h-[350px] bg-background p-2 text-light m-5 rounded-lg text-end shadow-md shadow-black">
+      <div className="h-auto w-auto   bg-background p-2 text-light m-5 rounded-lg text-end shadow-md shadow-black">
         <div
-          className={`h-[45%] w-full bg-cover`}
-          style={{ backgroundImage: `url(${truck})` }}
-        ></div>
+          className={`h-[45%] w-full`}
+        
+        > <img src={truck} alt="" className="h-auto max-w-full"/> </div>
         <div className="p-4  w-full text-xl h-[55%]">
           <h2 className="mb-2">كاميون كبير هه</h2>
           <div className="flex flex-wrap w-full justify-end h-fit border-b border-white pb-4">
@@ -25,16 +25,16 @@ const ProductCard = () => {
             </span>
           </div>
           <div className="flex w-full flex-col mt-2">
-            <p className="opacity-70 mb-2 text-lg">السعر</p>
+            <p className="opacity-70 mb-2 text-sm md:text-md">السعر</p>
 
             <div className="flex justify-between">
               <Link
                 to={"/vehicles/details"}
-                className="px-4 py-2 rounded flex bg-white text-background text-sm font-bold hover:bg-light duration-500"
+                className="px-4 py-2 rounded flex bg-white text-background text-xs md:text-sm font-bold hover:bg-light duration-500"
               >
                 المزيد
               </Link>
-              <h1 className="text-2xl">2000 DZD</h1>
+              <h1 className="text-xl lg:text-2xl text-center p-1">2000 DZD</h1>
             </div>
           </div>
         </div>

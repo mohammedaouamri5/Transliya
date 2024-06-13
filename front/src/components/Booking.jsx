@@ -84,7 +84,7 @@ const Booking = () => {
 
 
         <div className={`${next ? `block` : `hidden`} min-h-screen h-fit flex-col flex items-center justify-evenly w-full bg-background text-light text-end`}>
-          <div className="w-[60%] p-10 ">
+          <div className=" p-10 ">
             <form className="space-y-4 md:space-y-6 w-full" onSubmit={handleSubmit}>
               <h1 className="text-center text-3xl">إملأ المعلومات اللازمة</h1>
               <div className="flex gap-2 justify-between">

@@ -6,7 +6,7 @@ const AuthContext = createContext({
   accessToken: null,
   isAuthenticated: false,
   login: (email, password) => Promise.resolve(undefined),
-  signup: (formData, Type) => Promise.resolve(undefined),
+  signup: (person, Type) => Promise.resolve(undefined),
   logout: () => {},
 });
 
@@ -34,7 +34,7 @@ export const AuthProvider = ({ children }) => {
           password,
         }
       );
-      if (res.status === 200) {
+      if (res.status >= 200 && res.status <= 300) {
         setUser(res.data.user);
         setIsAuthenticated(true);
         setAccessToken(res.data["token"]);
@@ -56,67 +56,86 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const signup = async (formData, Type) => {
-    console.log("type: ", Type);
-    try {
-      const res = await axios.post(
-        "https://bl44wdcn-8000.euw.devtunnels.ms/API/signup",
-        {
-          ...formData,
-          driving_license: undefined,
-        },
-        {
-          headers: { "Content-Type": "application/json" },
-        }
-      );
-
-      // setUser(res.data.person);
-      console.log(res.data)
-      setIsAuthenticated(true);
-      setAccessToken(res.data["token"]);
-      localStorage.setItem("token", res.data["token"]);
-      // localStorage.setItem("user", JSON.stringify(res.data.user));
-      localStorage.setItem("isAuthenticated", "1");
-      console.log("user: ", user);
-      console.log("token: ", res.data["token"]);
-      console.log("auth: ", isAuthenticated);
-
-      if (Type === "employee") {
-        const token = localStorage.getItem(token);
-        const user = localStorage.getItem(user);
-        const id = user.id;
-        const driving_license = formData.driving_license;
-
-        try {
-          const response = axios.post(
-            "https://bl44wdcn-8000.euw.devtunnels.ms/API/create_employer",
-            {
-              driving_license,
-              id,
-            },
-            {
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `token ${token}`,
-              },
-            }
-          );
-
-          if (response.status === 200) {
-            console.log("an employer is registered");
+  const signup = async (person, Type) => {
+    if (Type === "user") {
+      try {
+        const response = await axios.post(
+          "https://bl44wdcn-8000.euw.devtunnels.ms/API/signup",
+          {
+            ...person,
+          },
+          {
+            headers: { "Content-Type": "application/json" },
           }
-        } catch (error) {
-          console.error(error);
+        );
+
+        console.log("response data: ", response.data);
+
+        const { person: userData, token } = response.data;
+
+        setUser(userData);
+        setIsAuthenticated(true);
+        setAccessToken(token);
+        localStorage.setItem("token", token);
+        localStorage.setItem("user", JSON.stringify(userData));
+        localStorage.setItem("isAuthenticated", "1");
+
+        console.log("user: ", userData);
+        console.log("token: ", token);
+        console.log("auth: ", isAuthenticated);
+      } catch (err) {
+        if (err.response && err.response.status === 400) {
+          return "Invalid email or password, please try again";
+        } else {
+          return "Something went wrong";
         }
-      } else {
-        throw new Error("Something went wrong");
       }
-    } catch (err) {
-      if (err.response && err.response.status === 400) {
-        return "Invalid email or password, please try again";
-      } else {
-        return "Something went wrong";
+    } else if (Type === "employee") {
+      const { driving_license, ...dataToCopy } = person; // Exclude driving_license
+
+      try {
+        const response = await axios.post(
+          "https://bl44wdcn-8000.euw.devtunnels.ms/API/signemployer",
+          {
+            person: dataToCopy,
+            driving_license: person.driving_license,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        console.log("response data: ", response.data);
+        console.log("an employer is registered");
+
+        const { person: userData, token } = response.data;
+
+        if (response.status >= 200 && response.status < 300) {
+          console.log("Employer registration successful");
+
+          setUser(userData);
+          setIsAuthenticated(true);
+          setAccessToken(token);
+          localStorage.setItem("token", token);
+          localStorage.setItem("user", JSON.stringify(userData));
+          localStorage.setItem("isAuthenticated", "1");
+
+          console.log("user: ", userData);
+          console.log("token: ", token);
+          console.log("auth: ", isAuthenticated);
+        }
+      } catch (error) {
+        console.error("Error during employer registration:", error);
+        if (error.response && error.response.status === 400) {
+          return "Invalid data provided, please check the input.";
+        } else {
+          return "Something went wrong during employer registration";
+        }
       }
+    } else {
+      throw new Error("Unknown Type provided");
     }
   };
 

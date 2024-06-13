@@ -8,7 +8,7 @@ import { PiButterflyThin } from "react-icons/pi";
 const Signup = () => {
   const navigate = useNavigate();
   const { signup } = useAuth();
-  const [confirmPassword, setConfirmPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const [Type, setType] = useState(null);
   const [formData, setFormData] = useState({
@@ -21,6 +21,8 @@ const Signup = () => {
     driving_license: "",
   });
 
+
+
   const handleChange = (event) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
   };
@@ -32,17 +34,24 @@ const Signup = () => {
     setType("employee");
   };
 
-  console.log(Type)
+  console.log(Type);
 
   const [errorMessage, setErrorMessage] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (formData.password === confirmPassword) {
-      signup(formData, Type);  
-    }
-    else{
-      setErrorMessage("خطأ في تأكيد كلمة السر")
+      if (Type === "user") {
+        const { driving_license, ...userData } = formData;
+        signup(userData, Type);
+        console.log("userData: ", userData)
+        navigate("/");
+      } else if (Type === "employee") {
+        signup(formData, Type);
+        navigate("/");
+      }
+    } else {
+      setErrorMessage("خطأ في تأكيد كلمة السر");
     }
   };
 
@@ -61,7 +70,10 @@ const Signup = () => {
                 <>
                   {" "}
                   <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl ">
-                    إنشاء حساب <span className="text-secondary">{`${Type === "employee" ? "عامل" : "زبون"}`}</span>
+                    إنشاء حساب{" "}
+                    <span className="text-secondary">{`${
+                      Type === "employee" ? "عامل" : "زبون"
+                    }`}</span>
                   </h1>
                   <form
                     className="space-y-4 md:space-y-6"
@@ -151,23 +163,24 @@ const Signup = () => {
                       />
                     </div>
 
-                    {Type === 'employee' && <div>
-                      <label className="block mb-2 text-sm font-medium text-gray-900 ">
-                        رقم رخصة السياقة
-                      </label>
-                      <input
-                        type="text"
-                        name="driving_license"
-                        id="driving_license"
-                        dir="rtl"
-                        placeholder=""
-                        value={formData.driving_license}
-                        onChange={handleChange}
-                        className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
-                        required=""
-                      />
-                    </div>
-                    }
+                    {Type === "employee" && (
+                      <div>
+                        <label className="block mb-2 text-sm font-medium text-gray-900 ">
+                          رقم رخصة السياقة
+                        </label>
+                        <input
+                          type="text"
+                          name="driving_license"
+                          id="driving_license"
+                          dir="rtl"
+                          placeholder=""
+                          value={formData.driving_license}
+                          onChange={handleChange}
+                          className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                          required=""
+                        />
+                      </div>
+                    )}
                     <div>
                       <label className="block mb-2 text-sm font-medium text-gray-900 ">
                         كلمة السر
@@ -195,12 +208,16 @@ const Signup = () => {
                         dir="rtl"
                         placeholder="••••••••"
                         value={confirmPassword}
-                        onChange={(e) => {setConfirmPassword(e.target.value)}}
+                        onChange={(e) => {
+                          setConfirmPassword(e.target.value);
+                        }}
                         className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                         required=""
                       />
                     </div>
-                    <div className="text-red-800 text-center">{errorMessage}</div>
+                    <div className="text-red-800 text-center">
+                      {errorMessage}
+                    </div>
                     <div className="flex items-center justify-between"></div>
                     <button
                       type="submit"
@@ -221,12 +238,23 @@ const Signup = () => {
                 </>
               ) : (
                 <>
-                <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl text-center">اختر نوع الحساب</h1>
-                <div className="w-full justify-around flex">
-                  <button className="px-5 py-2 rounded-md hover:bg-secondary duration-200 bg-black text-light" onClick={handleTypeUser}>أنشئ حساب زبون</button>
-                  <button className="px-5 py-2 rounded-md hover:bg-secondary duration-200 bg-black text-light" onClick={handleTypeEmployee}>أنشئ حساب عامل</button>
-                </div>
-                  
+                  <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl text-center">
+                    اختر نوع الحساب
+                  </h1>
+                  <div className="w-full justify-around flex">
+                    <button
+                      className="px-5 py-2 rounded-md hover:bg-secondary duration-200 bg-black text-light"
+                      onClick={handleTypeUser}
+                    >
+                      أنشئ حساب زبون
+                    </button>
+                    <button
+                      className="px-5 py-2 rounded-md hover:bg-secondary duration-200 bg-black text-light"
+                      onClick={handleTypeEmployee}
+                    >
+                      أنشئ حساب عامل
+                    </button>
+                  </div>
                 </>
               )}
             </div>
