@@ -34,7 +34,7 @@ const Login = () => {
       <section className="bg-hero bg-cover relative">
         <div className="absolute inset-0 bg-black opacity-60"></div>
 
-        <div className="flex flex-col items-center relative justify-center px-6 py-8 mx-auto md:h-screen lg:py-0 ">
+        <div className="flex flex-col items-center relative justify-center px-6 py-8 mx-auto h-screen lg:py-0 ">
           <h1 className="flex items-center mb-6 text-2xl font-semibold text-white ">
             Transilya
           </h1>

@@ -8,14 +8,14 @@ import { PiButterflyThin } from "react-icons/pi";
 const Signup = () => {
   const navigate = useNavigate();
   const { signup } = useAuth();
+  const [confirmPassword, setConfirmPassword] = useState('')
 
   const [Type, setType] = useState(null);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
-    confirmPassword: "",
-    firstName: "",
-    lastName: "",
+    first_name: "",
+    last_name: "",
     username: "",
     phonenumberp: "",
     driving_license: "",
@@ -38,7 +38,12 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    signup(formData, Type);
+    if (formData.password === confirmPassword) {
+      signup(formData, Type);  
+    }
+    else{
+      setErrorMessage("خطأ في تأكيد كلمة السر")
+    }
   };
 
   return (
@@ -69,10 +74,10 @@ const Signup = () => {
                         </label>
                         <input
                           type="text"
-                          name="lastName"
-                          id="lastName"
+                          name="last_name"
+                          id="last_name"
                           dir="rtl"
-                          value={formData.lastName}
+                          value={formData.last_name}
                           onChange={handleChange}
                           className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                           placeholder=""
@@ -86,11 +91,11 @@ const Signup = () => {
                         </label>
                         <input
                           type="text"
-                          name="firstName"
+                          name="first_name"
                           dir="rtl"
-                          id="firstName"
+                          id="first_name"
                           placeholder=""
-                          value={formData.firstName}
+                          value={formData.first_name}
                           onChange={handleChange}
                           className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                           required=""
@@ -189,13 +194,13 @@ const Signup = () => {
                         id="confirmPassword"
                         dir="rtl"
                         placeholder="••••••••"
-                        value={formData.confirmPassword}
-                        onChange={handleChange}
+                        value={confirmPassword}
+                        onChange={(e) => {setConfirmPassword(e.target.value)}}
                         className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                         required=""
                       />
                     </div>
-                    <div>{errorMessage}</div>
+                    <div className="text-red-800 text-center">{errorMessage}</div>
                     <div className="flex items-center justify-between"></div>
                     <button
                       type="submit"

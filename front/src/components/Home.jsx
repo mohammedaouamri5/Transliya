@@ -15,9 +15,9 @@ const Home = () => {
         <div className="absolute inset-0 bg-black opacity-60"></div>
         <div className="h-full w-full flex items-center relative md:justify-normal justify-center ">
           <div className="w-[85%] h-[70%] flex items-center md:justify-end md:text-end text-center justify-center">
-            <div className="md:w-[60%] lg:[50%] w-full">
+            <div className="md:w-[60%] lg:w-[50%] w-full">
               <div className="flex-col">
-                <h1 className="text-white text-3xl md:text-5xl font-bold leading-snug arabic-text">
+                <h1 className="text-white text-3xl md:text-[43px] font-bold leading-snug arabic-text">
                   انقل ما تريد بسهولة وسيطر على المركبات الثقيلة مع ترانزليا{" "}
                 </h1>
                 <br />
