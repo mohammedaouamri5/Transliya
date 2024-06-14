@@ -1,4 +1,3 @@
-from django.contrib.gis.db import models as gis_models
 from django.db import models
 from django.contrib.auth.hashers import make_password
 
@@ -48,8 +47,13 @@ class Tewsila(models.Model):
     t_started = models.TimeField()
     t_ended = models.TimeField() # ! <===
     
-    from_location = gis_models.PointField(geography=True)
-    to_location = gis_models.PointField(geography=True)
+    
+    from_lon = models.FloatField(); 
+    from_lat = models.FloatField();  
+    to_lon = models.FloatField(); 
+    to_lat = models.FloatField(); 
+    distention = models.FloatField(); 
+    
     
     matricule_car = models.ForeignKey(CarEmployer, on_delete=models.CASCADE)
     
@@ -73,18 +77,6 @@ class Kerya(models.Model):
     ta9yim_Kerya = models.FloatField()
 
 
-class Admin(models.Model):
-    id_admin = models.OneToOneField(Person, on_delete=models.CASCADE, primary_key=True, related_name='admin_person')
-    id_super = models.ForeignKey('self', null=True, blank=True, on_delete=models.SET_NULL, related_name='admin_super')
-
-
-class Salahiyat(models.Model):
-    id_salahiya = models.AutoField(primary_key=True)
-    name_salahiya = models.CharField(max_length=255)
-
-class AdminSalahiyat(models.Model):
-    id_admin = models.ForeignKey(Admin, on_delete=models.CASCADE)
-    id_salahiya = models.ForeignKey(Salahiyat, on_delete=models.CASCADE)
 
 
 class GetPayed(models.Model):

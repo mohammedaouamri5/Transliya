@@ -31,19 +31,19 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'admin_soft.apps.AdminSoftDashboardConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
-    'django.contrib.gis',
     'corsheaders',    
     'rest_framework',
     'rest_framework.authtoken',
     
     # 'BDD',
+
     'API',
 ]
 
@@ -87,26 +87,29 @@ TEMPLATES = [
 WSGI_APPLICATION = 'Transliya.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
+    # Database
+    # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'transliya',
-        'USER': 'postgres',
-        'PASSWORD': 'MOHAMMED.ADMIN',
-        'HOST': 'localhost',
-        # 'PORT': '5432',
+if DEBUG : 
+
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
+else : 
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'transliya',
+            'USER': 'postgres',
+            'PASSWORD': 'MOHAMMED.ADMIN',
+            'HOST': 'localhost',
+            # 'PORT': '5432',
+        }
+    }
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 

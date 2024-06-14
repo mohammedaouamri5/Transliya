@@ -23,18 +23,19 @@ class CarTypeSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class ServiceSerializer(serializers.ModelSerializer):
-    class Meta(object):
-        model = models.Service
-        fields = '__all__'
 
 class CarEmployerSerializer(serializers.ModelSerializer):
     class Meta(object):
         model = models.CarEmployer
         fields = '__all__'
         
-        
-        
+
+
+class ServiceSerializer(serializers.ModelSerializer):
+    class Meta(object):
+        model = models.Service
+        fields = '__all__'
+
 class TewsilaSerializer(serializers.ModelSerializer):
     class Meta(object):
         model = models.Tewsila
@@ -75,10 +76,10 @@ class NotifySerializer(serializers.ModelSerializer):
             'time',
             'is_readed'
         ]
-        
-        
-        
-        
+
+
+
+
 class CarSerializer_serchByname(serializers.ModelSerializer):
     class Meta:
         model = models.CarEmployer
@@ -140,3 +141,7 @@ class FullPersonSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Person
         fields = '__all__'  # Include all fields from Person model plus 'user' and 'employer'
+    #     fields = ["first_name", 
+    #   "last_name", 
+    #   "email", 
+    #   "phonenumberp" ]
