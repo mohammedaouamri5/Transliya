@@ -62,7 +62,7 @@ export const AuthProvider = ({ children }) => {
         const response = await axios.post(
           "https://bl44wdcn-8000.euw.devtunnels.ms/API/signup",
           {
-            ...person,
+            "person": person,
           },
           {
             headers: { "Content-Type": "application/json" },

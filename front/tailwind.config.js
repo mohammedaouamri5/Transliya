@@ -10,6 +10,7 @@ module.exports = {
           secondary: '#1b263b', 
           accent: '#778da9',
           background: '#0d1b2a',
+          subtext: '#6c757d',
           light: '#e0e1dd',
       },
       backgroundImage: {
