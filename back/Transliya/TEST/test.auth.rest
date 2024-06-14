@@ -13,8 +13,35 @@ Content-Type: application/json
 } 
 
 ###
+
+POST http://127.0.0.1:8000/API/signemployer
+Content-Type: application/json
+
+{ 
+
+
+    "person" : {
+        "password":     "r60066123",
+        "username":     "060096",
+        "email":        "06006644e@GMAIL.com",
+        "phonenumberp": 906006690
+    }, 
+    "driving_license": 98978 
+
+
+} 
+
+
+### "is_allowed": true,
+### "is_working": false
+
+###
+
+
+
+
 POST  http://127.0.0.1:8000/API/create_employer 
-Authorization: token e8ed8982feba0614f5b8b2c1a1947e0ce4b928ed
+Authorization: token 5983886c1f4eced6e7a470eb830e508b48f9b026
 Content-Type: application/json
 
 {
@@ -35,7 +62,7 @@ Content-Type: application/json
 ###
 
 POST http://127.0.0.1:8000/API/test_token 
-Authorization: token c5d1b11508f641d914ad2b5c88011e10117e08d3
+Authorization: token 5983886c1f4eced6e7a470eb830e508b48f9b026
 Content-Type: application/json
 
 {
@@ -53,16 +80,16 @@ Content-Type: application/json
 
 
 GET  http://127.0.0.1:8000/API/get_person 
-Authorization: token c5d1b11508f641d914ad2b5c88011e10117e08d3
+Authorization: token 5983886c1f4eced6e7a470eb830e508b48f9b026
 Content-Type: application/json
 
 {
     "phonenumberp": 1221
 }
 ###
-# Authorization: token c5d1b11508f641d914ad2b5c88011e10117e08d3 # 5dam
+# Authorization: token 5983886c1f4eced6e7a470eb830e508b48f9b026 # 5dam
 GET  http://127.0.0.1:8000/API/get_person 
-Authorization: token c5d1b11508f641d914ad2b5c88011e10117e08d3
+Authorization: token 5983886c1f4eced6e7a470eb830e508b48f9b026
 Content-Type: application/json
 
 {
@@ -77,7 +104,7 @@ Content-Type: application/json
 
 
 ###
-# Authorization: token c5d1b11508f641d914ad2b5c88011e10117e08d3 # 5dam
+# Authorization: token 5983886c1f4eced6e7a470eb830e508b48f9b026 # 5dam
 POST  http://127.0.0.1:8000/API/login 
 Content-Type: application/json
 
@@ -90,18 +117,18 @@ Content-Type: application/json
 ### 
 
 POST  http://127.0.0.1:8000/API/create_car_type 
-Authorization: token ece464232061f533094ac1270463b7262b804c4e
+Authorization: token 5983886c1f4eced6e7a470eb830e508b48f9b026
 Content-Type: application/json
 
 {
     "Tewsila_prix_car_type":34.3, 
     "Kerya_prix_car_type":34.3, 
-    "name_car_type":"S2222MARRRRLL"
+    "name_car_type":"DED"
 }
 ### 
 
 POST  http://127.0.0.1:8000/API/create_service 
-Authorization: token ece464232061f533094ac1270463b7262b804c4e
+Authorization: token 5983886c1f4eced6e7a470eb830e508b48f9b026
 Content-Type: application/json
 
 {
@@ -111,7 +138,7 @@ Content-Type: application/json
 ###
 
 POST  http://127.0.0.1:8000/API/create_caremployer
-Authorization: token e8ed8982feba0614f5b8b2c1a1947e0ce4b928ed
+Authorization: token 5983886c1f4eced6e7a470eb830e508b48f9b026
 Content-Type: application/json
 
 {
@@ -123,12 +150,13 @@ Content-Type: application/json
 ###
 
 GET  http://127.0.0.1:8000/API/search_by_name
-Authorization: token e8ed8982feba0614f5b8b2c1a1947e0ce4b928ed
+Authorization: token 5983886c1f4eced6e7a470eb830e508b48f9b026
 Content-Type: application/json
 
 {
-"name" : "", 
-"cars_type_id" : [1 , 2]
+"name" : "g", 
+
+"cars_type_id" : [1 , 2 , 4, 5]
 }
 ###
 
@@ -142,7 +170,7 @@ Content-Type: application/json
 ###
 
 POST  http://127.0.0.1:8000/API/127.0.0.1:8000/API/127.0.0.1:8000/API/create_notificationtype
-Authorization: token c5d1b11508f641d914ad2b5c88011e10117e08d3
+Authorization: token 5983886c1f4eced6e7a470eb830e508b48f9b026
 Content-Type: application/json
 
 {
@@ -152,7 +180,7 @@ Content-Type: application/json
 ###
 
 POST  http://127.0.0.1:8000/API/create_notification
-Authorization: token c5d1b11508f641d914ad2b5c88011e10117e08d3
+Authorization: token 5983886c1f4eced6e7a470eb830e508b48f9b026
 Content-Type: application/json
 
 {
@@ -166,7 +194,7 @@ Content-Type: application/json
 ###
 
 GET http://127.0.0.1:8000/API/get_my_notification
-Authorization: token ece464232061f533094ac1270463b7262b804c4e
+Authorization: token 5983886c1f4eced6e7a470eb830e508b48f9b026
 Content-Type: application/json
 
 {

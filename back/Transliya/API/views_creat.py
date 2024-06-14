@@ -1,9 +1,21 @@
+from django.forms import ValidationError
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.authentication import SessionAuthentication, TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.request import Request
 from rest_framework import status
+
+
+
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import status
+from django.db import transaction
+from django.core.exceptions import ValidationError
+from rest_framework.authtoken.models import Token
+
+
 
 from django.shortcuts import get_object_or_404
 
@@ -34,6 +46,50 @@ def signup(request):
     print(serializer.errors)
     print(request.data)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['POST'])
+def signup_employer(request):
+    person_data = request.data.get('person')
+    driving_license = request.data.get('driving_license')
+
+    if not person_data or driving_license is None:
+        return Response({'error': 'Person data and driving license are required'}, status=status.HTTP_400_BAD_REQUEST)
+
+    # Check if the driving license already exists
+    if models.Employer.objects.filter(driving_license=driving_license).exists():
+        return Response({'error': 'Driving license already exists'}, status=status.HTTP_400_BAD_REQUEST)
+
+    person_serializer = PersonSerializer(data=person_data)
+    if not person_serializer.is_valid():
+        return Response(person_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    try:
+        # Save the person
+        person = person_serializer.save()
+
+        # Create the employer
+        employer_data = {
+            'id_employer': person.id,
+            'driving_license': driving_license
+        }
+        employer_serializer = EmployerSerializer(data=employer_data)
+        if employer_serializer.is_valid():
+            employer_serializer.save()
+            token = Token.objects.create(user=person)
+            return Response({
+                                "employer" : employer_serializer.data,
+                                "person" : person_serializer.data,
+                                'token': token.key,
+                                }, status=status.HTTP_201_CREATED)
+        else:
+            # If employer data is invalid, raise an exception to trigger a rollback
+            raise ValueError(employer_serializer.errors)
+    except Exception as e:
+        # Return the error response if any exception is raised
+        return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+
+
 
 
 
