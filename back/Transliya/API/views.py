@@ -121,34 +121,67 @@ def get_my_notification(request: Request):
         else:
             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-
-
 @api_view(['GET'])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
-def search_by_name(request: Request):
+def search_by_name(request):
     
-    
-    # FIXME :use the request.data 
-     
-    # if not ("cars_type_id" in request.data): 
-    #     return Response({"error":"you must enter one of  (cars_type_id)" } , status=status.HTTP_400_BAD_REQUEST) 
-
-
+    # Fetching filters from request data
     name_filter = request.data.get('name')
     car_id_filter = request.data.get('cars_type_id')
 
-    # name_filter =  [1, 2]
-    # car_id_filter = ""
-
-    persons = Person.objects.filter(
-        first_name__icontains=name_filter,
-        last_name__icontains=name_filter,
+    # Filtering persons based on the given name and car ID
+    persons_username = Person.objects.filter(
         username__icontains=name_filter,
         employer__caremployer__id_type_car__in=car_id_filter
     )
+    persons_first_name = Person.objects.filter(
+        first_name__icontains=name_filter,
+        employer__caremployer__id_type_car__in=car_id_filter
+    )
+    persons_last_name = Person.objects.filter(
+        last_name__icontains=name_filter,
+        employer__caremployer__id_type_car__in=car_id_filter
+    )
 
-    # Serialize the queryset
-    serializer = FullPersonSerializer(persons, many=True)    # persons = Person.objects.filter(name__icontains=name_filter)
-    # serializer = PersonSerializer(persons, many=True)
-    return Response(serializer.data)
+    # Serializing the filtered querysets
+    serializer_first_name = FullPersonSerializer(persons_first_name, many=True)
+    serializer_last_name = FullPersonSerializer(persons_last_name, many=True)
+    serializer_username = FullPersonSerializer(persons_username, many=True)
+    
+    # Filter the serialized data to include only specific fields
+    def filter_fields(data, fields):
+        return [{field: item[field] for field in fields} for item in data]
+
+    fields_to_include = ['id', 'username', 'first_name', 'last_name', 'phonenumberp']
+    
+    result_first_name = filter_fields(serializer_first_name.data, fields_to_include)
+    result_last_name = filter_fields(serializer_last_name.data, fields_to_include)
+    result_username = filter_fields(serializer_username.data, fields_to_include)
+    
+    # Combining the filtered serialized data
+    result = result_first_name + result_last_name + result_username
+    
+    return Response({"result": result}, status=status.HTTP_200_OK)
+    return Response({"result": result['id' , 'username', 'first_name', 'last_name' , 'phonenumberp' ] }, status=status.HTTP_200_OK)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
