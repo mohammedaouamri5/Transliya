@@ -31,6 +31,7 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'admin_soft.apps.AdminSoftDashboardConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,6 +42,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     
+    # 'BDD',
+
     'API',
 ]
 
@@ -96,7 +99,8 @@ WSGI_APPLICATION = 'Transliya.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',        'NAME': 'transliya',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'transliya',
         'USER': 'postgres',
         'PASSWORD': 'MOHAMMED.ADMIN',
         'HOST': 'localhost',
