@@ -1,0 +1,101 @@
+
+POST http://127.0.0.1:8000/API/signup
+Content-Type: application/json
+
+{ 
+    "username": "BRUH", 
+    "password": "Pass1234!", 
+    "email": "JJJJJJJDEJJJJJJ@mail.com" , 
+    "phonenumberp": 2233
+} 
+###
+
+POST http://127.0.0.1:8000/API/login  
+Content-Type: application/json
+
+{ 
+    "password": "Pass1234!", 
+    "username": ",hgcjth" 
+
+}  
+
+###
+
+POST http://127.0.0.1:8000/API/test_token 
+Authorization: token 0083503209ced38a64c5b2a696a66ac5d583364d
+Content-Type: application/json
+
+{
+    "info": "106"
+}
+###
+
+
+GET  http://127.0.0.1:8000/API/get_person 
+Authorization: token 0083503209ced38a64c5b2a696a66ac5d583364d
+Content-Type: application/json
+
+{
+    "phonenumberp": 2233
+}
+###
+# Authorization: token 0083503209ced38a64c5b2a696a66ac5d583364d # 5dam
+GET  http://127.0.0.1:8000/API/get_person 
+Authorization: token 0083503209ced38a64c5b2a696a66ac5d583364d
+Content-Type: application/json
+
+{
+    "email": "JJJJJJJDEJJJJJJ@mail.com" 
+}
+
+
+###
+POST  http://127.0.0.1:8000/API/creat_employer 
+Authorization: token 0083503209ced38a64c5b2a696a66ac5d583364d
+Content-Type: application/json
+
+{
+    "id" : 1, 
+    "driving_license" : 23453 
+}
+###
+GET http://127.0.0.1:8000/API/hello 
+Content-Type: application/json
+
+
+
+###
+# Authorization: token 0083503209ced38a64c5b2a696a66ac5d583364d # 5dam
+GET  http://127.0.0.1:8000/API/get_persons_services 
+Authorization: token 0083503209ced38a64c5b2a696a66ac5d583364d
+Content-Type: application/json
+
+{
+    "email": "JJJJJJJDEJJJJJJ@mail.com" 
+}
+
+
+### 
+
+POST  http://127.0.0.1:8000/API/create_car 
+POST  http://127.0.0.1:8000/API/create_car 
+POST  http://127.0.0.1:8000/API/create_car 
+POST  http://127.0.0.1:8000/API/create_car 
+POST  http://127.0.0.1:8000/API/create_car 
+POST  http://127.0.0.1:8000/API/create_car 
+POST  http://127.0.0.1:8000/API/create_car 
+POST  http://127.0.0.1:8000/API/create_car 
+POST  http://127.0.0.1:8000/API/create_car 
+POST  http://127.0.0.1:8000/API/create_car 
+Authorization: token 0083503209ced38a64c5b2a696a66ac5d583364d
+Content-Type: application/json
+
+{
+    "Tewsila_prix_car_type":34.3, 
+    "Kerya_prix_car_type":34.3, 
+    "name_car_type":"SMALL"
+}
+
+
+
+

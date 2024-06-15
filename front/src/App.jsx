@@ -10,9 +10,7 @@ import RentResults from './components/RentResults.jsx'
 import Rent from './components/Rent.jsx'
 import ScrollToTop from './components/ScrollToTop.jsx'
 import BookingResults from './components/BookingResults.jsx'
-
 function App() {
-
   return (
     <>
       <Navbar />
