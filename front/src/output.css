@@ -600,6 +600,10 @@ video {
   visibility: visible;
 }
 
+.collapse{
+  visibility: collapse;
+}
+
 .absolute{
   position: absolute;
 }
@@ -742,6 +746,14 @@ video {
 
 .ml-2{
   margin-left: 0.5rem;
+}
+
+.me-2{
+  margin-inline-end: 0.5rem;
+}
+
+.me-auto{
+  margin-inline-end: auto;
 }
 
 .block{
