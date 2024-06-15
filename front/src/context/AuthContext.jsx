@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) => {
   });
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
     const storedAuth = localStorage.getItem("isAuthenticated");
-    return storedAuth ? JSON.parse(storedAuth) : false;
+    return storedAuth ? JSON.parse(storedAuth) : true;
   });
   const [accessToken, setAccessToken] = useState(() => {
     const storedAccessToken = localStorage.getItem("access-token");
