@@ -40,8 +40,8 @@ class CarService(admin.ModelAdmin):
     search_fields = ('id_car__id_employer__id_employer__username', 'id_service__name_service')
 
 class Kerya(admin.ModelAdmin):
-    list_display = ('id_Kerya', 't_started', 't_ended', 'id_car_employer', 'id_zaboun', 'comment_Kerya', 'ta9yim_Kerya')
-    search_fields = ('id_Kerya', 'id_car_employer__id_employer__id_employer__username', 'id_zaboun__username', 'comment_Kerya')
+    list_display = ('id_Kerya', 't_started', 't_ended', 'matricule_car', 'id_zaboun', 'comment_Kerya', 'ta9yim_Kerya')
+    search_fields = ('id_Kerya', 'matricule_car__id_employer__id_employer__username', 'id_zaboun__username', 'comment_Kerya')
 
 class Admin(admin.ModelAdmin):
     list_display = ('id_admin', 'id_super')

@@ -66,12 +66,12 @@ class CarService(models.Model):
 
 class Kerya(models.Model):
     id_Kerya = models.AutoField(primary_key=True)
-    t_started = models.TimeField()
-    t_ended = models.TimeField()
-    id_car_employer = models.ForeignKey(CarEmployer, on_delete=models.CASCADE)
+    t_started = models.DateTimeField()
+    t_ended = models.DateTimeField()
+    matricule_car = models.ForeignKey(CarEmployer, on_delete=models.CASCADE)
     id_zaboun = models.ForeignKey(Person, on_delete=models.CASCADE)
-    comment_Kerya = models.TextField()
-    ta9yim_Kerya = models.FloatField()
+    comment_Kerya = models.TextField(null=True)
+    ta9yim_Kerya = models.FloatField(null=True)
 
 
 

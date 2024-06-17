@@ -1,4 +1,17 @@
 
+
+POST http://127.0.0.1:8000/API/create_kerya
+Content-Type: application/json
+
+{ 
+"t_started" : "2024-06-17T20:10:48.04", 
+"t_ended" : "2024-06-17T20:10:48.04", 
+"matricule_car" : 1, 
+"id_zaboun" : 2
+}
+
+###
+
 POST http://127.0.0.1:8000/API/createtawsila
 Content-Type: application/json
 
@@ -14,11 +27,11 @@ Content-Type: application/json
 
 ####
 
-POST http://127.0.0.1:8000/API/add_ta9yym
+POST http://127.0.0.1:8000/API/add_ta9yym_to_kerya
 Content-Type: application/json
 
 {
-    "id_Tewsila" : 1 , 
+    "id" : 1 , 
     "ta9yym" : 9 ,
     "comment" : "bruh"
 
