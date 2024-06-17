@@ -5,6 +5,7 @@ import jac3 from "../assets/jac3ton.jpg";
 import cam20 from "../assets/camion20ton.jpg";
 import cam10 from "../assets/camion10ton.jpg";
 import { Link } from "react-router-dom";
+import MapboxComponent from "./Mapbox";
 
 const Booking = () => {
   const [formData, setFormData] = useState({
@@ -93,72 +94,7 @@ const Booking = () => {
             ))}
           </div>
         </div>
-
-        <div
-          className={` h-fit flex-col p-10 flex items-center justify-evenly w-full relative bg-background text-light text-end`}
-        >
-          <div className="w-full sm:w-[90%] md:w-[80%]">
-            <form
-              className="space-y-4 px-5 md:space-y-6 w-full"
-              onSubmit={handleSubmit}
-            >
-              <div className="flex gap-2 justify-between">
-                <div className="w-[48%]">
-                  <label className="block mb-2 text-lg font-medium text-light ">
-                    إلى
-                  </label>
-                  <input
-                    type="text"
-                    name="to"
-                    id="to"
-                    dir="rtl"
-                    onChange={handleChange}
-                    className="bg-gray-50 border border-gray-300 text-background sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
-                    placeholder=""
-                    required
-                  />
-                </div>
-                <div className="w-[48%]">
-                  <label className="block mb-2 text-lg font-medium text-light ">
-                    من
-                  </label>
-                  <input
-                    type="text"
-                    name="from"
-                    id="from"
-                    dir="rtl"
-                    onChange={handleChange}
-                    placeholder="اختر نقطة بداية التوصيل"
-                    className="bg-gray-50 border border-gray-300 text-background sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
-                    required
-                  />
-                </div>
-              </div>
-{/* 
-              <div>
-                <label className="block my-2 text-lg font-medium text-light ">
-                  أضف ملاحظة
-                </label>
-                <textarea
-                  type="text"
-                  name="from"
-                  id="from"
-                  dir="rtl"
-                  placeholder="اختر نقطة بداية التوصيل"
-                  className="bg-gray-50 border border-gray-300 text-background sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 h-[100px] block w-full p-2.5 "
-                  required=""
-                />
-              </div> */}
-              <button
-                
-                type="submit"
-                className="w-full text-background bg-white hover:bg-light duration-300 text-lg focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg  px-5 py-2.5 text-center "
-              >
-                <Link to={'/bookingresults'}>  إظهار النتائج</Link>
-              </button>
-            </form>
-          </div>
-        </div>
+          <MapboxComponent />
       </div>
     </>
   );
