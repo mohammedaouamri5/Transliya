@@ -26,8 +26,8 @@ urlpatterns = [
     re_path('create_notificationtype', views.create_notificationtype),
     re_path('create_notification', views.create_notification),
     
-    
-    
+    re_path('createtawsila', views.create_tawsila),
+    re_path('add_ta9yym', views.add_ta9yym),
     
     re_path('search_by_name', views.search_by_name),
 

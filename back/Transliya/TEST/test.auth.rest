@@ -1,5 +1,30 @@
 
+POST http://127.0.0.1:8000/API/createtawsila
+Content-Type: application/json
 
+{
+    "from_lon"  : 1 ,
+    "from_lat"  : 1 ,
+    "to_lon"  : 1 ,
+    "to_lat"  : 1 ,
+    "distention"  : 1 ,
+    "matricule_car"  :2222  ,
+    "id_zaboun"  : 4  
+}
+
+####
+
+POST http://127.0.0.1:8000/API/add_ta9yym
+Content-Type: application/json
+
+{
+    "id_Tewsila" : 1 , 
+    "ta9yym" : 9 ,
+    "comment" : "bruh"
+
+}
+
+####
 POST http://127.0.0.1:8000/API/signup
 Content-Type: application/json
 
@@ -194,7 +219,7 @@ Content-Type: application/json
 ###
 
 GET http://127.0.0.1:8000/API/get_my_notification
-Authorization: token 5983886c1f4eced6e7a470eb830e508b48f9b026
+Authorization: token 1b97ebe9d5ff9c8539f3c8ab516396e4b9738e83
 Content-Type: application/json
 
 {
@@ -205,8 +230,7 @@ Content-Type: application/json
 
 
 
-
-
+###
 
 
 

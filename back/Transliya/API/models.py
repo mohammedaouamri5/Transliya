@@ -44,9 +44,6 @@ class CarEmployer(models.Model):
 class Tewsila(models.Model):
     id_Tewsila = models.AutoField(primary_key=True)
     
-    t_started = models.TimeField()
-    t_ended = models.TimeField() # ! <===
-    
     
     from_lon = models.FloatField(); 
     from_lat = models.FloatField();  
@@ -59,8 +56,8 @@ class Tewsila(models.Model):
     
     id_zaboun = models.ForeignKey(Person, on_delete=models.CASCADE)
     
-    comment_Tewsila = models. TextField() # ! <===
-    ta9yim_Tewsila = models.FloatField() # ! <===
+    comment_Tewsila = models. TextField(null=True) # ! <===
+    ta9yim_Tewsila = models.FloatField(null=True) # ! <===
 
 
 class CarService(models.Model):
