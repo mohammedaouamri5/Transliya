@@ -25,23 +25,25 @@ SECRET_KEY = 'django-insecure-dnf@77_)&1_62bp&5t9!=_88_^6p)n1=b6)7&sa*3sy)@p-6(v
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'admin_soft.apps.AdminSoftDashboardConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
+    'corsheaders',    
     'rest_framework',
     'rest_framework.authtoken',
     
     # 'BDD',
+
     'API',
 ]
 
@@ -53,9 +55,18 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'Transliya.urls'
+
+
+CORS_ALLOW_ALL_ORIGINS = True 
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+    "https://gv7j4t31-5173.euw.devtunnels.ms"    
+]
 
 TEMPLATES = [
     {
@@ -76,26 +87,29 @@ TEMPLATES = [
 WSGI_APPLICATION = 'Transliya.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
+    # Database
+    # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.contrib.gis.db.backends.postgis',
-        'NAME': 'transliya',
-        'USER': 'postgres',
-        'PASSWORD': 'MOHAMMED.ADMIN',
-        'HOST': 'localhost',
-        # 'PORT': '5432',
+if DEBUG : 
+
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
+else : 
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'transliya',
+            'USER': 'postgres',
+            'PASSWORD': 'MOHAMMED.ADMIN',
+            'HOST': 'localhost',
+            # 'PORT': '5432',
+        }
+    }
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 

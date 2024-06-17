@@ -1,29 +1,236 @@
+
+POST http://127.0.0.1:8000/API/createtawsila
+Content-Type: application/json
+
+{
+    "from_lon"  : 1 ,
+    "from_lat"  : 1 ,
+    "to_lon"  : 1 ,
+    "to_lat"  : 1 ,
+    "distention"  : 1 ,
+    "matricule_car"  :2222  ,
+    "id_zaboun"  : 4  
+}
+
+####
+
+POST http://127.0.0.1:8000/API/add_ta9yym
+Content-Type: application/json
+
+{
+    "id_Tewsila" : 1 , 
+    "ta9yym" : 9 ,
+    "comment" : "bruh"
+
+}
+
+####
 POST http://127.0.0.1:8000/API/signup
 Content-Type: application/json
 
 { 
-    "username": "ddDEDEddddddd", 
+    "username": "WW", 
     "password": "Pass1234!", 
-    "email": "JJJJJJJDEJJJJJJ@mail.com" , 
-    "phone_number_p": 2233
+    "email": "DEs@mail.com" , 
+    "phonenumberp": 2332,
+    "first_name": "DEPDEKE"
+
 } 
 
 ###
 
-POST http://127.0.0.1:8000/API/login  
+POST http://127.0.0.1:8000/API/signemployer
+Content-Type: application/json
+
+{ 
+
+
+    "person" : {
+        "password":     "r60066123",
+        "username":     "060096",
+        "email":        "06006644e@GMAIL.com",
+        "phonenumberp": 906006690
+    }, 
+    "driving_license": 98978 
+
+
+} 
+
+
+### "is_allowed": true,
+### "is_working": false
+
+###
+
+
+
+
+POST  http://127.0.0.1:8000/API/create_employer 
+Authorization: token 5983886c1f4eced6e7a470eb830e508b48f9b026
+Content-Type: application/json
+
+{
+    "id" : 3, 
+    "driving_license" : 90887
+}
+
+###
+POST https://bl44wdcn-8000.euw.devtunnels.ms/API/login  
 Content-Type: application/json
 
 { 
     "password": "Pass1234!", 
-    "phone_number_p": 23
+    "email": "WDDOW@mail.com" 
 
 }  
 
 ###
 
-GET http://127.0.0.1:8000/API/test_token 
-Content-Type: application/json Authorization: 
-Authorization: token 
+POST http://127.0.0.1:8000/API/test_token 
+Authorization: token 5983886c1f4eced6e7a470eb830e508b48f9b026
+Content-Type: application/json
 
+{
+    "infxsqxsxo": "1xqsxsq06"
+}
+###
+
+POST http://127.0.0.1:8000/API/test_end_point 
+Content-Type: application/json
+
+{
+    "infxsqxsxo": "1xqsxsq06"
+}
+###
+
+
+GET  http://127.0.0.1:8000/API/get_person 
+Authorization: token 5983886c1f4eced6e7a470eb830e508b48f9b026
+Content-Type: application/json
+
+{
+    "phonenumberp": 1221
+}
+###
+# Authorization: token 5983886c1f4eced6e7a470eb830e508b48f9b026 # 5dam
+GET  http://127.0.0.1:8000/API/get_person 
+Authorization: token 5983886c1f4eced6e7a470eb830e508b48f9b026
+Content-Type: application/json
+
+{
+    "id": 1 
+}
+
+
+###
 GET http://127.0.0.1:8000/API/hello 
 Content-Type: application/json
+
+
+
+###
+# Authorization: token 5983886c1f4eced6e7a470eb830e508b48f9b026 # 5dam
+POST  http://127.0.0.1:8000/API/login 
+Content-Type: application/json
+
+{
+    "email": "WDDOW@mail.com" 
+
+}
+
+
+### 
+
+POST  http://127.0.0.1:8000/API/create_car_type 
+Authorization: token 5983886c1f4eced6e7a470eb830e508b48f9b026
+Content-Type: application/json
+
+{
+    "Tewsila_prix_car_type":34.3, 
+    "Kerya_prix_car_type":34.3, 
+    "name_car_type":"DED"
+}
+### 
+
+POST  http://127.0.0.1:8000/API/create_service 
+Authorization: token 5983886c1f4eced6e7a470eb830e508b48f9b026
+Content-Type: application/json
+
+{
+
+    "name_service" : "Tawsila"
+}
+###
+
+POST  http://127.0.0.1:8000/API/create_caremployer
+Authorization: token 5983886c1f4eced6e7a470eb830e508b48f9b026
+Content-Type: application/json
+
+{
+    "id_employer" : 3, 
+    "id_type_car" : 2, 
+    "matricule_car" : 232
+
+}
+###
+
+GET  http://127.0.0.1:8000/API/search_by_name
+Authorization: token 5983886c1f4eced6e7a470eb830e508b48f9b026
+Content-Type: application/json
+
+{
+"name" : "g", 
+
+"cars_type_id" : [1 , 2 , 4, 5]
+}
+###
+
+GET  http://127.0.0.1:8000/API/search_by_name
+Content-Type: application/json
+
+{
+}
+
+
+###
+
+POST  http://127.0.0.1:8000/API/127.0.0.1:8000/API/127.0.0.1:8000/API/create_notificationtype
+Authorization: token 5983886c1f4eced6e7a470eb830e508b48f9b026
+Content-Type: application/json
+
+{
+    "name_notification_type" : "jatek-5adma"
+}
+
+###
+
+POST  http://127.0.0.1:8000/API/create_notification
+Authorization: token 5983886c1f4eced6e7a470eb830e508b48f9b026
+Content-Type: application/json
+
+{
+    "id_from" : 1, 
+    "id_to" : 2, 
+    "id_notification_type" : 1
+    
+}
+
+
+###
+
+GET http://127.0.0.1:8000/API/get_my_notification
+Authorization: token 1b97ebe9d5ff9c8539f3c8ab516396e4b9738e83
+Content-Type: application/json
+
+{
+    "id" : 2
+}
+
+
+
+
+
+###
+
+
+
