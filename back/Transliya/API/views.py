@@ -170,6 +170,14 @@ def search_by_name(request):
 
 
 
+@api_view(['GET'])
+def get_all_car_type(request:Request):
+    car_type = models.CarType.objects.all()
+    car_type_serializer = CarTypeSerializer(car_type, many=True)
+    return Response({"car_type" : car_type_serializer.data} , status=status.HTTP_200_OK)
+
+
+
 
 
 

@@ -33,6 +33,8 @@ urlpatterns = [
     re_path('add_ta9yym_to_kerya', views.add_ta9yym_to_kerya),
     
     
+    re_path('get_all_car_type', views.get_all_car_type),
+    
     
     re_path('search_by_name', views.search_by_name),
     
