@@ -23,23 +23,24 @@ class Employer(models.Model):
     
     created_at = models.DateTimeField(auto_now_add=True)
 
+ 
 class CarType(models.Model):
     id_car_type = models.AutoField(primary_key=True)
     name_car_type = models.CharField(max_length=255)
     Kerya_prix_car_type = models.FloatField()
-    Tewsila_prix_car_type = models.FloatField()  # CALCULABEL
-
-class Service(models.Model):
-    id_service = models.AutoField(primary_key=True)
-    name_service = models.CharField(max_length=255)
+    Tewsila_prix_car_type = models.FloatField()  
+    car_poitds = models.IntegerField(default=100) 
 
 class CarEmployer(models.Model):
     id_employer = models.ForeignKey(Employer, on_delete=models.CASCADE)
     id_type_car = models.ForeignKey(CarType, on_delete=models.CASCADE)
     matricule_car = models.IntegerField(primary_key=True)
     is_deleted_CarEmployer = models.BooleanField(default=False)
+ 
 
-
+class Service(models.Model):
+    id_service = models.AutoField(primary_key=True)
+    name_service = models.CharField(max_length=255)
 
 class Tewsila(models.Model):
     id_Tewsila = models.AutoField(primary_key=True)

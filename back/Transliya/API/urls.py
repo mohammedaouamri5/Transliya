@@ -16,6 +16,7 @@ urlpatterns = [
     
     re_path('get_person', views.get_person),
     re_path('get_my_notification', views.get_my_notification),
+    re_path('get_my_cars', views.get_my_cars),
     
     re_path('mark_as_readed', views.mark_as_readed),
     

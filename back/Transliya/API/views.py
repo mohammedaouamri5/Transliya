@@ -108,11 +108,9 @@ def get_persons_services(request: Request):
 
 
 @api_view(['GET'])
-@authentication_classes([SessionAuthentication, TokenAuthentication])
-@permission_classes([IsAuthenticated])
 def get_my_notification(request: Request):
     try : 
-        notifications = models.Notify.objects.filter(id_to=2).select_related('id_notification_type')
+        notifications = models.Notify.objects.filter(id_to=request.data['id']).select_related('id_notification_type')
         serializer = NotifySerializer(notifications, many=True)
         return Response({"notification" : serializer.data} , status=status.HTTP_200_OK)
     except Exception as e : 
@@ -180,9 +178,13 @@ def get_all_car_type(request:Request):
 
 
 
-
-
-
+@api_view(['GET'])
+def get_my_cars(request:Request):
+    id_ = request.data.get('id')
+    employer = get_object_or_404(models.Employer, id_employer=id_)
+    cars = models.CarEmployer.objects.filter(id_employer=employer)
+    cars_serializer = CarEmployerSerializer(cars, many=True)
+    return Response({"cars" : cars_serializer.data} , status=status.HTTP_200_OK)
 
 
 
