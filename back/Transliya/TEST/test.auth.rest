@@ -258,6 +258,10 @@ Content-Type: application/json
 
 
 ###
+GET http://127.0.0.1:8000/API/get_my_img
+Content-Type: application/json
 
-
+{
+    "matricule" : 23432423
+}
 

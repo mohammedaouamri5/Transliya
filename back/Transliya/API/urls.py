@@ -18,6 +18,8 @@ urlpatterns = [
     re_path('get_my_notification', views.get_my_notification),
     re_path('get_my_cars', views.get_my_cars),
     
+    re_path('get_my_img', views.get_my_img),
+    
     re_path('mark_as_readed', views.mark_as_readed),
     
     re_path('create_car_type', views.create_car_type),
@@ -41,7 +43,7 @@ urlpatterns = [
     
 
 
- 
+     path('car-employers/', views.CarEmployerCreateView.as_view(), name='car_employer_create'),
 
 
 ]

@@ -4,6 +4,7 @@ from rest_framework.authentication import SessionAuthentication, TokenAuthentica
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.request import Request
+from rest_framework.views import APIView
 from rest_framework import status
 
 from django.shortcuts import get_object_or_404
@@ -187,11 +188,29 @@ def get_my_cars(request:Request):
     return Response({"cars" : cars_serializer.data} , status=status.HTTP_200_OK)
 
 
+@api_view(['GET'])
+def get_my_img(request:Request):
+    matricule = request.data.get('matricule')
+    car = get_object_or_404(models.CarEmployer, matricule_car=matricule)
+    cars_serializer = CarEmployerSerializer(car)
+    return Response({"cars" : cars_serializer.data} , status=status.HTTP_200_OK)
 
 
 
+class CarEmployerCreateView(APIView):
+    def post(self, request, *args, **kwargs):
+        print(request.data)
+        print(request.data["image"])
+        serializer = CarEmployerSerializer(data=request.data)
+        
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        print(serializer.errors)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+ 
 
 
  

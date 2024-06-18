@@ -36,7 +36,7 @@ class CarEmployer(models.Model):
     id_type_car = models.ForeignKey(CarType, on_delete=models.CASCADE)
     matricule_car = models.IntegerField(primary_key=True)
     is_deleted_CarEmployer = models.BooleanField(default=False)
- 
+    image = models.ImageField(upload_to='images', null=True , default=None)
 
 class Service(models.Model):
     id_service = models.AutoField(primary_key=True)
