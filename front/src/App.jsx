@@ -5,33 +5,35 @@ import { Routes, Route } from "react-router-dom";
 import Home from "./components/Home.jsx";
 import Signup from "./components/Signup.jsx";
 import Booking from "./components/Booking.jsx";
-import Account from "./components/Account.jsx";
 import RentResults from "./components/RentResults.jsx";
 import Rent from "./components/Rent.jsx";
 import ScrollToTop from "./components/ScrollToTop.jsx";
 import BookingResults from "./components/BookingResults.jsx";
-import { useState } from "react";
-import Mapbox from './components/Mapbox.jsx'
-import MapComponent from "./components/Map.jsx";
+import MyTrucks from "./components/MyTrucks.jsx";
+import AddTruck from "./components/AddTruck.jsx";
+import Payment from "./components/Payment.jsx";
+import Dashboard from "./components/Dashboard.jsx";
 
 function App() {
   
   return (
     <>
 
-    {/* <Mapbox /> */}
       <Navbar />
+
       <ScrollToTop />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/account" element={<Account />} />
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/booking" element={<Booking />} />
         <Route path="/vehicles/details" element={<Booking />} />
-        <Route path="/rentresults" element={<RentResults />} />
-        <Route path="/bookingresults" element={<BookingResults />} />
+        <Route path="/rentresults/:ids" element={<RentResults />} />
+        <Route path="/bookingresults/:ids" element={<BookingResults />} />
         <Route path="/rent" element={<Rent />} />
+        <Route path="/addtruck" element={<AddTruck />} />
+        <Route path="/mytrucks" element={<MyTrucks />} />
       </Routes>
     </>
   );

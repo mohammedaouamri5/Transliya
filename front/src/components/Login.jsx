@@ -3,26 +3,23 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 const Login = () => {
-
   const { login, isAuthenticated } = useAuth();
+  const navigate = useNavigate()
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
-
-  console.log("email: ", email);
-  console.log("passord: ", password);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       await login(email, password);
       setErrorMessage(null); // Clear any previous errors
-      navigate("/");
     } catch (err) {
       setErrorMessage(err.message); // Display error message
     } finally {
       setEmail("");
       setPassword("");
+      navigate("/");
     }
   };
 

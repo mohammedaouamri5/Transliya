@@ -1,8 +1,58 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
 import ProductCard from "./ProductCard";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
-const BookingResults = ( ) => {
+const BookingResults = () => {
+  const token = localStorage.getItem("token");
+  console.log(token);
+
+  const { ids } = useParams();
+  const idsArray = ids.split(",").map((id) => parseInt(id.trim()));
+
+  const [trucks, setTrucks] = useState([]);
+  const [types, setTypes] = useState();
+
+  useEffect(() => {
+    const fetchCarTypes = async () => {
+      try {
+        const response = await axios.get(
+          "http://127.0.0.1:8000/API/get_all_car_type"
+        );
+        setTypes(response.data.car_type);
+        console.log(response.data.car_type);
+      } catch (error) {
+        console.error("Error fetching car types:", error);
+      }
+    };
+
+    fetchCarTypes();
+  }, []);
+
+  useEffect(() => {
+    const fetchTrucks = async () => {
+      try {
+        const response = await axios.post(
+          "http://127.0.0.1:8000/API/search_by_name",
+          {
+            cars_type_id: idsArray,
+          },
+          {
+            headers: {
+              Authorization: `Token ${token}`,
+            },
+          }
+        );
+        setTrucks(response.data);
+      } catch (error) {
+        console.error("Error fetching results:", error);
+      }
+    };
+
+    fetchTrucks();
+  }, [token]);
+
   return (
     <>
       <div className="w-full">
@@ -10,13 +60,17 @@ const BookingResults = ( ) => {
           <h1 className="text-4xl font-bold">نتائج البحث</h1>
         </div>
         <div className={`w-full p-10 bg-background flex items-center`}>
-          <Grid container columns={{ xs: 1, sm: 8, md: 12 }}>
-            {Array.from(Array(10)).map((_, index) => (
-              <Grid item xs={2} sm={4} md={4} key={index}>
-                <ProductCard />
-              </Grid>
-            ))}
-          </Grid>
+          {trucks.length > 0 ? (
+            <Grid container columns={{ xs: 1, sm: 8, md: 12 }}>
+              {trucks.map((truck, index) => (
+                <Grid item xs={2} sm={4} md={4} key={index}>
+                  <ProductCard userData={truck} token={token} types={types} />
+                </Grid>
+              ))}
+            </Grid>
+          ) : (
+            "Loading"
+          )}
         </div>
       </div>
     </>

@@ -1,0 +1,18 @@
+.mapboxgl-ctrl-geocoder input[type='text'] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #fff;
+}
+.mapboxgl-ctrl-geocoder{
+    min-width: 0;
+    width: 100%;
+}
+.mapboxgl-ctrl-geocoder--icon .mapboxgl-ctrl-geocoder--icon-search{
+    display: none;
+}
+.mapboxgl-ctrl-geocoder .mapboxgl-ctrl{
+    width: 100%;
+}

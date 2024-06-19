@@ -57,19 +57,39 @@ const Navbar = () => {
                 <Link to={"/"}> الصفحة الرئيسية </Link>
               </li>
               <li className="hover:text-accent duration-300">
-                {isAuthenticated ? <Link to={"/rent"}> الكراء </Link> : <div onClick={handleOpen} className="cursor-pointer">الكراء</div>}
-                    
+                {isAuthenticated ? (
+                  <Link to={"/rent"}> الكراء </Link>
+                ) : (
+                  <div onClick={handleOpen} className="cursor-pointer">
+                    الكراء
+                  </div>
+                )}
               </li>
               <li className="hover:text-accent duration-300">
-              {isAuthenticated ? <Link to={"/booking"}> التوصيل </Link> : <div onClick={handleOpen} className="cursor-pointer">التوصيل</div>}
+                {isAuthenticated ? (
+                  <Link to={"/booking"}> التوصيل </Link>
+                ) : (
+                  <div onClick={handleOpen} className="cursor-pointer">
+                    التوصيل
+                  </div>
+                )}
               </li>
               <li className="hover:text-accent duration-300">
-              {isAuthenticated ? <Link to={"/account"}> حسابي </Link> : <div onClick={handleOpen} className="cursor-pointer">حسابي</div>}
+                {isAuthenticated ? (
+                  <Link to={"/dashboard"}> حسابي </Link>
+                ) : (
+                  <div onClick={handleOpen} className="cursor-pointer">
+                    حسابي
+                  </div>
+                )}
               </li>
             </ul>
           </div>
-          <div className="h-[60px] w-[108px]">
-            <img className="h-full w-full" src={logo} alt="logo" />
+          <div className="flex items-center">              
+
+            <div className="h-[60px] w-[108px]">            
+              <img className="h-full w-full" src={logo} alt="logo" />
+            </div>
           </div>
         </div>
       </div>
@@ -81,15 +101,22 @@ const Navbar = () => {
         aria-describedby="modal-modal-description"
       >
         <div className="absolute top-1/2 left-1/2 transform rounded -translate-x-1/2 -translate-y-1/2 bg-light text-center w-[400px] p-5">
-            <h1 className="text-2xl m-10">سجل الدخول أولا</h1>
-            <div>
-                <Link to={'/login'} onClick={handleClose} className="px-6 py-2 text-md sm:text-lg bg-background text-light">
-                    تسجيل الدخول
-                </Link>
-            
-            </div>
+          <h1 className="text-2xl m-10">سجل الدخول أولا</h1>
+          <div>
+            <Link
+              to={"/login"}
+              onClick={handleClose}
+              className="px-6 py-2 text-md sm:text-lg bg-background text-light"
+            >
+              تسجيل الدخول
+            </Link>
+          </div>
         </div>
       </Modal>
+
+      
+
+
     </>
   );
 };

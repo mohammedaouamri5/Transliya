@@ -21,8 +21,6 @@ const Signup = () => {
     driving_license: "",
   });
 
-
-
   const handleChange = (event) => {
     setFormData({ ...formData, [event.target.name]: event.target.value });
   };
@@ -42,13 +40,22 @@ const Signup = () => {
     e.preventDefault();
     if (formData.password === confirmPassword) {
       if (Type === "user") {
-        const { driving_license, ...userData } = formData;
-        signup(userData, Type);
-        console.log("userData: ", userData)
-        navigate("/");
+        try {
+          const { driving_license, ...userData } = formData;
+          signup(userData, Type);
+          console.log("userData: ", userData);
+          navigate("/");
+        } catch (error) {
+          setErrorMessage(error);
+          console.log(error);
+        }
       } else if (Type === "employee") {
-        signup(formData, Type);
-        navigate("/");
+        try {
+          signup(formData, Type);
+          navigate("/");
+        } catch (error) {
+          setErrorMessage(error);
+        }
       }
     } else {
       setErrorMessage("خطأ في تأكيد كلمة السر");

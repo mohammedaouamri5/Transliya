@@ -5,11 +5,14 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
 import { FaLocationArrow } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import "./mapbox.css";
+import axios from "axios";
 
-const MapboxComponent = () => {
+const MapboxComponent = ({ user, userData, setShow, setForm }) => {
   const accessToken =
     "pk.eyJ1IjoiYXppemtoYWxlZCIsImEiOiJjbHhobmsxM2UxYTRoMm5yMmNncng5c3doIn0.Ybgma2XqB2-Nfn-VvLkATQ";
+
+  const phone = userData.id_employer.id_employer.phonenumberp;
 
   const mapContainerRef = useRef(null);
   const mapInstanceRef = useRef(null);
@@ -17,13 +20,10 @@ const MapboxComponent = () => {
   const endId = useRef(null);
   const [current, setcurrent] = useState();
   const [startPoint, setStartPoint] = useState(null);
-  const [startGeo, setStartGeo] = useState();
-  const [distance, setDistance] = useState()
-  const [startPointText, setStartPointText] = useState("");
-  const [endPointText, setEndPointText] = useState("");
-
   const [endPoint, setEndPoint] = useState(null);
-  const [mapLoaded, setMapLoaded] = useState(false);
+  const [startGeo, setStartGeo] = useState();
+  const [distance, setDistance] = useState();
+  const [startPointText, setStartPointText] = useState("");
   const startMarkerRef = useRef(null);
   const endMarkerRef = useRef(null);
 
@@ -64,9 +64,6 @@ const MapboxComponent = () => {
 
           // Handle map load
           mapInstanceRef.current.on("load", () => {
-            setMapLoaded(true);
-            console.log("Map loaded");
-
             const startPointGeocoder = new MapboxGeocoder({
               accessToken: accessToken,
               marker: true,
@@ -123,7 +120,7 @@ const MapboxComponent = () => {
           .then((response) => response.json())
           .then((data) => {
             if (data.routes && data.routes.length > 0) {
-              setDistance(data.routes[0].distance)
+              setDistance(data.routes[0].distance);
               const route = data.routes[0];
               const routeGeoJSON = {
                 type: "Feature",
@@ -273,55 +270,79 @@ const MapboxComponent = () => {
       startGeo.setInput(startPointText);
     }
   };
+  
+  const handleSubmit = async () => {
+    const distanceInKm = Math.round(distance / 1000);
 
-  const handleSubmit = () => {
+    setForm((prevState) => ({
+      ...prevState,
+      from_lon: startPoint[0],
+      from_lat: startPoint[1],
+      to_lon: endPoint[0],
+      to_lat: endPoint[1],
+      distention: distanceInKm,
+      id_zaboun: user.id,
+    }));
 
-  }
+    setShow(true);
+  };
 
   return (
     <>
-      <div className=" w-full bg-background p-12">
-        <div className=" w-[90%] m-auto">
-          <div className="text-end flex w-full justify-between">
-            <div>
-              <label className="block mb-2 text-lg font-medium mr-7 text-light ">
-                الى
-              </label>
-              <div
-                ref={endId}
-                id="end-point-geocoder"
-                className="w-auto p-2 text-background"
-              ></div>
-            </div>
-
-            <div>
-              <label className="block mb-2 mr-7 text-lg font-medium text-light ">
-                من
-              </label>
-              <div className="flex items-center mb-5 ">
-                <FaLocationArrow
-                  className="text-xl cursor-pointer text-light hover:text-white duration-200"
-                  onClick={setCurrentLocationAsStartPoint}
-                />
-                <div
-                  ref={startId}
-                  id="start-point-geocoder"
-                  className="w-auto p-2"
-                ></div>
-              </div>
+      <div className=" w-full m-auto bg-background p-4 rounded">
+        {phone && (
+          <div className="mb-5 w-full">
+            <label className="block mb-2 text-lg font-medium text-light ">
+              رقم هاتف صاحب الشاحنة
+            </label>
+            <div className="bg-gray-50 border border-gray-300 text-background sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 ">
+              {phone}
             </div>
           </div>
+        )}
+        <div className="text-end flex w-full justify-between">
+          <div className="w-[48%]">
+            <label className="block mb-2 text-lg font-medium  text-light ">
+              الى
+            </label>
+            <div
+              ref={endId}
+              id="end-point-geocoder"
+              className="w-full p-2 text-background flex justify-center"
+            ></div>
+          </div>
 
-          <div
-            id="map-container"
-            ref={mapContainerRef}
-            className="w-full h-[50vh]"
-          ></div>
+          <div className="w-[48%]">
+            <label className="block mb-2 text-lg font-medium text-light ">
+              من
+            </label>
+            <div className="flex items-center mb-5 ">
+              <FaLocationArrow
+                className="text-xl cursor-pointer text-light hover:text-white duration-200"
+                onClick={setCurrentLocationAsStartPoint}
+              />
 
-          <button className="w-full text-background bg-white hover:bg-light duration-300 text-lg focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg my-5 px-5 py-2.5 text-center ">
-            <Link to={"/bookingresults"}> إظهار النتائج </Link>
-          </button>
+              <div
+                ref={startId}
+                id="start-point-geocoder"
+                className="w-full p-2 text-background flex justify-center"
+              ></div>
+            </div>
+          </div>
         </div>
+
+        <div
+          id="map-container"
+          ref={mapContainerRef}
+          className="w-full h-[50vh]"
+        ></div>
+
+        <button
+          onClick={handleSubmit}
+          className="w-full text-background bg-white hover:bg-light duration-300 text-lg focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg my-5 px-5 py-2.5 text-center "
+        >
+          الانتقال الى الدفع
+        </button>
       </div>
     </>
   );
