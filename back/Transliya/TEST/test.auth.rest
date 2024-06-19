@@ -78,7 +78,7 @@ Content-Type: application/json
 
 {
     "matricule_car": 2, 
-    "id_type_car": 1, 
+    "id_car_type": 1, 
     "id_employer": 5
 }
 
@@ -195,20 +195,19 @@ Content-Type: application/json
 
 {
     "id_employer" : 3, 
-    "id_type_car" : 2, 
-    "matricule_car" : 232
+    "id_car_type" :1, 
+    "matricule_car" : 3321
 
 }
 ###
 
-GET  http://127.0.0.1:8000/API/search_by_name
+POST  http://127.0.0.1:8000/API/search_by_name
 Authorization: token 5ce4fbc930e3bab4071ef0081f3d685718011b33
 Content-Type: application/json
 
 {
-"name" : "g", 
-
-"cars_type_id" : [1 , 2 , 4, 5]
+"name" : "E", 
+"cars_type_id" : [2 , 1, 5]
 }
 ###
 

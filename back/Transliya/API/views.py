@@ -6,7 +6,12 @@ from rest_framework.response import Response
 from rest_framework.request import Request
 from rest_framework.views import APIView
 from rest_framework import status
-
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework import status
+from django.db.models import Q , F 
+from .models import Person
+from .serializers import FullPersonSerializer
 from django.shortcuts import get_object_or_404
 
 from django.contrib.auth.models import User
@@ -120,53 +125,59 @@ def get_my_notification(request: Request):
         else:
             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-@api_view(['GET'])
+@api_view(['POST'])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def search_by_name(request):
+    name_filter = request.data.get('name', "")
+    car_id_filter = request.data.get('cars_type_id', [])
+    cars = models.CarEmployer.objects.filter(id_car_type__in=car_id_filter)
+    cars = cars.select_related('id_employer')
+    print(len(cars))
+    cars = cars.filter(
+            Q(id_employer__id_employer__username__icontains=name_filter) |
+            Q(id_employer__id_employer__first_name__icontains=name_filter) |
+            Q(id_employer__id_employer__last_name__icontains=name_filter)
+            )
+    print(len(cars))
+    # Assuming CarEmployerEmployerSerializer is a serializer combining CarEmployer and Employer data
+    serializer = CarEmployerrEmployerPersonSerializerSerializer(cars, many=True)
     
+    response_data = {
+        "cars_with_employer_info": serializer.data,
+    }
+    
+    # Return the serialized data in the response
+    return Response(serializer.data)
     # Fetching filters from request data
     name_filter = request.data.get('name')
     car_id_filter = request.data.get('cars_type_id')
-
-    # Filtering persons based on the given name and car ID
-    persons_username = Person.objects.filter(
-        username__icontains=name_filter,
-        employer__caremployer__id_type_car__in=car_id_filter
-    )
-    persons_first_name = Person.objects.filter(
-        first_name__icontains=name_filter,
-        employer__caremployer__id_type_car__in=car_id_filter
-    )
-    persons_last_name = Person.objects.filter(
-        last_name__icontains=name_filter,
-        employer__caremployer__id_type_car__in=car_id_filter
-    )
-
-    # Serializing the filtered querysets
-    serializer_first_name = FullPersonSerializer(persons_first_name, many=True)
-    serializer_last_name = FullPersonSerializer(persons_last_name, many=True)
-    serializer_username = FullPersonSerializer(persons_username, many=True)
+    car_id_filter = request.data.get('cars_type_id', [])  # Assuming 'cars_type_id' is a list in the POST data
+    cars = models.CarEmployer.objects.filter(id_car_type__in=car_id_filter)
+    cars_with_employer_info = cars.select_related('id_employer')  # This performs a JOIN on id_employer
+    serializer = CarEmployerrEmployerSerializer(cars_with_employer_info, many=True)
     
-    # Filter the serialized data to include only specific fields
-    def filter_fields(data, fields):
-        return [{field: item[field] for field in fields} for item in data]
-
-    fields_to_include = ['id', 'username', 'first_name', 'last_name', 'phonenumberp']
+    response_data = {
+        "WOW": serializer.data,
+        "additional_info": "This is additional information you want to include."
+    }
+    return Response(response_data)
+    queryset = Person.objects.filter(
+        Q(username__icontains=name_filter) |
+        Q(first_name__icontains=name_filter) |
+        Q(last_name__icontains=name_filter)
+    ).filter(
+        employer__car=F('id')
+        )
     
-    result_first_name = filter_fields(serializer_first_name.data, fields_to_include)
-    result_last_name = filter_fields(serializer_last_name.data, fields_to_include)
-    result_username = filter_fields(serializer_username.data, fields_to_include)
-    
-    # Combining the filtered serialized data
-    result = result_first_name + result_last_name + result_username
-    
-    return Response({"result": result}, status=status.HTTP_200_OK)
-    return Response({"result": result['id' , 'username', 'first_name', 'last_name' , 'phonenumberp' ] }, status=status.HTTP_200_OK)
+    for obj in queryset:
+        print(obj.__dict__)
+        return Response(obj.__dict__)
+    # Serialize the queryset using FullPersonSerializer
+    serializer = FullPersonSerializer(queryset, many=True)
 
-
-
-
+    # Return the serialized data in the response
+    return Response(serializer.data)
 
 
 @api_view(['GET'])

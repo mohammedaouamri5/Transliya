@@ -26,8 +26,8 @@ class Service(admin.ModelAdmin):
     search_fields = ('name_service',)
 
 class CarEmployer(admin.ModelAdmin):
-    list_display = ('id_employer', 'id_type_car', 'matricule_car', 'is_deleted_CarEmployer')
-    search_fields = ('id_employer__id_employer__username', 'id_type_car__name_car_type', 'matricule_car')
+    list_display = ('id_employer', 'id_car_type', 'matricule_car', 'is_deleted_CarEmployer')
+    search_fields = ('id_employer__id_employer__username', 'id_car_type__name_car_type', 'matricule_car')
     
 class Tewsila(admin.ModelAdmin):
     list_display = ('id_Tewsila',  'from_lon' , 'from_lat' , 'to_lon' , 'to_lat' , 'distention' , 'matricule_car', 'id_zaboun', 'comment_Tewsila', 'ta9yim_Tewsila')

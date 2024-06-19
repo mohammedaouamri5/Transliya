@@ -33,7 +33,7 @@ class CarType(models.Model):
 
 class CarEmployer(models.Model):
     id_employer = models.ForeignKey(Employer, on_delete=models.CASCADE)
-    id_type_car = models.ForeignKey(CarType, on_delete=models.CASCADE)
+    id_car_type = models.ForeignKey(CarType, on_delete=models.CASCADE)
     matricule_car = models.IntegerField(primary_key=True)
     is_deleted_CarEmployer = models.BooleanField(default=False)
     image = models.ImageField(upload_to='images', null=True , default=None)
