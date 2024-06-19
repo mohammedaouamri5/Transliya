@@ -23,29 +23,27 @@ class Employer(models.Model):
     
     created_at = models.DateTimeField(auto_now_add=True)
 
+ 
 class CarType(models.Model):
     id_car_type = models.AutoField(primary_key=True)
     name_car_type = models.CharField(max_length=255)
     Kerya_prix_car_type = models.FloatField()
-    Tewsila_prix_car_type = models.FloatField()  # CALCULABEL
+    Tewsila_prix_car_type = models.FloatField()  
+    car_poitds = models.IntegerField(default=100) 
+
+class CarEmployer(models.Model):
+    id_employer = models.ForeignKey(Employer, on_delete=models.CASCADE)
+    id_car_type = models.ForeignKey(CarType, on_delete=models.CASCADE)
+    matricule_car = models.IntegerField(primary_key=True)
+    is_deleted_CarEmployer = models.BooleanField(default=False)
+    image = models.ImageField(upload_to='images', null=True , default=None)
 
 class Service(models.Model):
     id_service = models.AutoField(primary_key=True)
     name_service = models.CharField(max_length=255)
 
-class CarEmployer(models.Model):
-    id_employer = models.ForeignKey(Employer, on_delete=models.CASCADE)
-    id_type_car = models.ForeignKey(CarType, on_delete=models.CASCADE)
-    matricule_car = models.IntegerField(primary_key=True)
-    is_deleted_CarEmployer = models.BooleanField(default=False)
-
-
-
 class Tewsila(models.Model):
     id_Tewsila = models.AutoField(primary_key=True)
-    
-    t_started = models.TimeField()
-    t_ended = models.TimeField() # ! <===
     
     
     from_lon = models.FloatField(); 
@@ -59,8 +57,8 @@ class Tewsila(models.Model):
     
     id_zaboun = models.ForeignKey(Person, on_delete=models.CASCADE)
     
-    comment_Tewsila = models. TextField() # ! <===
-    ta9yim_Tewsila = models.FloatField() # ! <===
+    comment_Tewsila = models. TextField(null=True) # ! <===
+    ta9yim_Tewsila = models.FloatField(null=True) # ! <===
 
 
 class CarService(models.Model):
@@ -69,12 +67,12 @@ class CarService(models.Model):
 
 class Kerya(models.Model):
     id_Kerya = models.AutoField(primary_key=True)
-    t_started = models.TimeField()
-    t_ended = models.TimeField()
-    id_car_employer = models.ForeignKey(CarEmployer, on_delete=models.CASCADE)
+    t_started = models.DateTimeField()
+    t_ended = models.DateTimeField()
+    matricule_car = models.ForeignKey(CarEmployer, on_delete=models.CASCADE)
     id_zaboun = models.ForeignKey(Person, on_delete=models.CASCADE)
-    comment_Kerya = models.TextField()
-    ta9yim_Kerya = models.FloatField()
+    comment_Kerya = models.TextField(null=True)
+    ta9yim_Kerya = models.FloatField(null=True)
 
 
 

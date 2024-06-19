@@ -34,7 +34,7 @@ class ModelsTransactionTestCase(TransactionTestCase):
         # Create Car5adam
         self.car5adam = Car5adam.objects.create(
             id_employer=self.employer,
-            id_type_car=self.car_type,
+            id_car_type=self.car_type,
             matricule=123456789
         )
         

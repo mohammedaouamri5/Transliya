@@ -276,3 +276,78 @@ def stop_working(request):
         else:
             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+
+
+
+
+@api_view(['POST'])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def create_tawsila(request: Request): 
+    serializer = TewsilaSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        print(serializer.data)
+        return Response({'Tawsila': serializer.data}, status=status.HTTP_201_CREATED)
+    print(serializer)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['POST'])
+def add_ta9yym_to_tewsila(request: Request):
+    ta9yym = request.data.get("ta9yym", 7)
+    comment = request.data.get("comment", "W0W")
+    id_tawsila = request.data.get('id')
+
+    if not id_tawsila:
+        return Response({'error': 'id_Tewsila is required'}, status=status.HTTP_400_BAD_REQUEST)
+
+    tawsila = get_object_or_404(models.Tewsila, id_Tewsila=id_tawsila)
+
+    if ta9yym is not None:
+        tawsila.ta9yim_Tewsila = ta9yym
+
+    if comment is not None:
+        tawsila.comment_Tewsila = comment
+
+    tawsila.save()
+
+    serializer = TewsilaSerializer(tawsila)
+    return Response({'Tawsila': serializer.data}, status=status.HTTP_200_OK)
+
+
+@api_view(['POST'])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def create_kerya(request: Request): 
+    serializer = KeryaSerializer(data=request.data)
+    if serializer.is_valid():
+        serializer.save()
+        print(serializer.data)
+        return Response({'Tawsila': serializer.data}, status=status.HTTP_201_CREATED)
+    print(serializer)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@api_view(['POST'])
+def add_ta9yym_to_kerya(request: Request):
+    ta9yym = request.data.get("ta9yym", 7)
+    comment = request.data.get("comment", "W0W")
+    id_kerya = request.data.get('id')
+
+    if not id_kerya:
+        return Response({'error': 'id_Tewsila is required'}, status=status.HTTP_400_BAD_REQUEST)
+
+    kerya = get_object_or_404(models.Kerya, id_Kerya=id_kerya)
+
+    if ta9yym is not None:
+        kerya.ta9yim_Kerya = ta9yym
+
+    if comment is not None:
+        kerya.comment_Kerya = comment
+
+    kerya.save()
+
+    serializer = KeryaSerializer(kerya)
+    return Response({'Tawsila': serializer.data}, status=status.HTTP_200_OK)
+

@@ -1,4 +1,43 @@
 
+POST http://127.0.0.1:8000/API/create_kerya
+Content-Type: application/json
+
+{ 
+"t_started" : "2024-06-17T20:10:48.04", 
+"t_ended" : "2024-06-17T20:10:48.04", 
+"matricule_car" : 1, 
+"id_zaboun" : 2
+}
+
+###
+
+GET http://127.0.0.1:8000/API/createtawsila
+Content-Type: application/json
+
+{
+    "from_lon"  : 1 ,
+    "from_lat"  : 1 ,
+    "to_lon"  : 1 ,
+    "to_lat"  : 1 ,
+    "distention"  : 1 ,
+    "matricule_car"  :2222  ,
+    "id_zaboun"  : 4  
+}
+
+####
+
+POST http://127.0.0.1:8000/API/add_ta9yym_to_kerya
+Content-Type: application/json
+
+{
+    "id" : 1 , 
+    "ta9yym" : 9 ,
+    "comment" : "bruh"
+
+}
+
+####
+
 POST http://127.0.0.1:8000/API/signup
 Content-Type: application/json
 
@@ -20,19 +59,33 @@ Content-Type: application/json
 
 
     "person" : {
-        "password":     "r60066123",
-        "username":     "060096",
-        "email":        "06006644e@GMAIL.com",
-        "phonenumberp": 906006690
+        "password":     "r601066123",
+        "username":     "0601096",
+        "email":        "060106644e@GMAIL.com",
+        "phonenumberp": 9060106690
     }, 
-    "driving_license": 98978 
+    "driving_license": 978 
 
 
 } 
 
 
 ### "is_allowed": true,
-### "is_working": false
+
+POST http://127.0.0.1:8000/API/create_caremployer
+Authorization: token 3dc08da914f338a3855a8d84bf87a520ccd08186
+Content-Type: application/json
+
+{
+    "matricule_car": 2, 
+    "id_car_type": 1, 
+    "id_employer": 5
+}
+
+
+
+
+
 
 ###
 
@@ -40,7 +93,7 @@ Content-Type: application/json
 
 
 POST  http://127.0.0.1:8000/API/create_employer 
-Authorization: token 5983886c1f4eced6e7a470eb830e508b48f9b026
+Authorization: token 5ce4fbc930e3bab4071ef0081f3d685718011b33
 Content-Type: application/json
 
 {
@@ -62,8 +115,7 @@ Content-Type: application/json
 ###
 
 POST http://127.0.0.1:8000/API/test_token 
-
-Authorization: token 5983886c1f4eced6e7a470eb830e508b48f9b026
+Authorization: token 5ce4fbc930e3bab4071ef0081f3d685718011b33
 Content-Type: application/json
 
 {
@@ -81,16 +133,16 @@ Content-Type: application/json
 
 
 GET  http://127.0.0.1:8000/API/get_person 
-Authorization: token 5983886c1f4eced6e7a470eb830e508b48f9b026
+Authorization: token 5ce4fbc930e3bab4071ef0081f3d685718011b33
 Content-Type: application/json
 
 {
     "phonenumberp": 1221
 }
 ###
-# Authorization: token 5983886c1f4eced6e7a470eb830e508b48f9b026 # 5dam
+# Authorization: token 5ce4fbc930e3bab4071ef0081f3d685718011b33 # 5dam
 GET  http://127.0.0.1:8000/API/get_person 
-Authorization: token 5983886c1f4eced6e7a470eb830e508b48f9b026
+Authorization: token 5ce4fbc930e3bab4071ef0081f3d685718011b33
 Content-Type: application/json
 
 {
@@ -104,8 +156,8 @@ Content-Type: application/json
 
 
 
- 
-# Authorization: token 5983886c1f4eced6e7a470eb830e508b48f9b026 # 5dam
+###
+# Authorization: token 5ce4fbc930e3bab4071ef0081f3d685718011b33 # 5dam
 POST  http://127.0.0.1:8000/API/login 
 Content-Type: application/json
 
@@ -118,7 +170,7 @@ Content-Type: application/json
 ### 
 
 POST  http://127.0.0.1:8000/API/create_car_type 
-Authorization: token 5983886c1f4eced6e7a470eb830e508b48f9b026
+Authorization: token 5ce4fbc930e3bab4071ef0081f3d685718011b33
 Content-Type: application/json
 
 {
@@ -129,7 +181,7 @@ Content-Type: application/json
 ### 
 
 POST  http://127.0.0.1:8000/API/create_service 
-Authorization: token 5983886c1f4eced6e7a470eb830e508b48f9b026
+Authorization: token 5ce4fbc930e3bab4071ef0081f3d685718011b33
 Content-Type: application/json
 
 {
@@ -139,25 +191,24 @@ Content-Type: application/json
 ###
 
 POST  http://127.0.0.1:8000/API/create_caremployer
-Authorization: token 5983886c1f4eced6e7a470eb830e508b48f9b026
+Authorization: token 5ce4fbc930e3bab4071ef0081f3d685718011b33
 Content-Type: application/json
 
 {
     "id_employer" : 3, 
-    "id_type_car" : 2, 
-    "matricule_car" : 232
+    "id_car_type" :1, 
+    "matricule_car" : 3321
 
 }
 ###
 
-GET  http://127.0.0.1:8000/API/search_by_name
-Authorization: token 5983886c1f4eced6e7a470eb830e508b48f9b026
+POST  http://127.0.0.1:8000/API/search_by_name
+Authorization: token 5ce4fbc930e3bab4071ef0081f3d685718011b33
 Content-Type: application/json
 
 {
-"name" : "g", 
-
-"cars_type_id" : [1 , 2 , 4, 5]
+"name" : "E", 
+"cars_type_id" : [2 , 1, 5]
 }
 ###
 
@@ -171,23 +222,24 @@ Content-Type: application/json
 ###
 
 POST  http://127.0.0.1:8000/API/127.0.0.1:8000/API/127.0.0.1:8000/API/create_notificationtype
-Authorization: token 5983886c1f4eced6e7a470eb830e508b48f9b026
+Authorization: token 5ce4fbc930e3bab4071ef0081f3d685718011b33
 Content-Type: application/json
 
 {
-    "name_notification_type" : "jatek-5adma"
+    "name_notification_type" : "WOW"
 }
 
 ###
 
 POST  http://127.0.0.1:8000/API/create_notification
-Authorization: token 5983886c1f4eced6e7a470eb830e508b48f9b026
+Authorization: token 5ce4fbc930e3bab4071ef0081f3d685718011b33
 Content-Type: application/json
 
 {
-    "id_from" : 1, 
-    "id_to" : 2, 
+    "id_from" : 4, 
+    "id_to" : 3, 
     "id_notification_type" : 1
+
     
 }
 
@@ -195,18 +247,20 @@ Content-Type: application/json
 ###
 
 GET http://127.0.0.1:8000/API/get_my_notification
-Authorization: token 5983886c1f4eced6e7a470eb830e508b48f9b026
 Content-Type: application/json
 
 {
-    "id" : 2
+    "id" : 3
 }
 
 
 
 
 
+###
+GET http://127.0.0.1:8000/API/get_my_img
+Content-Type: application/json
 
- 
-
-
+{
+    "matricule" : 23432423
+}

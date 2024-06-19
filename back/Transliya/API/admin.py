@@ -7,27 +7,32 @@ from API import models
 
 class Person(admin.ModelAdmin):
     list_display = ('username', 'email', 'phonenumberp', 'is_deleted_p', 'first_name', 'last_name', 'is_staff', 'is_active', 'date_joined')
+    list_editable = (  'email', 'phonenumberp', 'is_deleted_p', 'first_name', 'last_name', 'is_staff', 'is_active')
     search_fields = ('username', 'email', 'phonenumberp', 'first_name', 'last_name')
 
 class Employer(admin.ModelAdmin):
     list_display = ('id_employer', 'driving_license', 'ta9yim_employer', 'is_allowed', 'is_working', 'created_at')
+    list_editable = ('ta9yim_employer', 'is_allowed', 'is_working')
     search_fields = ('id_employer__username', 'driving_license')
 
 class CarType(admin.ModelAdmin):
     list_display = ('id_car_type', 'name_car_type', 'Kerya_prix_car_type', 'Tewsila_prix_car_type')
+    list_editable = ('Kerya_prix_car_type', 'Tewsila_prix_car_type')
     search_fields = ('name_car_type',)
 
 class Service(admin.ModelAdmin):
     list_display = ('id_service', 'name_service')
+    list_editable = ('name_service',)
     search_fields = ('name_service',)
 
 class CarEmployer(admin.ModelAdmin):
-    list_display = ('id_employer', 'id_type_car', 'matricule_car', 'is_deleted_CarEmployer')
-    search_fields = ('id_employer__id_employer__username', 'id_type_car__name_car_type', 'matricule_car')
-
+    list_display = ('id_employer', 'id_car_type', 'matricule_car', 'is_deleted_CarEmployer')
+    search_fields = ('id_employer__id_employer__username', 'id_car_type__name_car_type', 'matricule_car')
+    
 class Tewsila(admin.ModelAdmin):
-    list_display = ('id_Tewsila', 't_started', 't_ended', 'from_lon' , 'from_lat' , 'to_lon' , 'to_lat' , 'distention' , 'matricule_car', 'id_zaboun', 'comment_Tewsila', 'ta9yim_Tewsila')
-    search_fields = ('id_Tewsila', 'matricule_car__id_employer__id_employer__username', 'id_zaboun__username', 'comment_Tewsila')
+    list_display = ('id_Tewsila',  'from_lon' , 'from_lat' , 'to_lon' , 'to_lat' , 'distention' , 'matricule_car', 'id_zaboun', 'comment_Tewsila', 'ta9yim_Tewsila')
+    list_editable = ('from_lon' , 'from_lat' , 'to_lon' , 'to_lat' , 'distention' , 'matricule_car', 'id_zaboun', 'comment_Tewsila', 'ta9yim_Tewsila')
+    search_fields = ('id_Tewsila', 'matricule_car__id_employer__id_employer__username', 'id_zaboun__username')
 
 
 class CarService(admin.ModelAdmin):
@@ -35,8 +40,8 @@ class CarService(admin.ModelAdmin):
     search_fields = ('id_car__id_employer__id_employer__username', 'id_service__name_service')
 
 class Kerya(admin.ModelAdmin):
-    list_display = ('id_Kerya', 't_started', 't_ended', 'id_car_employer', 'id_zaboun', 'comment_Kerya', 'ta9yim_Kerya')
-    search_fields = ('id_Kerya', 'id_car_employer__id_employer__id_employer__username', 'id_zaboun__username', 'comment_Kerya')
+    list_display = ('id_Kerya', 't_started', 't_ended', 'matricule_car', 'id_zaboun', 'comment_Kerya', 'ta9yim_Kerya')
+    search_fields = ('id_Kerya', 'matricule_car__id_employer__id_employer__username', 'id_zaboun__username', 'comment_Kerya')
 
 class Admin(admin.ModelAdmin):
     list_display = ('id_admin', 'id_super')

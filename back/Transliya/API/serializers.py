@@ -83,7 +83,7 @@ class NotifySerializer(serializers.ModelSerializer):
 class CarSerializer_serchByname(serializers.ModelSerializer):
     class Meta:
         model = models.CarEmployer
-        fields = ['matricule_car', 'id_type_car']
+        fields = ['matricule_car', 'id_car_type']
 
 class EmployerSerializer_serchByname(serializers.ModelSerializer):
     cars = CarSerializer_serchByname(source='caremployer_set', many=True, read_only=True)  # Corrected field name
@@ -128,11 +128,22 @@ class EmployerSerializer(serializers.ModelSerializer):
         model = models.Employer
         fields = '__all__'  # Include all fields from Employer model
 class CarEmployerSerializer(serializers.ModelSerializer):
-    id_type_car = serializers.PrimaryKeyRelatedField(queryset=models.CarType.objects.all())
+    id_car_type = serializers.PrimaryKeyRelatedField(queryset=models.CarType.objects.all())
 
     class Meta:
         model = models.CarEmployer
-        fields = '__all__'  # Include all fields from CarEmployer model
+        fields = '__all__'   
+    
+    
+    
+class CarEmployerSerializer____(serializers.ModelSerializer):
+    id_car_type = serializers.CharField(source='id_car_type.name_car_type', read_only=True)  # Display the car type name
+
+    class Meta:
+        model = models.CarEmployer
+        fields = ['id_car_type', 'image']
+        
+        
 class FullPersonSerializer(serializers.ModelSerializer):
     user = UserSerializer____(source='id_employer', read_only=True)  # Include related User data
     employer = EmployerSerializer(   read_only=True)  # Include related Employer data
@@ -140,8 +151,27 @@ class FullPersonSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.Person
-        fields = '__all__'  # Include all fields from Person model plus 'user' and 'employer'
-    #     fields = ["first_name", 
-    #   "last_name", 
-    #   "email", 
-    #   "phonenumberp" ]
+        fields = '__all__' 
+        
+class FullPersonSerializer(serializers.ModelSerializer):
+    user = serializers.CharField(source='username', read_only=True)  # Include related User data
+    employer = serializers.PrimaryKeyRelatedField(read_only=True)  # Include related Employer data
+    car_employers = CarEmployerSerializer____(many=True, read_only=True, source='employer.caremployer_set')  # Include related CarEmployer data
+
+    class Meta:
+        model = models.Person
+        fields = ['id', 'username', 'first_name', 'last_name', 'phonenumberp', 'car_employers']
+        
+class EmployerPersonSerializer(serializers.ModelSerializer):
+    id_employer = PersonSerializer()  # Nested serializer for Person
+    class Meta:
+        model = models.Employer
+        fields = '__all__'  # Include all fields from Employer model
+
+        
+class CarEmployerrEmployerPersonSerializerSerializer(serializers.ModelSerializer):
+    id_employer = EmployerPersonSerializer()  # Include the EmployerSerializer as a nested serializer
+
+    class Meta:
+        model = models.CarEmployer
+        fields = ('id_employer', 'id_car_type', 'matricule_car', 'is_deleted_CarEmployer', 'image')
