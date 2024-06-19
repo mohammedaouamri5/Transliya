@@ -16,11 +16,13 @@ from django.shortcuts import get_object_or_404
 
 from django.contrib.auth.models import User
 
+from API import utile
 from API.models import Employer, Person
 
 from rest_framework.authtoken.models import Token
 
 from .serializers import EmpoyerSerializer, UserSerializer , PersonSerializer
+
 
 from API.views_creat import * 
 from API.views_pdf import * 
@@ -88,6 +90,7 @@ def get_person(request:Request):
     try:
         id_person = person_serializer.data['id']
         employer = Employer.objects.get(id_employer=id_person) 
+
         employer_serializer = EmpoyerSerializer(employer)
     except:
         return Response({

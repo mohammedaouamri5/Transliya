@@ -1,3 +1,4 @@
+
 from django.urls import include, re_path
 from django.urls import path
 from . import views
@@ -44,7 +45,6 @@ urlpatterns = [
 
 
      path('car-employers/', views.CarEmployerCreateView.as_view(), name='car_employer_create'),
-
 
 
 

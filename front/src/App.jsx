@@ -1,35 +1,42 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import "./index.css";
+import Navbar from "./components/Navbar.jsx";
+import Login from "./components/Login.jsx";
+import { Routes, Route } from "react-router-dom";
+import Home from "./components/Home.jsx";
+import Signup from "./components/Signup.jsx";
+import Booking from "./components/Booking.jsx";
+import RentResults from "./components/RentResults.jsx";
+import Rent from "./components/Rent.jsx";
+import ScrollToTop from "./components/ScrollToTop.jsx";
+import BookingResults from "./components/BookingResults.jsx";
+import MyTrucks from "./components/MyTrucks.jsx";
+import AddTruck from "./components/AddTruck.jsx";
+import Payment from "./components/Payment.jsx";
+import Dashboard from "./components/Dashboard.jsx";
 
 function App() {
-  const [count, setCount] = useState(0)
-
+  
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+
+      <Navbar />
+
+      <ScrollToTop />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/booking" element={<Booking />} />
+        <Route path="/vehicles/details" element={<Booking />} />
+        <Route path="/rentresults/:ids" element={<RentResults />} />
+        <Route path="/bookingresults/:ids" element={<BookingResults />} />
+        <Route path="/rent" element={<Rent />} />
+        <Route path="/addtruck" element={<AddTruck />} />
+        <Route path="/mytrucks" element={<MyTrucks />} />
+      </Routes>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
