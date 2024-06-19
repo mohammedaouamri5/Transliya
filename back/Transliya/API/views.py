@@ -192,12 +192,15 @@ def get_all_car_type(request:Request):
 
 
 @api_view(['GET'])
-def get_my_cars(request:Request):
-    id_ = request.data.get('id')
+def get_my_cars(request):
+    id_ = request.query_params.get('id')
+    if not id_:
+        return Response({"error": "ID parameter is required"}, status=status.HTTP_400_BAD_REQUEST)
+    
     employer = get_object_or_404(models.Employer, id_employer=id_)
     cars = models.CarEmployer.objects.filter(id_employer=employer)
     cars_serializer = CarEmployerSerializer(cars, many=True)
-    return Response({"cars" : cars_serializer.data} , status=status.HTTP_200_OK)
+    return Response({"cars": cars_serializer.data}, status=status.HTTP_200_OK)
 
 
 @api_view(['GET'])
