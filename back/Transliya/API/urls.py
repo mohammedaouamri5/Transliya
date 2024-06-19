@@ -46,4 +46,8 @@ urlpatterns = [
      path('car-employers/', views.CarEmployerCreateView.as_view(), name='car_employer_create'),
 
 
+
+
+
+    path('generate-pdf/', views.generate_pdf, name='generate_pdf'),
 ]

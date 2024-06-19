@@ -23,6 +23,7 @@ from rest_framework.authtoken.models import Token
 from .serializers import EmpoyerSerializer, UserSerializer , PersonSerializer
 
 from API.views_creat import * 
+from API.views_pdf import * 
 
 @api_view(['POST'])
 def login(request):
