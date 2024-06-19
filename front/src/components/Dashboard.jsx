@@ -52,7 +52,7 @@ const Dashboard = () => {
                 >
                   {" "}
                   <span className="text-sm font-bold ml-2">حسابي</span>
-                  <IoPerson className="text-md" />{" "}
+                  <IoPerson className="text-md ml-4" />{" "}
                 </div>
                 <div
                   className={`flex p-2 rounded ${
@@ -64,11 +64,8 @@ const Dashboard = () => {
                     setShow(1);
                   }}
                 >
-                  <div className="w-[80%] flex justify-between">
-                     <span className="text-sm font-bold ml-2">شاحناتي</span>{" "}
-                  <FaTruck className="text-md" />{" "}
-                  </div>
-                 
+                  <span className="text-sm font-bold ml-2">شاحناتي</span>{" "}
+                  <FaTruck className="text-md ml-4" />{" "}
                 </div>
                 <div
                   className={`flex p-2 rounded ${
@@ -80,15 +77,12 @@ const Dashboard = () => {
                     setShow(3);
                   }}
                 >
-                  <div className="w-[80%] flex justify-between">
-                    
-                
-                  <span className="text-sm font-bold ml-2 text-center w-[70%]">اضافة شاحنة</span>
-                  <ImBoxAdd className="text-md" />{" "}  
-                  </div>
+                  {" "}
+                  <span className="text-sm font-bold ml-2">اضافة شاحنة</span>
+                  <ImBoxAdd className="text-md ml-4" />{" "}
                 </div>
                 <div
-                  className={`flex p-2 w-full rounded ${
+                  className={`flex p-2 rounded ${
                     show === 2
                       ? "bg-background text-light"
                       : "bg-white text-background"
@@ -97,10 +91,9 @@ const Dashboard = () => {
                     setShow(2);
                   }}
                 >
-                 <div className="flex justify-between w-[60%]">
-                  <span className="text-sm font-bold ml-2 w-[70%]">الاشعارات</span>
-                  <IoMdNotifications className="text-md text-center" />{" "}
-                  </div>
+                  {" "}
+                  <span className="text-sm font-bold ml-2">الاشعارات</span>
+                  <IoMdNotifications className="text-md ml-4" />{" "}
                 </div>
               </div>
             </div>

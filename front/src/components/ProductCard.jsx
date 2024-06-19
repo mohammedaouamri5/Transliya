@@ -7,6 +7,7 @@ import axios from "axios";
 import DFM from "../assets/DFM.jpg";
 import jac5 from "../assets/jac3ton.jpg";
 import cam20 from "../assets/camion20ton.jpg";
+import { Button, MenuItem, Select, TextField, Typography } from '@mui/material';
 import Box from "@mui/material/Box";
 import MapboxComponent from "./Mapbox";
 
@@ -25,11 +26,32 @@ const style = {
 };
 
 const ProductCard = ({ userData, token, types }) => {
+
   console.log(userData);
   const user = JSON.parse(localStorage.getItem("user"));
   const id_employer = userData.id_employer.id_employer.id;
   const matricule = userData.matricule;
+  const [material, setMat] = useState() 
 
+
+  const materials = [
+    {
+      name: "grafi",
+      value: 1,
+    },
+    { name: "sima",
+      value: 2,
+
+    },
+    { name: "rmel",
+      value: 3,
+
+    },
+    { name: "sabl",
+      value: 4,
+
+    }
+  ]
   const [open, setOpen] = useState(false);
   const [show, setShow] = useState(false);
   const [selected, setSelected] = useState([]);
@@ -104,20 +126,22 @@ const ProductCard = ({ userData, token, types }) => {
   };
 
   const id_car_type = userData.id_car_type;
-  const truck = trucks.find(truck => truck.id_car_type === id_car_type);
-  const carType = types.find((type) => type.id_car_type === userData.id_car_type);
+  const truck = trucks.find((truck) => truck.id_car_type === id_car_type);
+  const carType = types.find(
+    (type) => type.id_car_type === userData.id_car_type
+  );
 
   const defaultImage = trucks.length > 0 ? trucks[0].photo : null;
 
   return (
     <>
       <div className="h-auto w-auto   bg-light p-2 text-background m-5 rounded-lg text-end shadow-md shadow-light">
-        <div className={`h-[45%] max-h-[160px] w-full`}>
+        <div className={`h-[45%]  w-full`}>
           {" "}
           <img
-            src={truck ? truck.image : defaultImage}
+            src={truck ? truck.photo : defaultImage}
             alt=""
-           className="h-auto max-w-full"
+            className="h-[auto] max-w-full"
           />{" "}
         </div>
         <div className="p-4  w-full text-xl h-[55%]">
@@ -228,66 +252,43 @@ const ProductCard = ({ userData, token, types }) => {
               </>
             ) : (
               <>
-                <LongCard />
+                <LongCard
+                  photo={truck ? truck.photo : defaultImage}
+                  name={carType ? carType.name_car_type : "اسم الشاحنة"}
+                  weight={carType ? `${carType.car_poitds} kg` : "وزن الشاحنة"}
+                />
+
+                <div className="flex flex-col w-full justify-between items-end mb-5">
+                  <div className="w-[30%]">
+                    <h1 className="text-xl font-bold my-5">المادة</h1>
+                   
+                  </div>
+                  <Select
+                    className="w-[100%]"
+                    name="weight"
+                    value={material}
+                    onChange={() => {setMat(e.target.value)}}
+                    displayEmpty
+                    placeholder="المادة"
+                    inputProps={{ "aria-label": "Without label" }}
+                  >
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
+                    {materials.map((material, index) => (
+                      <MenuItem key={index} value={material.value}>
+                        {material.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </div>
+
                 <MapboxComponent
                   user={user}
                   userData={userData}
                   setShow={setShow}
                   setForm={setForm}
                 />
-                {/* <form className="space-y-4 px-5 md:space-y-6 w-full">
-                  <div className="flex gap-2 justify-between">
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                      <div className="w-[48%]">
-                        <label className="block mb-2 text-lg font-medium text-background ">
-                          إلى
-                        </label>
-                        <DatePicker
-                          value={end}
-                          className="bg-gray-50 border border-gray-300 text-background sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
-                          onChange={(newValue) => setEnd(newValue)}
-                        />
-                      </div>
-                      <div className="w-[48%]">
-                        <label className="block mb-2 text-lg font-medium text-background ">
-                          من
-                        </label>
-                        <DatePicker
-                          value={start}
-                          className="bg-gray-50 border border-gray-300 text-background sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
-                          onChange={(newValue) => setStart(newValue)}
-                        />
-                      </div>
-                    </LocalizationProvider>
-                  </div>
-              
-                  <div>
-                    <label className="block my-2 text-lg font-medium text-background ">
-                      أضف ملاحظة
-                    </label>
-                    <textarea
-                      type="text"
-                      name="from"
-                      id="from"
-                      dir="rtl"
-                      value={comment}
-                      onChange={(e) => {
-                        setComment(e.target.value);
-                      }}
-                      placeholder="اختر نقطة بداية التوصيل"
-                      className="bg-gray-50 border border-gray-300 text-background sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 h-[100px] block w-full p-2.5 "
-                    />
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setShow(true);
-                    }}
-                    className="w-full text-light bg-background hover:bg-secondary duration-300 text-lg focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg  px-5 py-2.5 text-center "
-                  >
-                    الانتقال الى الدفع
-                  </button>{" "}
-                </form> */}
               </>
             )}
           </Box>

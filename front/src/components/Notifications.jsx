@@ -32,6 +32,9 @@ const Notifications = () => {
     getNotifications()
   }, [token, userId]);
 
+
+  
+
   return (
     <>
       <div className="w-full flex flex-wrap">

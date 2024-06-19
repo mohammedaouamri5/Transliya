@@ -88,12 +88,13 @@ const ProductCardRent = ({ userData, token, types }) => {
             {
               id_from: user.id,
               id_to: id_employer,
-              id_notification_type: 1,
+              id_notification_type: 2,
             },
             {
               headers: { Authorization: `Token ${token}` },
             }
           );
+          handleClose()
         } catch (error) {}
       }
     } catch (error) {}
@@ -157,8 +158,8 @@ const ProductCardRent = ({ userData, token, types }) => {
             {show ? (
               <>
                 <div>
-                  <h1 className="mb-4">اختر طريقة الدفع</h1>
-                  <div className="flex w-full justify-evenly">
+                  <h1 className="mb-8 text-3xl font-bold">اختر طريقة الدفع</h1>
+                  <div className="flex w-full mb-5 justify-evenly">
                     <div
                       className={` ${
                         selected.includes("dhahabiya")
@@ -189,21 +190,38 @@ const ProductCardRent = ({ userData, token, types }) => {
                       />
                     </div>
                   </div>
-                  <div>
-                    <h1>رقم البطاقة</h1>
-                    <input type="text" />
+                  <div className="mb-5">
+                    <h1 className="text-lg mb-2">رقم البطاقة</h1>
+                    <input
+                      type="text"
+                      dir="rtl"
+                      className="bg-whit mb-5 border border-gray-300 text-background sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                    />
                     <div className="flex w-full justify-between">
-                      <div>
-                        <h1>تاريخ نهاية الصلاحية</h1>
-                        <input type="text" />
+                      <div className="w-[48%]">
+                        <h1 className="text-lg mb-2">تاريخ نهاية الصلاحية</h1>
+                        <input
+                          type="text"
+                          dir="rtl"
+                          className="bg-whit  border border-gray-300 text-background sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                        />
                       </div>
-                      <div>
-                        <h1>ٍٍِCVV</h1>
-                        <input type="text" />
+                      <div className="w-[48%]">
+                        <h1 className="text-lg mb-2 ">CVV</h1>
+                        <input
+                          type="text"
+                          dir="rtl"
+                          className="bg-whit  border border-gray-300 text-background sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                        />
                       </div>
                     </div>
                   </div>
-                  <button onClick={handleRent}>تأكيد الدفع</button>
+                  <button
+                    onClick={handleRent}
+                    className="w-full text-light bg-background hover:bg-secondary duration-300 text-lg focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg  px-5 py-2.5 text-center "
+                  >
+                    تأكيد الدفع
+                  </button>
                 </div>
               </>
             ) : (
@@ -212,7 +230,6 @@ const ProductCardRent = ({ userData, token, types }) => {
                   photo={truck ? truck.photo : defaultImage}
                   name={carType ? carType.name_car_type : "اسم الشاحنة"}
                   weight={carType ? `${carType.car_poitds} kg` : "وزن الشاحنة"}
-                
                 />
                 <form className="space-y-4 px-5 md:space-y-6 w-full">
                   <div className="flex gap-2 justify-between">
