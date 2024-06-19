@@ -50,6 +50,7 @@ const ProductCardRent = ({ userData, token, types }) => {
   ];
 
   const user = JSON.parse(localStorage.getItem("user"));
+  console.log(userData.id_employer.id_employer.username);
 
   const id_employer = userData.id_employer.id_employer.id;
   const phone = userData.id_employer.id_employer.phonenumberp;
@@ -63,6 +64,17 @@ const ProductCardRent = ({ userData, token, types }) => {
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+
+  const handleDownload = () => {
+    const response = axios.get("http://127.0.0.1:8000/API/generate-pdf/", {
+      params: {
+        username: user.username,
+        employerName: userData.id_employer.id_employer.username,
+        Type: "Rent",
+        price: 2000,
+      },
+    });
+  };
 
   const handleRent = async () => {
     try {
@@ -94,7 +106,7 @@ const ProductCardRent = ({ userData, token, types }) => {
               headers: { Authorization: `Token ${token}` },
             }
           );
-          handleClose()
+          handleClose();
         } catch (error) {}
       }
     } catch (error) {}
@@ -216,12 +228,20 @@ const ProductCardRent = ({ userData, token, types }) => {
                       </div>
                     </div>
                   </div>
-                  <button
-                    onClick={handleRent}
-                    className="w-full text-light bg-background hover:bg-secondary duration-300 text-lg focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg  px-5 py-2.5 text-center "
-                  >
-                    تأكيد الدفع
-                  </button>
+                  <div className="w-full">
+                    <button
+                      onClick={handleRent}
+                      className="w-[48%] text-light bg-background hover:bg-secondary duration-300 text-lg focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg  px-5 py-2.5 text-center "
+                    >
+                      تأكيد الدفع
+                    </button>
+                    <button
+                      onClick={handleDownload}
+                      className="w-[48%] text-light bg-background hover:bg-secondary duration-300 text-lg focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg  px-5 py-2.5 text-center "
+                    >
+                      حمل الفاتورة
+                    </button>
+                  </div>
                 </div>
               </>
             ) : (

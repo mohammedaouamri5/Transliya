@@ -125,6 +125,19 @@ const ProductCard = ({ userData, token, types }) => {
     } catch (error) {}
   };
 
+  const handleDownload = () => {
+    const response = axios.get("http://127.0.0.1:8000/API/generate-pdf/", {
+      params: {
+        username: user.username,
+        employerName: userData.id_employer.id_employer.username,
+        Type: "Rent",
+        price: 2000,
+      },
+    });
+  };
+
+
+
   const id_car_type = userData.id_car_type;
   const truck = trucks.find((truck) => truck.id_car_type === id_car_type);
   const carType = types.find(
@@ -242,12 +255,20 @@ const ProductCard = ({ userData, token, types }) => {
                       </div>
                     </div>
                   </div>
-                  <button
-                    onClick={handleBooking}
-                    className="w-full text-light bg-background hover:bg-secondary duration-300 text-lg focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg  px-5 py-2.5 text-center "
-                  >
-                    تأكيد الدفع
-                  </button>
+                  <div className="w-full">
+                    <button
+                      onClick={handleBooking}
+                      className="w-[48%] text-light bg-background hover:bg-secondary duration-300 text-lg focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg  px-5 py-2.5 text-center "
+                    >
+                      تأكيد الدفع
+                    </button>
+                    <button
+                      onClick={handleDownload}
+                      className="w-[48%] text-light bg-background hover:bg-secondary duration-300 text-lg focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg  px-5 py-2.5 text-center "
+                    >
+                      حمل الفاتورة
+                    </button>
+                  </div>
                 </div>
               </>
             ) : (
@@ -261,7 +282,6 @@ const ProductCard = ({ userData, token, types }) => {
                 <div className="flex flex-col w-full justify-between items-end mb-5">
                   <div className="w-[30%]">
                     <h1 className="text-xl font-bold my-5">المادة</h1>
-                   
                   </div>
                   <Select
                     className="w-[100%]"
