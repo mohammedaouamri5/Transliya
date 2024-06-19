@@ -3,17 +3,24 @@ import axios from "axios";
 
 const AuthContext = createContext({
   user: null,
+  employer: null,
   accessToken: null,
   isAuthenticated: false,
   login: (email, password) => Promise.resolve(undefined),
-  signup: (formData, Type) => Promise.resolve(undefined),
+  signup: (person, Type) => Promise.resolve(undefined),
   logout: () => {},
 });
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(() => {
     const storedUser = localStorage.getItem("user");
-    return storedUser ? JSON.parse(storedUser) : null;
+    return storedUser ? JSON.parse(storedUser): null;
+    //
+  });
+  const [employer, setEmployer] = useState(() => {
+    const storedEmployer = localStorage.getItem("employer");
+    return storedEmployer ? JSON.parse(storedEmployer) : null;
+    //
   });
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
     const storedAuth = localStorage.getItem("isAuthenticated");
@@ -26,20 +33,18 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const res = await axios.post(
-        "https://bl44wdcn-8000.euw.devtunnels.ms/API/login",
-        {
-          email,
-          password,
-        }
-      );
-      if (res.status === 200) {
-        setUser(res.data.user);
+      const res = await axios.post("http://127.0.0.1:8000/API/login", {
+        email,
+        password,
+      });
+      if (res.status >= 200 && res.status <= 300) {
+        setUser(JSON.stringify(res.data.user));
         setIsAuthenticated(true);
         setAccessToken(res.data["token"]);
         localStorage.setItem("token", res.data["token"]);
         localStorage.setItem("user", JSON.stringify(res.data.user));
         localStorage.setItem("isAuthenticated", "1");
+
         console.log("user: ", user);
         console.log("token: ", res.data["token"]);
         console.log("auth: ", isAuthenticated);
@@ -55,78 +60,89 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const signup = async (formData, Type) => {
-    if (formData.password !== formData.confirmPassword) {
-      console.log("Signup error: password");
-    } else {
+  const signup = async (person, Type) => {
+    if (Type === "user") {
       try {
-        const response = await fetch(
-          "https://bl44wdcn-8000.euw.devtunnels.ms/API/signup",
+        const response = await axios.post(
+          "http://127.0.0.1:8000/API/signup",
           {
-            method: "POST",
+            person: person,
+          },
+          {
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ ...formData, driving_license: undefined }), // Exclude driving_license
           }
         );
 
-        if (!response.ok) {
-          throw new Error(`Error: ${response.statusText}`);
+        console.log("response data: ", response.data);
+
+        const { person: userData, token } = response.data;
+
+        setUser(userData);
+        setIsAuthenticated(true);
+        setAccessToken(token);
+        localStorage.setItem("token", token);
+        localStorage.setItem("user", JSON.stringify(userData));
+        localStorage.setItem("isAuthenticated", "1");
+
+        console.log("user: ", user);
+        console.log("token: ", token);
+        console.log("auth: ", isAuthenticated);
+      } catch (err) {
+        if (err.response && err.response.status === 400) {
+          return "Invalid email or password, please try again";
+        } else {
+          return "Something went wrong";
         }
+      }
+    } else if (Type === "employee") {
+      const { driving_license, ...dataToCopy } = person; // Exclude driving_license
 
-        const data = await response.json();
-
-        console.log("Signup successful:", data);
-
-        try {
-          setUser(response.data.person);
-          setIsAuthenticated(true);
-          setAccessToken(res.data["token"]);
-          localStorage.setItem("token", response.data["token"]);
-          localStorage.setItem(
-            "person",
-            JSON.stringify(res.data.person)
-          );
-          localStorage.setItem("isAuthenticated", "1");
-          console.log("user: ", res.data.person);
-          console.log("token: ", res.data["token"]);
-          console.log("auth: ", isAuthenticated);
-          const userId = user.id;
-          const token = response.data["token"];
-        } catch (error) {
-          console.error("Error setting user state:", error);
-        }
-
-        if (Type === "employee") {
-          try {
-            const employeeResponse = await fetch(
-              "https://bl44wdcn-8000.euw.devtunnels.ms/API/create_employer",
-              {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                  Authorization: `token ${token}`,
-                },
-                body: JSON.stringify({
-                  driving_license: formData.driving_license,
-                  userId,
-                }),
-              }
-            );
-
-            if (employeeResponse.ok) {
-              console.log("Employee creation successful");
-            } else {
-              throw new Error(
-                `Error creating employee: ${employeeResponse.statusText}`
-              );
-            }
-          } catch (error) {
-            console.error("Error creating employee:", error);
+      try {
+        const response = await axios.post(
+          "http://127.0.0.1:8000/API/signemployer",
+          {
+            person: dataToCopy,
+            driving_license: person.driving_license,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
           }
+        );
+
+        console.log("response data: ", response.data);
+        console.log("an employer is registered");
+
+        const { person: userData, token, employer } = response.data;
+
+        if (response.status >= 200 && response.status < 300) {
+          console.log("Employer registration successful");
+
+          localStorage.setItem("token", token);
+          localStorage.setItem("user", JSON.stringify(userData));
+          localStorage.setItem("employer", JSON.stringify(employer));
+          localStorage.setItem("isAuthenticated", "1");
+
+          console.log("user: ", userData);
+          console.log("employer: ", employer);
+          console.log("token: ", token);
+          console.log("auth: ", isAuthenticated);
+          setUser(userData);
+          setEmployer(employer);
+          setIsAuthenticated(true);
+          setAccessToken(token);
         }
       } catch (error) {
-        console.error("Signup failed:", error);
+        console.error("Error during employer registration:", error);
+        if (error.response && error.response.status === 400) {
+          return "Invalid data provided, please check the input.";
+        } else {
+          return "Something went wrong during employer registration";
+        }
       }
+    } else {
+      throw new Error("Unknown Type provided");
     }
   };
 
@@ -135,6 +151,7 @@ export const AuthProvider = ({ children }) => {
     setIsAuthenticated(false);
     localStorage.removeItem("access-token");
     localStorage.removeItem("user");
+    localStorage.removeItem("employer");
     localStorage.removeItem("isAuthenticated");
   };
 

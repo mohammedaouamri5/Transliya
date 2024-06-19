@@ -3,27 +3,23 @@ import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 
 const Login = () => {
-  const navigate = useNavigate();
-
   const { login, isAuthenticated } = useAuth();
+  const navigate = useNavigate()
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
-
-  console.log("email: ", email);
-  console.log("passord: ", password);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       await login(email, password);
       setErrorMessage(null); // Clear any previous errors
-      navigate("/");
     } catch (err) {
       setErrorMessage(err.message); // Display error message
     } finally {
       setEmail("");
       setPassword("");
+      navigate("/");
     }
   };
 
@@ -34,7 +30,7 @@ const Login = () => {
       <section className="bg-hero bg-cover relative">
         <div className="absolute inset-0 bg-black opacity-60"></div>
 
-        <div className="flex flex-col items-center relative justify-center px-6 py-8 mx-auto md:h-screen lg:py-0 ">
+        <div className="flex flex-col items-center relative justify-center px-6 py-8 mx-auto h-screen lg:py-0 ">
           <h1 className="flex items-center mb-6 text-2xl font-semibold text-white ">
             Transilya
           </h1>

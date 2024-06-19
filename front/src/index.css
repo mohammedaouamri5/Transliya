@@ -8,3 +8,8 @@
     font-family: "Readex Pro", sans-serif;
     /* font-family: "Poppins", sans-serif; */
 }
+
+.mapboxgl-ctrl-top-right{
+    display: flex;
+    justify-content: space-between;
+}
