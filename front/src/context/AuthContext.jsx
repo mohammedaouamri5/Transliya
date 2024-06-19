@@ -66,7 +66,7 @@ export const AuthProvider = ({ children }) => {
         const response = await axios.post(
           "http://127.0.0.1:8000/API/signup",
           {
-            person: person,
+            ...person,
           },
           {
             headers: { "Content-Type": "application/json" },

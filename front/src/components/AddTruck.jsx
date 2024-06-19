@@ -27,7 +27,7 @@ const AddTruck = ({ employer }) => {
   const [formData, setFormData] = useState({
     matricule_car: '',
     name: '',
-    id_type_car: '',
+    id_car_type: '',
     weight: '',
     photos: [], // Array to store selected files
   });
@@ -35,7 +35,7 @@ const AddTruck = ({ employer }) => {
   const id_employer = employer.id;
 
   const getWeights = () => {
-    return weightOptions[formData.id_type_car] || [];
+    return weightOptions[formData.id_car_type] || [];
   };
 
   const handleChange = (event) => {
@@ -53,7 +53,7 @@ const AddTruck = ({ employer }) => {
 
     const formDataToSend = new FormData();
     formDataToSend.append('id_employer', id_employer);
-    formDataToSend.append('id_type_car', formData.id_type_car);
+    formDataToSend.append('id_car_type', formData.id_car_type);
     formDataToSend.append('matricule_car', formData.matricule_car);
 
     // Append each image file to formDataToSend
@@ -115,6 +115,23 @@ const AddTruck = ({ employer }) => {
               onChange={handleChange}
             />
           </div>
+          <div className="flex w-full justify-between items-start mb-5">
+            <div className="w-[30%]">
+              <h1 className="text-xl font-bold">Name *</h1>
+              <p className="text-[0.9rem]">
+                Enter the name of the truck.
+              </p>
+            </div>
+            <TextField
+              className="w-[65%]"
+              id="outlined-text-input"
+              type="number"
+              name="matricule_car"
+              placeholder="matricule_car"
+              value={formData.matricule_car}
+              onChange={handleChange}
+            />
+          </div>
 
           <div className="flex w-full justify-between items-start mb-5">
             <div className="w-[30%]">
@@ -125,8 +142,8 @@ const AddTruck = ({ employer }) => {
             </div>
             <Select
               className="w-[65%]"
-              value={formData.id_type_car}
-              name="id_type_car"
+              value={formData.id_car_type}
+              name="id_car_type"
               onChange={handleChange}
               displayEmpty
               placeholder="Type"

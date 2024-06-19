@@ -39,7 +39,10 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (formData.password === confirmPassword) {
+      console.log('[BRUH] formData : ' , formData )
+      console.log('[BRUH] Type : ' , Type )
       if (Type === "user") {
+
         try {
           const { driving_license, ...userData } = formData;
           signup(userData, Type);

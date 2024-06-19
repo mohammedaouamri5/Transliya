@@ -16,7 +16,6 @@ from django.shortcuts import get_object_or_404
 
 from django.contrib.auth.models import User
 
-from API import utile
 from API.models import Employer, Person
 
 from rest_framework.authtoken.models import Token
