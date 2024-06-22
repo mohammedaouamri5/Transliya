@@ -28,8 +28,10 @@ class KeryaPDF():
         self.matricule = matricule
         self.start = start
         self.end = end
-        self.prix = prix
+        self.prix = prix 
         self.poids = poids 
+        self.tax = 10  / 100
+        self.prix_final = prix * (2 + self.tax) 
         self.employer_id = employer_id
         self.person_id = person_id
     def create(self):
@@ -99,6 +101,8 @@ class KeryaPDF():
                     <p><strong>Fin de la location:</strong> {self.end}</p>
                     <p><strong>Poids de la location:</strong> {self.poids} kg</p>
                     <p><strong>Prix de location:</strong> {self.prix} DZA</p>
+                    <p><strong>TAX :</strong> {self.tax * 100 } %</p>
+                    <p><strong>Prix final de location :</strong> {self.prix_final} DZA</p>
                 </div>
                 <div class="date-id">
                     <p><strong>Date:</strong> <span id="current-date"> {datetime.now().strftime('[%Y-%m-%d]')} </span></p>
@@ -147,7 +151,7 @@ class TawsilaPDF():
         self.poids = poids
         self.employer_id = employer_id
         self.person_id = person_id    
-        self.tax = 0/100
+        self.tax = 10 /100
         self.prix_apres = prix * (1 + self.tax)  
     def create(self):
 
@@ -234,8 +238,8 @@ class TawsilaPDF():
                         <p><strong>Distance:</strong> {self.distance} km</p>
                         <p><strong>Poids de la location:</strong> {self.poids} kg</p>
                         <p><strong>Prix:</strong> {self.prix} DZA</p>
-                        <p><strong>Prix après:</strong> {self.prix_apres} DZA</p>
-                        <p><strong>Tax:</strong> {self.tax} DZA</p>
+                        <p><strong>Tax:</strong> {self.tax * 100 } % </p>
+                        <p><strong>Prix final:</strong> {self.prix_apres} DZA</p>
                     </div>
                     <h2>Article Livré:</h2>
                     <ul class="item-list">
@@ -299,16 +303,18 @@ def kerya_pdf(request:Request):
     return Response({"path":path } , status=status.HTTP_200_OK)
 
 
-# KeryaPDF(
-#     id_=-1,
-#     person="bruh",
-#     employer="wow",
-#     prix=300 
+
     
-# ).create()
-# TawsilaPDF(
-#     person="bruh",
-#     id_=-1,
-#     employer="wow",
-#     prix=300
-# ).create()
+KeryaPDF(
+    id_=-1,
+    person="bruh",
+    employer="wow",
+    prix=300 
+    
+).create()
+TawsilaPDF(
+    person="bruh",
+    id_=-1,
+    employer="wow",
+    prix=300
+).create()
