@@ -51,14 +51,11 @@ const Home = () => {
             <div className="p-3 h-[50vh] md:h-[40vh] lg:h-[60vh] w-full lg:w-1/3 mt-4">
             <div className="  h-full bg-light text-background rounded-lg flex items-center flex-col justify-between">
               <div className="w-full h-full m-auto p-5 flex flex-col justify-around items-center text-center">
-                <PiListChecksBold className="text-5xl h-[30%] mb-4" />
-                <h1 className="text-xl mb-4 font-bold h-[20%]">
-                  اطلب العرض الذي يناسبك
-                </h1>
-                <p className="text-accent font-light mb-4 h-[50%]">
+              <MdLocalShipping className="mb-4 text-5xl h-[30%]" />
+                <h1 className="text-xl mb-4 font-bold h-[20%]">استرخ واستمتع</h1>
+                <p className="text-accent mb-4 font-light h-[50%]">
                   {" "}
-                  قم بزيارة موقعنا الإلكتروني وقدم لنا بعض المعلومات الأساسية عن
-                  احتياجاتك من النقل
+                اترك الباقي لنا! سيتولى المورد المختار عملية النقل بأكملها
                 </p>
               </div>
             </div>
@@ -80,12 +77,18 @@ const Home = () => {
             <div className="p-3 w-full h-[50vh] md:h-[40vh] lg:h-[60vh] lg:w-1/3 mt-4">
             <div className=" h-full bg-light text-background rounded-lg">
               <div className="w-full h-full m-auto p-5 flex flex-col justify-around items-center text-center">
-                <MdLocalShipping className="mb-4 text-5xl h-[30%]" />
-                <h1 className="text-xl mb-4 font-bold h-[20%]">استرخ واستمتع</h1>
-                <p className="text-accent mb-4 font-light h-[50%]">
+
+              <PiListChecksBold className="text-5xl h-[30%] mb-4" />
+                <h1 className="text-xl mb-4 font-bold h-[20%]">
+                  اطلب العرض الذي يناسبك
+                </h1>
+                <p className="text-accent font-light mb-4 h-[50%]">
                   {" "}
-                اترك الباقي لنا! سيتولى المورد المختار عملية النقل بأكملها
+                  قم بزيارة موقعنا الإلكتروني وقدم لنا بعض المعلومات الأساسية عن
+                  احتياجاتك من النقل
                 </p>
+
+               
               </div>
             </div>
             </div>
