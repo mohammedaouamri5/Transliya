@@ -52,7 +52,6 @@ class Tewsila(models.Model):
     to_lat = models.FloatField(); 
     distention = models.FloatField(); 
     
-    
     matricule_car = models.ForeignKey(CarEmployer, on_delete=models.CASCADE)
     
     id_zaboun = models.ForeignKey(Person, on_delete=models.CASCADE)
@@ -108,7 +107,7 @@ class Notify(models.Model):
     )
     
     time = models.DateTimeField(auto_now_add=True)
-    
+
     is_readed = models.BooleanField(default=False)
     
     

@@ -48,6 +48,6 @@ urlpatterns = [
 
 
 
-
-    path('generate-pdf/', views.generate_pdf, name='generate_pdf'),
+    path('generate-pdf-tawsila/', views.tawsila_pdf),
+    path('generate-pdf-kerya/', views.kerya_pdf),
 ]
