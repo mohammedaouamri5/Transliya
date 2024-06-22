@@ -127,7 +127,7 @@ const Home = () => {
           <h1 className="text-3xl w-[47%] leading-snug px-2 font-bold hidden lg:block">
             نقل وكراء بلا حدود، لأننا في
             <span className="text-accent"> ترانزليا </span>
-            ملتزمون بتقديم خدمات لا مثيل لها في مجال النقل والكراء.
+            ملتزمون بتقديم خدمات لا مثيل لها في مجال النقل والكراء
           </h1>
         </div>
         <div className="flex flex-wrap lg:w-[85%] w-[95%] h-fit p-5 justify-between">
