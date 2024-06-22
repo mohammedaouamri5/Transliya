@@ -63,7 +63,7 @@ const ReviewCard = () => {
                   </div>
 
                   <p className="mt-0.5 text-lg font-medium text-gray-900">
-                  احمد بركاني 
+                   عوامري محمد 
                   </p>
                 </div>
               </div>
