@@ -101,7 +101,7 @@ const Home = () => {
           <h1 className="text-3xl lg:hidden  w-full leading-snug px-2 font-bold">
             نقل وكراء بلا حدود، لأننا في
             <span className="text-accent"> ترانزليا </span>
-            ملتزمون بتقديم خدمات لا مثيل لها في مجال النقل والكراء.
+            ملتزمون بتقديم خدمات لا مثيل لها في مجال النقل والكراء
           </h1>
 
           <br />
