@@ -8,12 +8,14 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.request import Request
 from rest_framework import status
+import os
+from datetime import datetime
 
 class KeryaPDF():
     def __init__(self,
-                id_ = None,
-                employer = "Jack Johnson",
-                person = "Transilia Truck Rentals",
+                id_ = -1,
+                employer = "جاك جونسون",
+                person = "ترانسيليا لتأجير الشاحنات",
                 matricule = 106,
                 start = "2024-06-22",
                 end = "2024-06-25",
@@ -31,10 +33,14 @@ class KeryaPDF():
         self.prix = prix 
         self.poids = poids 
         self.tax = 10  / 100
-        self.prix_final = prix * (2 + self.tax) 
+        self.prix_final = prix * (1 + self.tax) 
         self.employer_id = employer_id
         self.person_id = person_id
     def create(self):
+
+
+
+
         style = """
             body { 
                 font-family: Arial, sans-serif;
@@ -72,19 +78,19 @@ class KeryaPDF():
             .date-id {
                 position: absolute;
                 bottom: 20px;
-                right: 20px;
-                text-align: right;
+                left: 20px;
+                text-align: left;
                 font-size: 0.8em;
             }            
             
             """
         __html = f"""
             <!DOCTYPE html>
-            <html lang="en">
+            <html lang="ar" dir="rtl">
             <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Facture de Location de Camion</title>
+            <title>فاتورة تأجير الشاحنات</title>
             <style>
             {style}
             </style>
@@ -92,22 +98,21 @@ class KeryaPDF():
             <body>
 
             <div class="container">
-                <h1 style="text-align: center;">Facture de Transilia</h1>
+                <h1 style="text-align: center;">فاتورة ترانسيليا</h1>
                 <div class="info-box">
-                    <p><strong>Owner of the truck:</strong> {self.employer}</p>
-                    <p><strong>Nom du locataire:</strong> {self.person}</p>
-                    <p><strong>Numéro de série du camion:</strong> {self.matricule}</p>
-                    <p><strong>Début de la location:</strong> {self.start}</p>
-                    <p><strong>Fin de la location:</strong> {self.end}</p>
-                    <p><strong>Poids de la location:</strong> {self.poids} kg</p>
-                    <p><strong>Prix de location:</strong> {self.prix} DZA</p>
-                    <p><strong>TAX :</strong> {self.tax * 100 } %</p>
-                    <p><strong>Prix final de location :</strong> {self.prix_final} DZA</p>
+                    <p><strong>مالك الشاحنة:</strong> {self.employer}</p>
+                    <p><strong>اسم الشخص:</strong> {self.person}</p>
+                    <p><strong>رقم الماتريكيول:</strong> {self.matricule}</p>
+                    <p><strong>بداية التأجير:</strong> {self.start}</p>
+                    <p><strong>نهاية التأجير:</strong> {self.end}</p>
+                    <p><strong>سعر التأجير:</strong> {self.prix} دز</p>
+                    <p><strong>الضريبة :</strong> {self.tax * 100 } %</p>
+                    <p><strong>السعر النهائي للتأجير :</strong> {self.prix_final} دز</p>
                 </div>
                 <div class="date-id">
-                    <p><strong>Date:</strong> <span id="current-date"> {datetime.now().strftime('[%Y-%m-%d]')} </span></p>
-                    <p><strong>ID du propriétaire:</strong> {self.employer_id}</p>
-                    <p><strong>ID du locataire:</strong> {self.person_id}</p>
+                    <p><strong>التاريخ:</strong> [2024-06-22]</p>
+                    <p><strong>معرف المالك:</strong> {self.employer_id}</p>
+                    <p><strong>معرف الشخص:</strong> {self.person_id}</p>
                 </div>
             </div>
 
@@ -123,22 +128,33 @@ class KeryaPDF():
             path = "kerya.pdf"
         else:
             os.makedirs("./media/pdf/kerya/", exist_ok=True)
-            path = f'media/pdf/kerya/{self.id}.pdf'
-        # Convert HTML content to PDF
-        HTML(string=__html).write_pdf(path)
+            path = f'media/pdf/kerya/{self.id}.html'
+        with open(path, "w") as file:
+            # Write the string to the file
+            file.write(__html)        
         print(f'PDF generated: {path}')
         return path
 
 
+
+
+
+
+
+
+
+
+ 
+
 class TawsilaPDF():
     def __init__(self,
-                id_ = None,
-                employer = "Jack Johnson",
-                person = "Transilia Truck Rentals",
+                id_ = -1,
+                employer = "جاك جونسون",
+                person = "ترانسيليا لتأجير الشاحنات",
                 distance = 106,
-                produit = "sand",
-                prix = "200" ,
-                poids = "200 kg" , 
+                produit = "رمل",
+                prix = 200 ,
+                poids = "200 كج" , 
                 employer_id = -1 , 
                 person_id = -1 , 
                 ) -> None:
@@ -187,10 +203,12 @@ class TawsilaPDF():
                 }
 
                 .date-id {
-                    text-align: right;
-                    font-size: 0.8em;
+                text-align: right;
+                font-size: 0.8em;
+                top: 54%;
+                position: fixed;
+                left: 26%;
                 }
-
                 .info-box {
                     margin: 20px 0;
                 }
@@ -213,11 +231,11 @@ class TawsilaPDF():
         __html = f"""
         
             <!DOCTYPE html>
-            <html lang="en">
+            <html lang="ar" dir="rtl">
             <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Facture de Transilia</title>
+            <title>فاتورة ترانسيليا</title>
             <style>
             {style}
             </style>
@@ -225,23 +243,23 @@ class TawsilaPDF():
             <body>
                 <div class="container">
                     <div class="header">
-                        <h1>Facture de Transilia</h1>
+                        <h1>فاتورة ترانسيليا</h1>
                         <div class="date-id">
-                            <p><strong>Date:</strong> <span id="current-date">{datetime.now().strftime('[%Y-%m-%d]')}</span></p>
-                            <p><strong>ID du livreur:</strong> {self.employer_id}</p>
-                            <p><strong>ID du destinataire:</strong> {self.person_id}</p>
+                            <p><strong>التاريخ:</strong> <span id="current-date">{datetime.now().strftime('[%Y-%m-%d]')}</span></p>
+                            <p><strong>معرف السائق:</strong> {self.employer_id}</p>
+                            <p><strong>معرف المستلم:</strong> {self.person_id}</p>
                         </div>
                     </div>
                     <div class="info-box">
-                        <p><strong>Nom du livreur:</strong> {self.employer}</p>
-                        <p><strong>Nom du destinataire:</strong> {self.person}</p>
-                        <p><strong>Distance:</strong> {self.distance} km</p>
-                        <p><strong>Poids de la location:</strong> {self.poids} kg</p>
-                        <p><strong>Prix:</strong> {self.prix} DZA</p>
-                        <p><strong>Tax:</strong> {self.tax * 100 } % </p>
-                        <p><strong>Prix final:</strong> {self.prix_apres} DZA</p>
+                        <p><strong>اسم السائق:</strong> {self.employer}</p>
+                        <p><strong>اسم المستلم:</strong> {self.person}</p>
+                        <p><strong>المسافة:</strong> {self.distance} كم</p>
+                        <p><strong>وزن الشحنة:</strong> {self.poids}</p>
+                        <p><strong>السعر:</strong> {self.prix} دز</p>
+                        <p><strong>الضريبة:</strong> {self.tax * 100 } % </p>
+                        <p><strong>السعر النهائي:</strong> {self.prix_apres} دز</p>
                     </div>
-                    <h2>Article Livré:</h2>
+                    <h2>المنتج :</h2>
                     <ul class="item-list">
                         <li>{self.produit}</li>
                     </ul>
@@ -257,12 +275,12 @@ class TawsilaPDF():
             path = "tawsila.pdf"
         else:
             os.makedirs("./media/pdf/tawsila/", exist_ok=True)
-            path = f'media/pdf/tawsila/{self.id}.pdf'
-        # Convert HTML content to PDF
-        HTML(string=__html).write_pdf(path)
-
-        print(f'PDF generated: {path}')
+            path = f'media/pdf/tawsila/{self.id}.html'
+        with open(path, "w", encoding="utf-8") as file:
+            # Write the string to the file
+            file.write(__html)        
         return path
+
 
 
 
@@ -304,17 +322,8 @@ def kerya_pdf(request:Request):
 
 
 
-    
-KeryaPDF(
-    id_=-1,
-    person="bruh",
-    employer="wow",
-    prix=300 
-    
-).create()
-TawsilaPDF(
-    person="bruh",
-    id_=-1,
-    employer="wow",
-    prix=300
-).create()
+
+
+
+print(TawsilaPDF().create())
+print(KeryaPDF().create())

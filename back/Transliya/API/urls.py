@@ -50,4 +50,10 @@ urlpatterns = [
 
     path('generate-pdf-tawsila/', views.tawsila_pdf),
     path('generate-pdf-kerya/', views.kerya_pdf),
+    
+    
+    
+    
+    # path('generate_invoice/', views.generate_invoice),
+    
 ]
