@@ -101,8 +101,8 @@ class KeryaPDF():
                 <h1 style="text-align: center;">فاتورة ترانسيليا</h1>
                 <div class="info-box">
                     <p><strong>مالك الشاحنة:</strong> {self.employer}</p>
-                    <p><strong>اسم الشخص:</strong> {self.person}</p>
-                    <p><strong>رقم الماتريكيول:</strong> {self.matricule}</p>
+                    <p><strong>اسم الزبون:</strong> {self.person}</p>
+                    <p><strong>ترقيم الشاحنة:</strong> {self.matricule}</p>
                     <p><strong>بداية التأجير:</strong> {self.start}</p>
                     <p><strong>نهاية التأجير:</strong> {self.end}</p>
                     <p><strong>سعر التأجير:</strong> {self.prix} دز</p>
@@ -112,7 +112,7 @@ class KeryaPDF():
                 <div class="date-id">
                     <p><strong>التاريخ:</strong> [2024-06-22]</p>
                     <p><strong>معرف المالك:</strong> {self.employer_id}</p>
-                    <p><strong>معرف الشخص:</strong> {self.person_id}</p>
+                    <p><strong>رقم حساب الزبون:</strong> {self.person_id}</p>
                 </div>
             </div>
 
