@@ -98,7 +98,7 @@ const MyLongCard = ({ truckData, types }) => {
               <MenuItem value="">
                 <em>اختيار</em>
               </MenuItem>
-              <MenuItem value={"stoped"}>خامل</MenuItem>
+              <MenuItem value={"stoped"}>ناقل</MenuItem>
               <MenuItem value={"rent"}>كراء</MenuItem>
               <MenuItem value={"booking"}>توصيل</MenuItem>
             </Select>

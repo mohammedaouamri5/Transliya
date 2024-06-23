@@ -262,7 +262,7 @@ const Signup = () => {
                       className="px-5 py-2 rounded-md hover:bg-secondary duration-200 bg-black text-light"
                       onClick={handleTypeEmployee}
                     >
-                      أنشئ حساب عامل
+                      أنشئ حساب ناقل
                     </button>
                   </div>
                 </>
