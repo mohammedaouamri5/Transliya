@@ -111,7 +111,7 @@ class KeryaPDF():
                 </div>
                 <div class="date-id">
                     <p><strong>التاريخ:</strong> [2024-06-22]</p>
-                    <p><strong>معرف المالك:</strong> {self.employer_id}</p>
+                    <p><strong>رقم حساب المالك:</strong> {self.employer_id}</p>
                     <p><strong>رقم حساب الزبون:</strong> {self.person_id}</p>
                 </div>
             </div>
@@ -246,8 +246,8 @@ class TawsilaPDF():
                         <h1>فاتورة ترانزليا</h1>
                         <div class="date-id">
                             <p><strong>التاريخ:</strong> <span id="current-date">{datetime.now().strftime('[%Y-%m-%d]')}</span></p>
-                            <p><strong>معرف السائق:</strong> {self.employer_id}</p>
-                            <p><strong>معرف المستلم:</strong> {self.person_id}</p>
+                            <p><strong>رقم حساب السائق:</strong> {self.employer_id}</p>
+                            <p><strong>رقم حساب المستلم:</strong> {self.person_id}</p>
                         </div>
                     </div>
                     <div class="info-box">
