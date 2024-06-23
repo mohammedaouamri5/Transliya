@@ -235,7 +235,7 @@ class TawsilaPDF():
             <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>فاتورة ترانسيليا</title>
+            <title>فاتورة ترانزليا</title>
             <style>
             {style}
             </style>
@@ -243,7 +243,7 @@ class TawsilaPDF():
             <body>
                 <div class="container">
                     <div class="header">
-                        <h1>فاتورة ترانسيليا</h1>
+                        <h1>فاتورة ترانزليا</h1>
                         <div class="date-id">
                             <p><strong>التاريخ:</strong> <span id="current-date">{datetime.now().strftime('[%Y-%m-%d]')}</span></p>
                             <p><strong>معرف السائق:</strong> {self.employer_id}</p>
