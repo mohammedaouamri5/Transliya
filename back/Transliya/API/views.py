@@ -94,25 +94,13 @@ def get_person(request:Request):
     except:
         return Response({
             'person': person_serializer.data ,
-                     } , status=status.HTTP_200_OK)
+ } , status=status.HTTP_200_OK)
     
     
     return Response({
         'person': person_serializer.data ,
         "Employer":  employer_serializer.data 
                      } , status=status.HTTP_200_OK)
-
-
-
-@api_view(['GET'])
-@authentication_classes([SessionAuthentication, TokenAuthentication])
-@permission_classes([IsAuthenticated])
-def get_persons_services(request: Request):
-    employer = Employer.objects.filter(id_employer=id).values()
-    # Convert the QuerySet to a list
-    employer_list = list(employer)
-    # Return the list as JSON response
-    return JsonResponse(employer_list, safe=False)
 
 
 
@@ -227,7 +215,94 @@ class CarEmployerCreateView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
- 
 
 
- 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@api_view(['POST'])
+@authentication_classes([SessionAuthentication, TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def get_pay(request):
+    serializer = GetPayedSerializer(data=request.data)
+    if serializer.is_valid():
+        employer_id = serializer.validated_data['id_employer']
+        employer = get_object_or_404(models.Employer, id_employer=employer_id)
+        payment = models.GetPayed.objects.create(id_employer=employer, prix=serializer.validated_data['prix'])
+        # Serialize the payment object
+        serialized_payment = GetPayedSerializer(payment)
+        return Response({"payment": serialized_payment.data}, status=status.HTTP_201_CREATED)
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+
+
+
+class ZabounCountSerializer(serializers.Serializer):
+    id_zaboun = serializers.IntegerField()
+    count = serializers.IntegerField()
+
+
+class ZabounCountView(APIView):
+    def get(self, request, *args, **kwargs):
+        zaboun_counts = models.Tewsila.objects.values('id_zaboun').annotate(count=Count('id_zaboun'))
+        serializer = ZabounCountSerializer(zaboun_counts, many=True)
+        return Response(serializer.data)
+
+
+
+class ZabounCountView(APIView):
+    def get(self, request, *args, **kwargs):
+        zaboun_counts = models.Kerya.objects.values('id_zaboun').annotate(count=Count('id_zaboun'))
+        serializer = ZabounCountSerializer(zaboun_counts, many=True)
+        return Response(serializer.data)
+
+
+
+
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from .models import Person, Employer
+
+def count_persons_and_employers():
+    person_count = models.Person.objects.count()
+    employer_count = models.Employer.objects.count()
+    result = person_count - employer_count
+    return person_count, employer_count, result
+
+@login_required
+def admin_tools_stats(request):
+    person_count, employer_count, result = count_persons_and_employers()
+    
+    context = {
+        'person_count': person_count,
+        'employer_count': employer_count,
+        'result': result,
+    }
+    
+    return render(request, 'admin_tools_stats.html', context)

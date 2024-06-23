@@ -18,9 +18,12 @@ from django.urls import path , include
 from django.conf.urls.static import static
 from django.conf import settings
 import API 
+from .plots import *
 
 urlpatterns = [
+    path('admin/plot/', plot_graph, name='plot_graph'),
     path('admin/', admin.site.urls),
+    path('admin_tools_stats/', include('admin_tools_stats.urls')),
     path('API/', include('API.urls')),
 ]
 

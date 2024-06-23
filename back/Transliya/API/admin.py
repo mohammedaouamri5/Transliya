@@ -3,13 +3,29 @@
 from django.contrib import admin
 from API import models 
 
-
-
+class AdminToolsStats:
+    @staticmethod
+    def get_persons_minus_employers_count():
+        # Count all Person instances
+        total_persons = Person.objects.count()
+        
+        # Count all Employer instances
+        total_employers = Employer.objects.count()
+        
+        # Subtract the counts
+        result = total_persons - total_employers
+        
+        return result
+    
+    
 class Person(admin.ModelAdmin):
+
     list_display = ('username', 'email', 'phonenumberp', 'is_deleted_p', 'first_name', 'last_name', 'is_staff', 'is_active', 'date_joined')
     list_editable = (  'email', 'phonenumberp', 'is_deleted_p', 'first_name', 'last_name', 'is_staff', 'is_active')
     search_fields = ('username', 'email', 'phonenumberp', 'first_name', 'last_name')
-
+    def count_difference(self, obj):
+        return AdminToolsStats.get_persons_minus_employers_count()
+    count_difference.short_description = 'Persons - Employers'
 class Employer(admin.ModelAdmin):
     list_display = ('id_employer', 'driving_license', 'ta9yim_employer', 'is_allowed', 'is_working', 'created_at')
     list_editable = ('ta9yim_employer', 'is_allowed', 'is_working')
@@ -66,6 +82,10 @@ class NotificationType(admin.ModelAdmin):
 class Notify(admin.ModelAdmin):
     list_display = ('id_notify', 'id_from', 'id_to', 'id_notification_type', 'time', 'is_readed')
     search_fields = ('id_from__username', 'id_to__username', 'id_notification_type__name_notification_type')
+
+
+
+
 
 admin.site.register(models.Person, Person)
 admin.site.register(models.Employer, Employer)

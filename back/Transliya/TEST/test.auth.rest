@@ -231,14 +231,13 @@ Content-Type: application/json
 
 ###
 
-POST  http://127.0.0.1:8000/API/create_notification
-Authorization: token 5ce4fbc930e3bab4071ef0081f3d685718011b33
+POST  http://127.0.0.1:8000/API/get-pay 
+Authorization: token 5969e29f33c2008ff514cfdddf1420beaa862041
 Content-Type: application/json
 
 {
-    "id_from" : 4, 
-    "id_to" : 3, 
-    "id_notification_type" : 1
+    "id_employer" : 6, 
+    "prix" : 1323.32
 
     
 }

@@ -79,7 +79,7 @@ class Kerya(models.Model):
 class GetPayed(models.Model):
     id_employer = models.ForeignKey(Employer, on_delete=models.CASCADE)
     prix = models.FloatField()
-
+    at = models.DateTimeField(auto_now_add=True)
 
 
 class NotificationType(models.Model):
@@ -107,7 +107,7 @@ class Notify(models.Model):
     )
     
     time = models.DateTimeField(auto_now_add=True)
-
-    is_readed = models.BooleanField(default=False)
+    info = models.TextField(default="")
+    is_readed  =  models.BooleanField(default=False)
     
     

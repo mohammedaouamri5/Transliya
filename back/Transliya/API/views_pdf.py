@@ -203,11 +203,11 @@ class TawsilaPDF():
                 }
 
                 .date-id {
-                text-align: right;
-                font-size: 0.8em;
-                top: 54%;
-                position: fixed;
-                left: 26%;
+                    text-align: right;
+                    font-size: 0.8em;
+                    top: 257%;
+                    position: relative;
+                    left: -1%;
                 }
                 .info-box {
                     margin: 20px 0;
@@ -277,8 +277,8 @@ class TawsilaPDF():
             os.makedirs("./media/pdf/tawsila/", exist_ok=True)
             path = f'media/pdf/tawsila/{self.id}.html'
         with open(path, "w", encoding="utf-8") as file:
-            # Write the string to the file
-            file.write(__html)        
+            # Write the string to the f        ile
+            file.write(__html)
         return path
 
 

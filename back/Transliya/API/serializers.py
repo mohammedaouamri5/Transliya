@@ -175,3 +175,12 @@ class CarEmployerrEmployerPersonSerializerSerializer(serializers.ModelSerializer
     class Meta:
         model = models.CarEmployer
         fields = ('id_employer', 'id_car_type', 'matricule_car', 'is_deleted_CarEmployer', 'image')
+        
+        
+        
+        
+class GetPayedSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.GetPayed
+        fields = "__all__"
+    

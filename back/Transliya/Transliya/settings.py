@@ -32,7 +32,10 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    # "django_light" , 
     'admin_soft.apps.AdminSoftDashboardConfig',
+    'admin_tools_stats',
+    'django_nvd3',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -65,9 +68,13 @@ ROOT_URLCONF = 'Transliya.urls'
 CORS_ALLOW_ALL_ORIGINS = True 
 
 CORS_ALLOWED_ORIGINS = [
+
+
     "http://localhost:5173",
     "https://gv7j4t31-5173.euw.devtunnels.ms",
     "http://localhost:3000"    
+
+
 ]
 
 TEMPLATES = [
