@@ -247,12 +247,12 @@ class TawsilaPDF():
                         <div class="date-id">
                             <p><strong>التاريخ:</strong> <span id="current-date">{datetime.now().strftime('[%Y-%m-%d]')}</span></p>
                             <p><strong>رقم حساب الناقل:</strong> {self.employer_id}</p>
-                            <p><strong>رقم حساب المستلم:</strong> {self.person_id}</p>
+                            <p><strong>رقم حساب الزبون:</strong> {self.person_id}</p>
                         </div>
                     </div>
                     <div class="info-box">
                         <p><strong>اسم الناقل:</strong> {self.employer}</p>
-                        <p><strong>اسم المستلم:</strong> {self.person}</p>
+                        <p><strong>اسم الزبون:</strong> {self.person}</p>
                         <p><strong>المسافة:</strong> {self.distance} كم</p>
                         <p><strong>وزن الشحنة:</strong> {self.poids}</p>
                         <p><strong>السعر:</strong> {self.prix} دز</p>
