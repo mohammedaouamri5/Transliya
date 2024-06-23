@@ -15,7 +15,7 @@ class KeryaPDF():
     def __init__(self,
                 id_ = -1,
                 employer = "جاك جونسون",
-                person = "ترانسيليا لتأجير الشاحنات",
+                person = "ترانزليا لتأجير الشاحنات",
                 matricule = 106,
                 start = "2024-06-22",
                 end = "2024-06-25",
