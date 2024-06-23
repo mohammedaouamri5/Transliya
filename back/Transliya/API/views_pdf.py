@@ -259,7 +259,7 @@ class TawsilaPDF():
                         <p><strong>الضريبة:</strong> {self.tax * 100 } % </p>
                         <p><strong>السعر النهائي:</strong> {self.prix_apres} دز</p>
                     </div>
-                    <h2>المنتج :</h2>
+                    <h2>المادة المنقولة :</h2>
                     <ul class="item-list">
                         <li>{self.produit}</li>
                     </ul>
