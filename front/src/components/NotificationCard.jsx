@@ -41,7 +41,7 @@ const NotificationCard = () => {
         <div className="p-2 flex items-center">
           <div>
             <h1 className="text-xl mb-2 w-fit">اسم الشاحنة</h1>
-            <h1>وزن الشاحنة</h1>
+            <h1>وزن الحمولة</h1>
           </div>
           <div className="h-[75px] w-[150px] rounded-md ml-2">
             <img className="w-full h-full rounded-md" src={truck} alt="truck" />

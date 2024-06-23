@@ -82,7 +82,7 @@ const Signup = () => {
                   <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl ">
                     إنشاء حساب{" "}
                     <span className="text-secondary">{`${
-                      Type === "employee" ? "عامل" : "زبون"
+                      Type === "employee" ? "ناقل" : "زبون"
                     }`}</span>
                   </h1>
                   <form
