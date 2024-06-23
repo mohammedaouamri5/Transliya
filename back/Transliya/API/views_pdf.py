@@ -98,7 +98,7 @@ class KeryaPDF():
             <body>
 
             <div class="container">
-                <h1 style="text-align: center;">فاتورة ترانسيليا</h1>
+                <h1 style="text-align: center;">فاتورة ترانزليا</h1>
                 <div class="info-box">
                     <p><strong>مالك الشاحنة:</strong> {self.employer}</p>
                     <p><strong>اسم الزبون:</strong> {self.person}</p>
@@ -150,7 +150,7 @@ class TawsilaPDF():
     def __init__(self,
                 id_ = -1,
                 employer = "جاك جونسون",
-                person = "ترانسيليا لتأجير الشاحنات",
+                person = "ترانزليا لتأجير الشاحنات",
                 distance = 106,
                 produit = "رمل",
                 prix = 200 ,
