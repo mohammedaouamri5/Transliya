@@ -3,8 +3,10 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import DFM from "../assets/DFM.jpg";
-import jac5 from "../assets/jac3ton.jpg";
+import jac5 from "../assets/jac5ton.jpg";
+import jac3 from "../assets/jac3ton.jpg";
 import cam20 from "../assets/camion20ton.jpg";
+import cam10 from "../assets/camion10ton.jpg";
 
 const MyLongCard = ({ truckData, types }) => {
   
@@ -12,7 +14,14 @@ const MyLongCard = ({ truckData, types }) => {
   const trucks = [
     {
       id_car_type: 2,
-      name: "JAC",
+      name: "JAC 3 ton",
+      weight: 3,
+      photo: jac3,
+    },
+    {
+      id_car_type: 3,
+  
+      name: "JAC 5 ton",
       weight: 5,
       photo: jac5,
     },
@@ -23,9 +32,15 @@ const MyLongCard = ({ truckData, types }) => {
       photo: DFM,
     },
     {
-      id_car_type: 3,
-      name: "Camion",
+      id_car_type: 4,
+      name: "Camion 10 ton",
       weight: 10,
+      photo: cam10,
+    },
+    {
+      id_car_type: 5,
+      name: "Camion 20 ton",
+      weight: 20,
       photo: cam20,
     },
   ];
@@ -74,9 +89,9 @@ const MyLongCard = ({ truckData, types }) => {
 
   const id_car_type = truckData.id_car_type;
   const truck = trucks.find((truck) => truck.id_car_type === id_car_type);
-  // Find the car type based on the id_type_car
-  const carType = types.find((type) => type.id_car_type === truck.id_type_car);
-  const defaultImage = trucks.length > 0 ? trucks[0].photo : null;
+  const carType = types.find((type) => type.id_car_type === truck.id_car_type)
+  console.log("truck: ", truck )
+ 
 
 
   return (
@@ -106,14 +121,14 @@ const MyLongCard = ({ truckData, types }) => {
           <div className="p-2 flex items-center">
             <div>
               <h1 className="text-xl mb-2 w-fit">
-                {carType ? carType.name_car_type : "اسم الشاحنة"}
+                {carType ? carType.name_car_type : "اسم الشاحنة"} : النوع 
               </h1>
-              <h1>{carType ? `${carType.car_poitds} kg` : "وزن الشاحنة"}</h1>
+              <h1>{carType ? `${carType.car_poitds} kg` : "اسم الشاحنة"} : الوزن</h1>
             </div>
             <div className="h-[100px] w-[200px] rounded-md ml-2">
               <img
                 className="w-full h-full rounded-md"
-                src={truckData.image ? truckData.image : truck.photo}
+                src={truckData.image ? `http://127.0.0.1:8000${truckData.image}` : truck.photo}
                 alt="truck"
               />
             </div>

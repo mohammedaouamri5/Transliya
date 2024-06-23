@@ -1,23 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import ReviewCard from "./ReviewCard";
 import { PiListChecksBold } from "react-icons/pi";
 import { PiCursorClickFill } from "react-icons/pi";
 import { MdLocalShipping } from "react-icons/md";
 import { Link } from "react-router-dom";
+import { Modal } from "@mui/material";
+import { useAuth } from "../context/AuthContext";
 
 const Home = () => {
   const user = localStorage.getItem("user");
-  console.log(user);
+  const [open, setOpen] = useState(false);
+  const { isAuthenticated } = useAuth();
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
   return (
     <>
       <div className="relative h-[90vh] bg-hero w-full bg-cover z-0]">
-        <div className="absolute inset-0 bg-black opacity-60"></div>
+        <div className="absolute inset-0 bg-black opacity-70"></div>
         <div className="h-full w-full flex items-center relative md:justify-normal justify-center ">
           <div className="w-[85%] h-[70%] flex items-center md:justify-end md:text-end text-center justify-center">
             <div className="md:w-[60%] lg:w-[50%] w-full">
               <div className="flex-col">
                 <h1 className="text-white text-3xl md:text-[43px] font-bold leading-snug arabic-text">
-                  انقل ما تريد بسهولة وسيطر على المركبات الثقيلة مع ترانزليا{" "}
+                  انقل ما تريد بسهولة وسيطر على المركبات الثقيلة مع ترانزليا
                 </h1>
                 <br />
                 <p className="text-light arabic-text">
@@ -30,12 +41,24 @@ const Home = () => {
                   المجال.
                 </p>
                 <br />
-                <Link
-                  to={"/booking"}
-                  className="px-8 py-3 text-background text-lg hover:bg-light duration-200 rounded bg-white"
-                >
-                  احجز الآن
-                </Link>
+
+                {isAuthenticated ? (
+                  <Link
+                    to={"/booking"}
+                    className="px-8 py-3 text-light text-lg hover:bg-accent duration-200 rounded bg-background"
+                  >
+                    احجز الآن
+                  </Link>
+                ) : (
+                  <div className="w-full flex justify-end">
+                    <div
+                      onClick={handleOpen}
+                      className="px-8 py-3 w-fit text-light text-lg hover:bg-accent duration-200 rounded bg-background cursor-pointer"
+                    >
+                      احجز الآن
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -47,48 +70,46 @@ const Home = () => {
           <h1 className="m-5 text-4xl">كيف يعمل ترانزليا</h1>
 
           <div className="flex flex-row flex-wrap w-full items-center justify-between">
-
             <div className="p-3 h-[50vh] md:h-[40vh] lg:h-[60vh] w-full lg:w-1/3 mt-4">
-            <div className="  h-full bg-light text-background rounded-lg flex items-center flex-col justify-between">
-              <div className="w-full h-full m-auto p-5 flex flex-col justify-around items-center text-center">
-                <PiListChecksBold className="text-5xl h-[30%] mb-4" />
-                <h1 className="text-xl mb-4 font-bold h-[20%]">
-                  اطلب العرض الذي يناسبك
-                </h1>
-                <p className="text-accent font-light mb-4 h-[50%]">
-                  {" "}
-                  قم بزيارة موقعنا الإلكتروني وقدم لنا بعض المعلومات الأساسية عن
-                  احتياجاتك من النقل
-                </p>
+              <div className="  h-full bg-light text-background rounded-lg flex items-center flex-col justify-between">
+                <div className="w-full h-full m-auto p-5 flex flex-col justify-around items-center text-center">
+                  <PiListChecksBold className="text-5xl h-[30%] mb-4" />
+                  <h1 className="text-xl mb-4 font-bold h-[20%]">
+                    اطلب العرض الذي يناسبك
+                  </h1>
+                  <p className="text-accent font-light mb-4 h-[50%]">
+                    قم بزيارة موقعنا الإلكتروني وقدم لنا بعض المعلومات الأساسية
+                    عن احتياجاتك من النقل
+                  </p>
+                </div>
               </div>
             </div>
-            </div>
-          <div className="p-3 h-[50vh] md:h-[40vh] lg:h-[60vh] w-full lg:w-1/3 mt-4">
-            <div className="  h-full bg-light text-background rounded-lg">
-              <div className="w-full h-full m-auto p-5 flex flex-col justify-around items-center text-center">
-                <PiCursorClickFill className="mb-4 text-5xl h-[30%]" />
-                <h1 className="text-xl mb-4 font-bold h-[20%]">حدد الطلب</h1>
-                <p className="text-accent mb-4 font-light h-[50%]">
-                  {" "}
-                  اختر طلب خدمة نقل أو كراء لشاحنة ثم عين المسار أو مدة الكراء
-                  تلقى عروض من موردينا: سيقوم موردونا المختلفين بتقديم معاملة
-                  راقية ذات جودة عالية
-                </p>
+            <div className="p-3 h-[50vh] md:h-[40vh] lg:h-[60vh] w-full lg:w-1/3 mt-4">
+              <div className="  h-full bg-light text-background rounded-lg">
+                <div className="w-full h-full m-auto p-5 flex flex-col justify-around items-center text-center">
+                  <PiCursorClickFill className="mb-4 text-5xl h-[30%]" />
+                  <h1 className="text-xl mb-4 font-bold h-[20%]">حدد الطلب</h1>
+                  <p className="text-accent mb-4 font-light h-[50%]">
+                    اختر طلب خدمة نقل أو كراء لشاحنة ثم عين المسار أو مدة الكراء
+                    تلقى عروض من موردينا: سيقوم موردونا المختلفين بتقديم معاملة
+                    راقية ذات جودة عالية
+                  </p>
+                </div>
               </div>
-            </div>
             </div>
             <div className="p-3 w-full h-[50vh] md:h-[40vh] lg:h-[60vh] lg:w-1/3 mt-4">
-            <div className=" h-full bg-light text-background rounded-lg">
-              <div className="w-full h-full m-auto p-5 flex flex-col justify-around items-center text-center">
-                <MdLocalShipping className="mb-4 text-5xl h-[30%]" />
-                <h1 className="text-xl mb-4 font-bold h-[20%]">استرخ واستمتع</h1>
-                <p className="text-accent mb-4 font-light h-[50%]">
-                  {" "}
-                  اترك الباقي لنا! سيتولى المورد المختار عملية النقل بأكملها، من
-                  التحميل إلى التفريغ
-                </p>
+              <div className=" h-full bg-light text-background rounded-lg">
+                <div className="w-full h-full m-auto p-5 flex flex-col justify-around items-center text-center">
+                  <MdLocalShipping className="mb-4 text-5xl h-[30%]" />
+                  <h1 className="text-xl mb-4 font-bold h-[20%]">
+                    استرخ واستمتع
+                  </h1>
+                  <p className="text-accent mb-4 font-light h-[50%]">
+                    اترك الباقي لنا! سيتولى المورد المختار عملية النقل بأكملها،
+                    من التحميل إلى التفريغ
+                  </p>
+                </div>
               </div>
-            </div>
             </div>
           </div>
         </div>
@@ -156,6 +177,24 @@ const Home = () => {
         </div>
       </div>
       <ReviewCard />
+
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <div className="absolute top-1/2 left-1/2 transform rounded -translate-x-1/2 -translate-y-1/2 bg-background text-center  h-fit w-[400px] p-5">
+          <h1 className="text-2xl text-light my-4">سجل الدخول أولا</h1>
+          <div className="flex justify-center">
+            <div className="px-6 py-2 my-5 text-md sm:text-lg bg-light text-background w-fit">
+              <Link to={"/login"} onClick={handleClose}>
+                تسجيل الدخول
+              </Link>
+            </div>
+          </div>
+        </div>
+      </Modal>
     </>
   );
 };

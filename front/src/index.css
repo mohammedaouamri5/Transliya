@@ -13,3 +13,15 @@
     display: flex;
     justify-content: space-between;
 }
+
+.css-dqr9h-MuiRating-label{
+    font-size: 40px;
+}
+
+.css-1vooibu-MuiSvgIcon-root{
+    color: white;
+}
+
+.MuiSvgIcon-root .MuiSvgIcon-fontSizeInherit .css-1vooibu-MuiSvgIcon-root{
+    color: white;
+}

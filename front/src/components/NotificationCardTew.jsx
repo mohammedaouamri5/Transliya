@@ -3,21 +3,21 @@ import truck from "../assets/home-background.jpg";
 import { Modal } from "@mui/material";
 import LongCard from "./LongCard";
 import Box from "@mui/material/Box";
+import axios from "axios";
 import DFM from "../assets/DFM.jpg";
 import jac5 from "../assets/jac5ton.jpg";
 import jac3 from "../assets/jac3ton.jpg";
 import cam20 from "../assets/camion20ton.jpg";
 import cam10 from "../assets/camion10ton.jpg";
-import axios from "axios";
 
 const style = {
   position: "absolute",
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: "80vw", // Adjust width as needed
-  maxHeight: "90vh", // Allow some padding around the edges
-  overflowY: "auto", // Enable vertical scrolling if content overflows
+  width: "80vw",
+  maxHeight: "90vh",
+  overflowY: "auto",
   backgroundColor: "white",
   boxShadow: 24,
   textAlign: "end",
@@ -58,13 +58,16 @@ const trucks = [
   },
 ];
 
-const NotificationCard = ({ notify }) => {
+const NotificationCardTew = ({ notify }) => {
   console.log("notify: ", notify);
+  const token = localStorage.getItem("token")
+  const [open, setOpen] = useState(false);
   const [types, setTypes] = useState();
   const [truck, setTruck] = useState();
   const [defaultTruck, setDefaultTruck] = useState();
 
-  const [open, setOpen] = useState(false);
+
+
   const handleClose = () => {
     setOpen(false);
   };
@@ -73,13 +76,8 @@ const NotificationCard = ({ notify }) => {
   };
 
   const info = JSON.parse(notify.info);
-  const start = info.start.split("T")[0];
-  const end = info.end.split("T")[0];
-  const comment = info.comment;
-
-  const matricule = info.matricule;
-
   console.log(info);
+  const { weight, phone, start, end, material, matricule, price } = info;
 
   useEffect(() => {
     const fetchCarTypes = async () => {
@@ -117,6 +115,7 @@ const NotificationCard = ({ notify }) => {
   }, [truck, types]);
 
   const handleNotification = async (type) => {
+    
     try {
       const response = await axios.post(
         "http://127.0.0.1:8000/API/create_notification",
@@ -129,7 +128,7 @@ const NotificationCard = ({ notify }) => {
           headers: { Authorization: `Token ${token}` },
         }
       );
-      console.log("entered hh");
+      console.log("entered hh")
 
       console.log(response);
 
@@ -142,16 +141,16 @@ const NotificationCard = ({ notify }) => {
               id_notification: notify.id_notify,
             },
             {
-              headers: { Authorization: `Token ${token}` },
+              headers: {Authorization: `Token ${token}`}
             }
           );
           console.log(res);
         } catch (error) {
-          console.log(error);
+          console.log(error)
         }
       }
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
   };
 
@@ -172,7 +171,7 @@ const NotificationCard = ({ notify }) => {
           <div className="p-2 flex items-center">
             <div>
               <h1 className="text-xl mb-2 w-fit">{defaultTruck.name}</h1>
-              <h1> {matricule} </h1>
+              <h1>{matricule}</h1>
             </div>
             <div className="h-[75px] w-[150px] rounded-md ml-2">
               <img
@@ -195,20 +194,21 @@ const NotificationCard = ({ notify }) => {
           aria-describedby="modal-modal-description"
         >
           <Box sx={style}>
-            <LongCard
-              photo={
-                truck.image
-                  ? `http://127.0.0.1:8000/${truck.image}`
-                  : defaultTruck.photo
-              }
-              price={2000}
-              name={defaultTruck.name}
-              matricule={matricule}
-            />
+            {truck && defaultTruck && (
+              <LongCard
+                photo={
+                  truck.image
+                    ? `http://127.0.0.1:8000/${truck.image}`
+                    : defaultTruck.photo
+                }
+                price={price}
+                name={defaultTruck.name}
+                matricule={matricule}
+              />
+            )}
             <div>
               <h1 className="text-4xl font-bold my-7">
-                {" "}
-                {notify.name_notification_type} :نوع العملية{" "}
+                نوع العملية : {notify.name_notification_type}
               </h1>
               <div className="flex gap-2 justify-between mb-4">
                 <div className="w-[48%]">
@@ -234,15 +234,23 @@ const NotificationCard = ({ notify }) => {
                   رقم الهاتف
                 </label>
                 <div className="bg-gray-50 border border-gray-300 text-background sm:text-lg rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
-                  029348345
+                  {phone}
                 </div>
               </div>
-              <div>
-                <label className="block my-2 text-lg font-medium text-background">
-                  ملاحظة من عند الزبون
+              <div className="w-full mb-2">
+                <label className="block mb-2 text-lg font-medium text-background">
+                  المادة{" "}
                 </label>
-                <div className="bg-gray-50 border border-gray-300 text-background sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 h-fit block w-full p-2.5">
-                  {notify.comment}
+                <div className="bg-gray-50 border border-gray-300 text-background sm:text-lg rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                  {material}
+                </div>
+              </div>
+              <div className="w-full mb-2">
+                <label className="block mb-2 text-lg font-medium text-background">
+                  الوزن{" "}
+                </label>
+                <div className="bg-gray-50 border border-gray-300 text-background sm:text-lg rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                  {`${weight} kg`}
                 </div>
               </div>
               <div className="flex w-full items-center justify-center">
@@ -251,18 +259,21 @@ const NotificationCard = ({ notify }) => {
                     onClick={() => {
                       handleNotification(8);
                     }}
-                    className="px-4 py-2 m-2 rounded flex bg-background text-light text-xs md:text-xl font-bold hover:bg-secpndary  duration-200"
+                    className="px-4 py-2 m-2 rounded flex bg-background text-light text-xs md:text-xl font-bold hover:bg-accent  duration-200"
                   >
                     رفض
                   </button>
+
                   <button
+                  type="button"
                     onClick={() => {
-                      handleNotification(7);
+                     handleNotification(7);
                     }}
-                    className="px-4 py-2 m-2 rounded flex bg-background text-light text-xs md:text-xl font-bold hover:bg-secondary  duration-200"
+                    className="px-4 py-2 m-2 rounded flex bg-background text-light text-xs md:text-xl font-bold hover:bg-accent  duration-200"
                   >
                     تأكيد
                   </button>
+
                 </div>
               </div>
             </div>
@@ -273,4 +284,4 @@ const NotificationCard = ({ notify }) => {
   );
 };
 
-export default NotificationCard;
+export default NotificationCardTew;

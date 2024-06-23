@@ -9,38 +9,17 @@ import { useNavigate } from "react-router-dom";
 
 const Rent = () => {
   const user = JSON.parse(localStorage.getItem("user"));
-  const id = user.id;
-  const token = localStorage.getItem("token");
 
   const navigate = useNavigate();
 
-  const [trucks, setTrucks] = useState([
+  const trucks = [
     {
-      name: "JAC 3 ton",
-      weight: 3,
-      photo: jac3,
-    },
-    {
-      name: "JAC 5 ton",
-      weight: 5,
-      photo: jac5,
-    },
-    {
-      name: "DFM 1 ton",
-      weight: 1,
-      photo: DFM,
-    },
-    {
-      name: "Camion 10 ton",
-      weight: 10,
-      photo: cam10,
-    },
-    {
+      id_car_type: 3,
       name: "Camion 20 ton",
       weight: 20,
       photo: cam20,
     },
-  ]);
+  ];
 
 
   const [selected, setSelected] = useState([]);
@@ -116,7 +95,7 @@ const Rent = () => {
                     alt="truck"
                   />
                 </div>
-                <p className="text-center text-xl"> {truck.name}</p>
+                <p className="text-center text-light text-xl"> {truck.name}</p>
               </div>
             ))}
             
@@ -124,7 +103,7 @@ const Rent = () => {
           <button
             type="button"
             onClick={handleSubmit}
-            className="w-[80%] text-background bg-white hover:bg-light duration-300 text-lg focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg mb-5  px-5 py-2.5 text-center "
+            className="w-[80%] text-background bg-light hover:bg-accent duration-300 text-lg focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg mb-5  px-5 py-2.5 text-center "
           >
             إظهار النتائج
           </button>

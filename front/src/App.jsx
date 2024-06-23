@@ -9,18 +9,15 @@ import RentResults from "./components/RentResults.jsx";
 import Rent from "./components/Rent.jsx";
 import ScrollToTop from "./components/ScrollToTop.jsx";
 import BookingResults from "./components/BookingResults.jsx";
-import MyTrucks from "./components/MyTrucks.jsx";
-import AddTruck from "./components/AddTruck.jsx";
-import Payment from "./components/Payment.jsx";
 import Dashboard from "./components/Dashboard.jsx";
+import Plan from "./components/Plan.jsx";
 
 function App() {
-  
+   
   return (
     <>
 
       <Navbar />
-
       <ScrollToTop />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -32,8 +29,7 @@ function App() {
         <Route path="/rentresults/:ids" element={<RentResults />} />
         <Route path="/bookingresults/:ids" element={<BookingResults />} />
         <Route path="/rent" element={<Rent />} />
-        <Route path="/addtruck" element={<AddTruck />} />
-        <Route path="/mytrucks" element={<MyTrucks />} />
+        <Route path="/plan" element={<Plan />} />
       </Routes>
     </>
   );

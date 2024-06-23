@@ -8,13 +8,11 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const Booking = () => {
-  const user = JSON.parse(localStorage.getItem("user"));
-  const id = user.id;
-  const token = localStorage.getItem("token");
+  const user = JSON.parse(localStorage.getItem("user"))
 
   const navigate = useNavigate();
-
   const [selected, setSelected] = useState([]);
+  const [types, setTypes] = useState()
   const [truckData, setTruckData] = useState([]);
 
   const handleSelected = (index) => {
@@ -31,33 +29,39 @@ const Booking = () => {
     navigate(`/bookingresults/${selected.join(", ")}`);
   };
 
-  const [trucks, setTrucks] = useState([
+  const trucks = [
     {
+      id_car_type: 2,
       name: "JAC 3 ton",
       weight: 3,
       photo: jac3,
     },
     {
+      id_car_type: 3,
+  
       name: "JAC 5 ton",
       weight: 5,
       photo: jac5,
     },
     {
-      name: "DFM 1 ton",
+      id_car_type: 1,
+      name: "DFM",
       weight: 1,
       photo: DFM,
     },
     {
+      id_car_type: 4,
       name: "Camion 10 ton",
       weight: 10,
       photo: cam10,
     },
     {
+      id_car_type: 5,
       name: "Camion 20 ton",
       weight: 20,
       photo: cam20,
     },
-  ]);
+  ];
 
   useEffect(() => {
     const fetchCarTypes = async () => {
@@ -65,11 +69,11 @@ const Booking = () => {
         const response = await axios.get(
           "http://127.0.0.1:8000/API/get_all_car_type"
         );
-        const carTypes = response.data.car_type;
+        const types = response.data.car_type;
 
         // Merge fetched data with the trucks array
         const updatedTrucks = trucks.map((truck) => {
-          const matchedCarType = carTypes.find((car) =>
+          const matchedCarType = types.find((car) =>
             truck.name.includes(car.name_car_type)
           );
           return {

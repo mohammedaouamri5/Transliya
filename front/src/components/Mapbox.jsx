@@ -1,14 +1,23 @@
 import { useRef, useEffect, useState } from "react";
-import { Geocoder } from "@mapbox/search-js-react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
 import { FaLocationArrow } from "react-icons/fa";
 import "./mapbox.css";
-import axios from "axios";
+import { TextField } from "@mui/material";
+import { Price } from "../fetch/Price";
 
-const MapboxComponent = ({ user, userData, setShow, setForm }) => {
+const MapboxComponent = ({
+  user,
+  userData,
+  setShow,
+  setForm,
+  id_car_type,
+  setForma,
+}) => {
+  console.log("car: ", id_car_type);
+  const [price, setPrice] = useState();
   const accessToken =
     "pk.eyJ1IjoiYXppemtoYWxlZCIsImEiOiJjbHhobmsxM2UxYTRoMm5yMmNncng5c3doIn0.Ybgma2XqB2-Nfn-VvLkATQ";
 
@@ -21,11 +30,18 @@ const MapboxComponent = ({ user, userData, setShow, setForm }) => {
   const [current, setcurrent] = useState();
   const [startPoint, setStartPoint] = useState(null);
   const [endPoint, setEndPoint] = useState(null);
+  const [startText, setStartText] = useState("");
+  const [endText, setEndText] = useState("");
   const [startGeo, setStartGeo] = useState();
-  const [distance, setDistance] = useState();
-  const [startPointText, setStartPointText] = useState("");
+  const [distance, setDistance] = useState(0);
   const startMarkerRef = useRef(null);
   const endMarkerRef = useRef(null);
+
+  useEffect(() => {
+    Price(distance, id_car_type, setPrice);
+    console.log(distance);
+    console.log(price);
+  }, [distance]);
 
   useEffect(() => {
     mapboxgl.accessToken = accessToken;
@@ -120,7 +136,7 @@ const MapboxComponent = ({ user, userData, setShow, setForm }) => {
           .then((response) => response.json())
           .then((data) => {
             if (data.routes && data.routes.length > 0) {
-              setDistance(data.routes[0].distance);
+              setDistance(Math.round(data.routes[0].distance / 1000));
               const route = data.routes[0];
               const routeGeoJSON = {
                 type: "Feature",
@@ -226,14 +242,49 @@ const MapboxComponent = ({ user, userData, setShow, setForm }) => {
       .then((data) => {
         if (data.features && data.features.length > 0) {
           const address = data.features[0].properties.place_formatted;
-          setStartPointText(address);
-          startGeo.setInput(startPointText);
+          setStartText(address);
+          startGeo.setInput(startText);
         } else {
           console.warn("Unable to get address from coordinates");
         }
       })
       .catch((error) => console.error("Error fetching address:", error));
   };
+
+  const reverseLocationA = async (longitude, latitude, type) => {
+    try {
+      const response = await fetch(
+        `https://api.mapbox.com/search/geocode/v6/reverse?longitude=${longitude}&latitude=${latitude}&access_token=${accessToken}`
+      );
+      const data = await response.json();
+      if (data.features && data.features.length > 0) {
+        const address = data.features[0].properties.place_formatted;
+        console.log("address: ", address);
+        return address;
+      } else {
+        console.warn("Unable to get address from coordinates");
+        return null;
+      }
+    } catch (error) {
+      console.error("Error fetching address:", error);
+      return null;
+    }
+  };
+
+  useEffect(() => {
+
+    if (startPoint && endPoint) {
+      const fetchAdresses = async () => {
+        const start = await reverseLocationA(startPoint[0], startPoint[1], 1);
+        const end = await reverseLocationA(endPoint[0], endPoint[1], 2);
+        setStartText(start)
+        setEndText(end)
+      };
+
+      fetchAdresses()
+    }
+
+  }, [endPoint, startPoint]);
 
   const setCurrentLocationAsStartPoint = () => {
     navigator.geolocation.getCurrentPosition(
@@ -266,22 +317,26 @@ const MapboxComponent = ({ user, userData, setShow, setForm }) => {
       }
     );
 
-    if (startPointText) {
-      startGeo.setInput(startPointText);
+    if (startText) {
+      startGeo.setInput(startText);
     }
   };
-  
-  const handleSubmit = async () => {
-    const distanceInKm = Math.round(distance / 1000);
 
+  const handleSubmit = async () => {
     setForm((prevState) => ({
       ...prevState,
       from_lon: startPoint[0],
       from_lat: startPoint[1],
       to_lon: endPoint[0],
       to_lat: endPoint[1],
-      distention: distanceInKm,
+      distention: distance,
       id_zaboun: user.id,
+    }));
+
+    setForma((prevState) => ({
+      ...prevState,
+      start: startText,
+      end: endText,
     }));
 
     setShow(true);
@@ -307,6 +362,7 @@ const MapboxComponent = ({ user, userData, setShow, setForm }) => {
             </label>
             <div
               ref={endId}
+              dir="rtl"
               id="end-point-geocoder"
               className="w-full p-2 text-background flex justify-center"
             ></div>
@@ -324,11 +380,42 @@ const MapboxComponent = ({ user, userData, setShow, setForm }) => {
 
               <div
                 ref={startId}
+                dir="rtl"
                 id="start-point-geocoder"
                 className="w-full p-2 text-background flex justify-center"
               ></div>
             </div>
           </div>
+        </div>
+
+        <div className="mb-5">
+          <label className="block my-2 text-lg font-medium text-light ">
+            السعر
+          </label>
+          <TextField
+            className="w-full bg-white rounded-lg"
+            id="outlined-read-only-input"
+            dir="rtl"
+            value={price}
+            InputProps={{
+              readOnly: true,
+            }}
+          />
+        </div>
+
+        <div className="mb-5">
+          <label className="block my-2 text-lg font-medium text-light ">
+            المسافة
+          </label>
+          <TextField
+            className="w-full bg-white rounded-lg"
+            id="outlined-read-only-input"
+            dir="rtl"
+            value={distance}
+            InputProps={{
+              readOnly: true,
+            }}
+          />
         </div>
 
         <div

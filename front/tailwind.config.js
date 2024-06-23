@@ -6,12 +6,12 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-          primary: '#415a77', 
-          secondary: '#1b263b', 
-          accent: '#778da9',
-          background: '#0d1b2a',
-          subtext: '#6c757d',
-          light: '#e0e1dd',
+          primary: '#f2f4f3', 
+          secondary: '#f2f4f3', 
+          accent: '#ef233c',
+          background: '#283618',
+          subtext: '#669bbc',
+          light: '#f2f4f3',
       },
       backgroundImage: {
         'hero': "url('./src/assets/home-background.jpg')",

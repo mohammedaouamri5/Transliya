@@ -3,6 +3,7 @@ import Grid from "@mui/material/Grid";
 import ProductCardRent from "./ProductCardRent";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { fetchCarTypes } from "../fetch/Data";
 
 const RentResults = () => {
   const token = localStorage.getItem("token");
@@ -14,19 +15,7 @@ const RentResults = () => {
   const [types, setTypes] = useState();
 
   useEffect(() => {
-    const fetchCarTypes = async () => {
-      try {
-        const response = await axios.get(
-          "http://127.0.0.1:8000/API/get_all_car_type"
-        );
-        setTypes(response.data.car_type);
-        console.log(response.data.car_type);
-      } catch (error) {
-        console.error("Error fetching car types:", error);
-      }
-    };
-
-    fetchCarTypes();
+    fetchCarTypes(setTypes)
   }, []);
 
   useEffect(() => {

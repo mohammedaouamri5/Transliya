@@ -78,7 +78,7 @@ const Signup = () => {
                   {" "}
                   <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl ">
                     إنشاء حساب{" "}
-                    <span className="text-secondary">{`${
+                    <span className="text-accent">{`${
                       Type === "employee" ? "عامل" : "زبون"
                     }`}</span>
                   </h1>
@@ -150,7 +150,7 @@ const Signup = () => {
                         value={formData.username}
                         onChange={handleChange}
                         className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
-                        required=""
+                        autoComplete={false}
                       />
                     </div>
                     <div>
@@ -228,7 +228,7 @@ const Signup = () => {
                     <div className="flex items-center justify-between"></div>
                     <button
                       type="submit"
-                      className="w-full text-white bg-background hover:bg-secondary duration-300 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center "
+                      className="w-full text-white bg-background hover:bg-accent duration-300 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center "
                     >
                       إنشاء حساب{" "}
                     </button>
@@ -250,13 +250,13 @@ const Signup = () => {
                   </h1>
                   <div className="w-full justify-around flex">
                     <button
-                      className="px-5 py-2 rounded-md hover:bg-secondary duration-200 bg-black text-light"
+                      className="px-5 py-2 rounded-md hover:bg-accent duration-200 bg-black text-light"
                       onClick={handleTypeUser}
                     >
                       أنشئ حساب زبون
                     </button>
                     <button
-                      className="px-5 py-2 rounded-md hover:bg-secondary duration-200 bg-black text-light"
+                      className="px-5 py-2 rounded-md hover:bg-accent duration-200 bg-black text-light"
                       onClick={handleTypeEmployee}
                     >
                       أنشئ حساب عامل
