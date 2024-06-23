@@ -1,0 +1,28 @@
+asgiref==3.8.1
+Brotli==1.1.0
+cffi==1.16.0
+chardet==5.2.0
+cssselect2==0.7.0
+Django @ file:///opt/conda/conda-bld/django_1661296381686/work
+django-admin-material-dashboard==1.0.10
+django-admin-soft-dashboard==1.0.12
+django-admin-tools==0.9.3
+django-chartjs==2.3.0
+django-cors-headers==4.3.1
+django-wkhtmltopdf==3.4.0
+djangorestframework==3.15.1
+fonttools==4.53.0
+html5lib==1.1
+pillow==10.3.0
+psycopg2==2.9.9
+pycparser==2.22
+pydyf==0.10.0
+pyphen==0.15.0
+reportlab==4.2.0
+six==1.16.0
+sqlparse @ file:///croot/sqlparse_1690901927333/work
+tinycss2==1.3.0
+typing_extensions==4.12.2
+weasyprint==62.3
+webencodings==0.5.1
+zopfli==0.2.3
