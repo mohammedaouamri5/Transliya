@@ -130,11 +130,13 @@ def create_notification(request: Request):
         id_to = get_object_or_404(models.Person, id=data['id_to'])
         id_notification_type = get_object_or_404(models.NotificationType, id_notification_type=data['id_notification_type'])
 
+        info = data.get("info", None)
         # Create a new Notify instance
         notification = models.Notify(
             id_from=id_from,
             id_to=id_to,
-            id_notification_type=id_notification_type
+            id_notification_type=id_notification_type,
+            info=info
         )
         notification.save()
 
@@ -144,6 +146,8 @@ def create_notification(request: Request):
         return Response({"error": f"Missing key: {str(e)}"}, status=status.HTTP_400_BAD_REQUEST)
     except Exception as e:
         return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
 
 @api_view(['POST'])
 @authentication_classes([SessionAuthentication, TokenAuthentication])

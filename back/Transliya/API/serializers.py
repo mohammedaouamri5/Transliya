@@ -40,6 +40,8 @@ class TewsilaSerializer(serializers.ModelSerializer):
     class Meta(object):
         model = models.Tewsila
         fields = '__all__'
+
+
 class CarServiceSerializer(serializers.ModelSerializer):
     class Meta(object):
         model = models.CarService
@@ -55,6 +57,7 @@ class NotificationTypeSerializer(serializers.ModelSerializer):
     class Meta(object):
         model = models.NotificationType
         fields = '__all__'
+
 class NotifySerializer(serializers.ModelSerializer):
     class Meta(object):
         model = models.Notify 
@@ -71,6 +74,7 @@ class NotifySerializer(serializers.ModelSerializer):
             'id_notify',
             'id_from',
             'id_to',
+            'info',
             'id_notification_type',
             'name_notification_type',
             'time',
@@ -127,6 +131,8 @@ class EmployerSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Employer
         fields = '__all__'  # Include all fields from Employer model
+
+        
 class CarEmployerSerializer(serializers.ModelSerializer):
     id_car_type = serializers.PrimaryKeyRelatedField(queryset=models.CarType.objects.all())
 
@@ -175,3 +181,8 @@ class CarEmployerrEmployerPersonSerializerSerializer(serializers.ModelSerializer
     class Meta:
         model = models.CarEmployer
         fields = ('id_employer', 'id_car_type', 'matricule_car', 'is_deleted_CarEmployer', 'image')
+
+class GetPayedSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.GetPayed
+        fields = "__all__"
