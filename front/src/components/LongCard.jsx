@@ -9,7 +9,7 @@ const LongCard = ({photo, name, weight}) => {
 
           <h1 className="mb-2">السعر</h1>
           
-          <h1 className="text-2xl"> DZD 2000 </h1>
+          <h1 className="text-2xl"> DZD 800 </h1>
 
         </div>
         <div className="p-2 flex items-center">  
