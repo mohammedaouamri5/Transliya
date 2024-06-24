@@ -153,7 +153,7 @@ const ProductCardRent = ({ userData, token, types }) => {
               >
                 كراء
               </button>
-              <h1 className="text-xl lg:text-2xl text-center p-1">2000 DZD</h1>
+              <h1 className="text-xl lg:text-2xl text-center p-1">800 DZD</h1>
             </div>
           </div>
         </div>
