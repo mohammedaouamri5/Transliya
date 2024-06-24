@@ -33,7 +33,7 @@ ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS = [
     # "django_light" , 
-    'admin_soft.apps.AdminSoftDashboardConfig',
+    # 'admin_soft.apps.AdminSoftDashboardConfig',
     'admin_tools_stats',
     'django_nvd3',
     'django.contrib.admin',
