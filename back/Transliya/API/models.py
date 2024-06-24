@@ -115,3 +115,7 @@ class GetPayed(models.Model):
     id_employer = models.ForeignKey(Employer, on_delete=models.CASCADE)
     prix = models.FloatField()
     at = models.DateTimeField(auto_now_add=True)
+    
+    
+class isAbonner(models.Model): 
+    is_zaboun = models.ForeignKey(Person,  on_delete=models.CASCADE)

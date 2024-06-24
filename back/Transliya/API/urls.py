@@ -48,9 +48,13 @@ urlpatterns = [
 
 
     re_path('search_by_name', views.search_by_name),
+    re_path('add_to_is_abonner', views.add_to_is_abonner),
+    re_path('is_person_in_abonner', views.is_person_in_abonner),
 
 
 
     path('car-employers/', views.CarEmployerCreateView.as_view(),
          name='car_employer_create'),
+    
+    
 ]

@@ -68,6 +68,22 @@ Content-Type: application/json
 
 
 } 
+###
+
+POST http://127.0.0.1:8000/API/add_to_is_abonner/
+Content-Type: application/json
+
+{
+    "id": 1
+}
+###
+
+POST http://127.0.0.1:8000/API/is_person_in_abonner/
+Content-Type: application/json
+
+{
+    "id": 1
+}
 
 
 ### "is_allowed": true,

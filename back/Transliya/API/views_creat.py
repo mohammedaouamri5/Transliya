@@ -355,3 +355,47 @@ def add_ta9yym_to_kerya(request: Request):
     serializer = KeryaSerializer(kerya)
     return Response({'Tawsila': serializer.data}, status=status.HTTP_200_OK)
 
+
+@api_view(['POST'])
+def add_to_is_abonner(request):
+    try:
+        # Retrieve the person object using the provided ID
+        person = get_object_or_404(models.Person, id=request.data['id'])
+
+        # Create a new isAbonner instance
+        is_abonner_instance = models.isAbonner(is_zaboun=person)
+        
+        # Save the instance to the database
+        is_abonner_instance.save()
+
+        # Return a success response
+        return Response({"message": "Person added to isAbonner successfully."}, status=status.HTTP_201_CREATED)
+
+    except KeyError:
+        # Handle the case where 'id' is not provided in the request data
+        return Response({"error": "ID not provided in request data."}, status=status.HTTP_400_BAD_REQUEST)
+
+    except Exception as e:
+        # Handle any other exceptions
+        return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    
+    
+@api_view(['POST'])
+def is_person_in_abonner(request):
+    try:
+        # Retrieve the person object using the provided ID
+        person_id = request.data.get('id')
+        if not person_id:
+            return Response({"error": "ID not provided in request data."}, status=status.HTTP_400_BAD_REQUEST)
+        
+        person = get_object_or_404(models.Person, id=person_id)
+        
+        # Check if there is any isAbonner instance associated with this person
+        is_abonner_exists = models.isAbonner.objects.filter(is_zaboun=person).exists()
+
+        # Return a JSON response with the boolean result
+        return Response({"is_abonner": is_abonner_exists}, status=status.HTTP_200_OK)
+
+    except Exception as e:
+        # Handle any other exceptions
+        return Response({"error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
