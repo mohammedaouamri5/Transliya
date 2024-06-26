@@ -58,7 +58,7 @@ class Tewsila(models.Model):
 
     id_zaboun = models.ForeignKey(Person, on_delete=models.CASCADE)
 
-    comment_Tewsila = models. TextField(null=True)  # ! <===
+    comment_Tewsila = models.TextField(null=True)  # ! <===
     ta9yim_Tewsila = models.FloatField(null=True)  # ! <===
 
 

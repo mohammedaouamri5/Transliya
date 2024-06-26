@@ -40,12 +40,12 @@ class KeryaPDF():
     def create(self):
 
         style = """
-            body { 
+            body {
                 font-family: Arial, sans-serif;
                 margin: 20px;
                 background-color: #f9f9f9;
             }
-            .container { 
+            .container {
                 max-width: 600px;
                 margin: 0 auto;
                 padding: 20px;
@@ -54,23 +54,23 @@ class KeryaPDF():
                 box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
                 position: relative;
             }
-            h1, h2, p { 
+            h1, h2, p {
                 margin-bottom: 10px;
             }
-            .info-box { 
+            .info-box {
                 border-left: 4px solid #3498db;
                 padding-left: 10px;
                 margin-bottom: 20px;
             }
-            .info-box strong { 
+            .info-box strong {
                 font-weight: bold;
                 color: #333;
             }
-            .item-list { 
+            .item-list {
                 list-style-type: none;
                 padding-left: 0;
             }
-            .item-list li { 
+            .item-list li {
                 margin-bottom: 5px;
             }
             .date-id {
@@ -79,8 +79,8 @@ class KeryaPDF():
                 left: 20px;
                 text-align: left;
                 font-size: 0.8em;
-            }            
-            
+            }
+
             """
         __html = f"""
             <!DOCTYPE html>
@@ -146,17 +146,18 @@ class TawsilaPDF():
                  employer_id=-1,
                  person_id=-1,
                  ) -> None:
+        
         self.id = id_
         self.employer = employer
         self.person = person
         self.distance = distance
-        self.prix = prix
         self.produit = produit
         self.poids = poids
         self.employer_id = employer_id
         self.person_id = person_id
         self.tax = 10 / 100
-        self.prix_apres = prix * (1 + self.tax)
+        self.prix = float(prix)  # Ensure prix is a float
+        self.prix_apres = self.prix * (1 + self.tax)
 
     def create(self):
 

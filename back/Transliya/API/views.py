@@ -204,18 +204,18 @@ def search_by_name(request):
 
 
 @api_view(['POST'])
-@authentication_classes([SessionAuthentication, TokenAuthentication])
-@permission_classes([IsAuthenticated])
+
 def get_pay(request):
     serializer = GetPayedSerializer(data=request.data)
     if serializer.is_valid():
         employer_id = serializer.validated_data['id_employer']
-        employer = get_object_or_404(models.Employer, id_employer=employer_id)
+        employer = get_object_or_404(models.Employer, id_employer=employer_id)  # Use the correct field name
         payment = models.GetPayed.objects.create(id_employer=employer, prix=serializer.validated_data['prix'])
         # Serialize the payment object
         serialized_payment = GetPayedSerializer(payment)
         return Response({"payment": serialized_payment.data}, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 @api_view(['GET'])
 def get_all_car_type(request: Request):
