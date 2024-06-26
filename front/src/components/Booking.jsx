@@ -31,33 +31,36 @@ const Booking = () => {
 
   const trucks = [
     {
-      id_car_type: 2,
+      id_car_type: 5,
       name: "JAC 3 ton",
+      subName: "JAC",
       weight: 3,
       photo: jac3,
     },
     {
-      id_car_type: 3,
-  
+      id_car_type: 6,
       name: "JAC 5 ton",
+      subName: "JAC",
       weight: 5,
       photo: jac5,
     },
     {
-      id_car_type: 1,
+      id_car_type: 4,
       name: "DFM",
-      weight: 1,
+      subName: "DFM",
       photo: DFM,
     },
     {
-      id_car_type: 4,
+      id_car_type: 7,
       name: "Camion 10 ton",
+      subName: "Camion",
       weight: 10,
       photo: cam10,
     },
     {
-      id_car_type: 5,
+      id_car_type: 8,
       name: "Camion 20 ton",
+      subName: "Camion",
       weight: 20,
       photo: cam20,
     },
@@ -98,7 +101,7 @@ const Booking = () => {
           التوصيل
         </div>
         <div
-          className={`  flex-col flex items-center justify-evenly w-full bg-background text-light text-end p-5`}
+          className={`  flex-col flex items-center justify-evenly w-full bg-background text-light text-end px-10 py-20`}
         >
           <h1 className="text-center text-3xl my-10">إختر نوع المركبة</h1>
           <div className="flex w-full p-8 flex-wrap justify-center">
@@ -125,7 +128,7 @@ const Booking = () => {
           <button
             type="button"
             onClick={handleSubmit}
-            className="w-[80%] text-background bg-white hover:bg-light duration-300 text-lg focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg mb-5  px-5 py-2.5 text-center "
+            className="w-[80%] text-background bg-white hover:bg-accent duration-300 text-lg focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg mb-5  px-5 py-2.5 text-center "
           >
             إظهار النتائج
           </button>{" "}

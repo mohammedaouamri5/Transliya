@@ -1,6 +1,6 @@
 export const Price = (distance, id_car_type, setPrice) => {
   switch (id_car_type) {
-    case 1:
+    case 4:
       if (distance > 0 && distance <= 100) {
         setPrice(distance * 510);
       } else if (distance > 100 && distance <= 200) {
@@ -13,7 +13,7 @@ export const Price = (distance, id_car_type, setPrice) => {
         setPrice(distance * 400);
       }
       break;
-    case 2:
+    case 5:
       if (distance > 0 && distance <= 100) {
         setPrice(distance * 1400);
       } else if (distance > 100 && distance <= 200) {
@@ -26,7 +26,7 @@ export const Price = (distance, id_car_type, setPrice) => {
         setPrice(distance * 500);
       }
       break;
-    case 3:
+    case 6:
       if (distance > 0 && distance <= 100) {
         setPrice(distance * 1600);
       } else if (distance > 100 && distance <= 200) {
@@ -39,7 +39,7 @@ export const Price = (distance, id_car_type, setPrice) => {
         setPrice(distance * 500);
       }
       break;
-    case 4:
+    case 7:
       if (distance > 0 && distance <= 100) {
         setPrice(distance * 2000);
       } else if (distance > 100 && distance <= 200) {
@@ -52,7 +52,7 @@ export const Price = (distance, id_car_type, setPrice) => {
         setPrice(distance * 650);
       }
       break;
-    case 5:
+    case 8:
       if (distance > 0 && distance <= 100) {
         setPrice(distance * 3100);
       } else if (distance > 100 && distance <= 200) {

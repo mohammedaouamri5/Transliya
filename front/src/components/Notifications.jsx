@@ -8,8 +8,9 @@ import NotificationsCardResNo from "./NotificationsCardResNo";
 const Notifications = () => {
   const user = JSON.parse(localStorage.getItem("user"));
   const userId = user.id;
+  const employer = JSON.parse(localStorage.getItem("employer"));
   const token = localStorage.getItem("token");
-  const [selected, setSelected] = useState("work");
+  const [selected, setSelected] = useState("me");
   const [Notifications, setNotifications] = useState();
   const [workNotifies, setWorkNotifies] = useState();
   const [myNotifies, setNotifies] = useState();
@@ -55,16 +56,18 @@ const Notifications = () => {
   return (
     <>
       <div className="w-full justify-end flex mb-5">
-        <h1
-          onClick={() => {
-            setSelected("work");
-          }}
-          className={`w-fit ml-5 ${
-            selected === "work" ? "border-b-2 border-accent" : "border-none"
-          } cursor-pointer`}
-        >
-          إشعارات العمل
-        </h1>
+        {employer && (
+          <h1
+            onClick={() => {
+              setSelected("work");
+            }}
+            className={`w-fit ml-5 ${
+              selected === "work" ? "border-b-2 border-accent" : "border-none"
+            } cursor-pointer`}
+          >
+            إشعارات العمل
+          </h1>
+        )}
         <h1
           onClick={() => {
             setSelected("me");

@@ -18,6 +18,20 @@ import { IoIosLogOut } from "react-icons/io";
 import "./Navbar.css";
 import axios from "axios";
 
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: "80vw",
+  maxHeight: "90vh",
+  overflowY: "auto",
+  backgroundColor: "white",
+  boxShadow: 24,
+  textAlign: "end",
+  p: 4,
+};
+
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [notify, setNotify] = useState([]);
@@ -28,17 +42,40 @@ const Navbar = () => {
   const [notifications, setNotifications] = useState([]);
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(null);
+  const [isAbonner, setAbonner] = useState(false);
+  const [show, setShow] = useState(false);
+  const [selected, setSelected] = useState("");
+  const [pay, setPay] = useState(false);
+
+  const handleShowClose = () => {
+    setShow(false);
+    setPay(false);
+  };
+
+  const handleShowOpen = () => {
+    setShow(true);
+  };
 
   const settings = [
     {
       name: "كراء",
-      link: "rent",
+      link: isAuthenticated && isAbonner ? "rent" : "#",
       icon: <MdCarRental className="ml-4 text-2xl" />,
+      onClick: isAuthenticated
+        ? isAbonner
+          ? null
+          : handleShowOpen
+        : handleOpen,
     },
     {
       name: "توصيل",
-      link: "booking",
+      link: isAuthenticated && isAbonner ? "booking" : "#",
       icon: <TbTruckDelivery className="ml-4 text-2xl" />,
+      onClick: isAuthenticated
+        ? isAbonner
+          ? null
+          : handleShowOpen
+        : handleOpen,
     },
     {
       name: "لوحة التحكم",
@@ -55,6 +92,21 @@ const Navbar = () => {
     setAnchorElUser(null);
   };
 
+  const AddAbonner = async () => {
+    const res = await axios.post(
+      "http://127.0.0.1:8000/API/add_to_is_abonner",
+      {
+        id: user.id,
+      }
+    );
+    console.log(res);
+    if (res.status >= 200 && res.status < 300) {
+      setAbonner(true);
+      setShow(false);
+      console.log(isAbonner);
+    }
+  };
+
   useEffect(() => {
     if (isAuthenticated) {
       const user = JSON.parse(localStorage.getItem("user"));
@@ -63,6 +115,21 @@ const Navbar = () => {
       setToken(token);
     }
   }, [isAuthenticated]);
+
+  useEffect(() => {
+    if (user) {
+      const CheckAbonner = async () => {
+        const res = await axios.post(
+          "http://127.0.0.1:8000/API/is_person_in_abonner",
+          {
+            id: user.id,
+          }
+        );
+        setAbonner(res.data.is_abonner);
+      };
+      CheckAbonner();
+    }
+  }, [user]);
 
   useEffect(() => {
     if (isAuthenticated && user && token) {
@@ -76,7 +143,6 @@ const Navbar = () => {
             }
           );
           if (response.status >= 200 && response.status <= 300) {
-            console.log(response);
             setNotifications(response.data.notification);
           }
         } catch (error) {
@@ -96,7 +162,6 @@ const Navbar = () => {
       const notRead = notifications.filter(
         (notification) => !notification.is_readed
       );
-      console.log(notRead);
       setNotify(notRead);
     }
   }, [notifications]);
@@ -118,9 +183,11 @@ const Navbar = () => {
                       alt={user.username}
                       src="/static/images/avatar/2.jpg"
                     />
-                    <div className="absolute h-4 w-4 bg-red-600 text-white text-xs right-0 bottom-0 rounded-full">
-                      <p>{notify.length > 9 ? "9+" : notify.length}</p>
-                    </div>
+                    {notify.length > 0 && (
+                      <div className="absolute h-4 w-4 bg-red-600 text-white text-xs right-0 bottom-0 rounded-full">
+                        <p>{notify.length > 9 ? "9+" : notify.length}</p>
+                      </div>
+                    )}
                   </IconButton>
                 </Tooltip>
                 <Menu
@@ -145,17 +212,37 @@ const Navbar = () => {
                     <div className="border-t-2 border-[rgba(3, 27, 78, .5)] my-4"></div>
                   </div>
                   {settings.map((setting) => (
-                    <Link key={setting.name} to={`/${setting.link}`}>
-                      <MenuItem
-                        onClick={handleCloseUserMenu}
-                        className="text-end"
-                      >
-                        <h1 className="w-full text-end text-md">
-                          {setting.name}
-                        </h1>
-                        {setting.icon}
-                      </MenuItem>
-                    </Link>
+                    <MenuItem
+                      key={setting.name}
+                      onClick={() => {
+                        if (
+                          !isAbonner &&
+                          (setting.name === "كراء" || setting.name === "توصيل")
+                        ) {
+                          handleShowOpen();
+                        } else {
+                          handleCloseUserMenu();
+                        }
+                      }}
+                      className="text-end"
+                    >
+                      {isAbonner ||
+                      (setting.name !== "كراء" && setting.name !== "توصيل") ? (
+                        <Link to={`/${setting.link}`} className="w-full text-end text-md flex justify-end">
+                          <h1>
+                            {setting.name}
+                          </h1>
+                          {setting.icon}
+                        </Link>
+                      ) : (
+                        <>
+                          <h1 className="w-full text-end text-md">
+                            {setting.name}
+                          </h1>
+                          {setting.icon}
+                        </>
+                      )}
+                    </MenuItem>
                   ))}
                   <Link to={"/login"}>
                     <MenuItem
@@ -163,7 +250,6 @@ const Navbar = () => {
                       className="text-end hover:text-red-700 duration-100"
                     >
                       <h1 className="w-full text-center text-md">
-                        {" "}
                         تسجيل الخروج
                       </h1>
                       <IoIosLogOut className="ml-4 text-3xl" />
@@ -189,7 +275,13 @@ const Navbar = () => {
               </li>
               <li className="hover:text-accent duration-300">
                 {isAuthenticated ? (
-                  <Link to={"/rent"}> الكراء </Link>
+                  isAbonner ? (
+                    <Link to="/rent">الكراء</Link>
+                  ) : (
+                    <div onClick={handleShowOpen} className="cursor-pointer">
+                      الكراء
+                    </div>
+                  )
                 ) : (
                   <div onClick={handleOpen} className="cursor-pointer">
                     الكراء
@@ -198,13 +290,20 @@ const Navbar = () => {
               </li>
               <li className="hover:text-accent duration-300">
                 {isAuthenticated ? (
-                  <Link to={"/booking"}> التوصيل </Link>
+                  isAbonner ? (
+                    <Link to="/booking">التوصيل</Link>
+                  ) : (
+                    <div onClick={handleShowOpen} className="cursor-pointer">
+                      التوصيل
+                    </div>
+                  )
                 ) : (
                   <div onClick={handleOpen} className="cursor-pointer">
                     التوصيل
                   </div>
                 )}
               </li>
+
               <li className="hover:text-accent duration-300">
                 {isAuthenticated ? (
                   <Link to={"/plan"}> مخطط الموقع </Link>
@@ -214,6 +313,7 @@ const Navbar = () => {
                   </div>
                 )}
               </li>
+
               <li className="hover:text-accent duration-300">
                 {isAuthenticated ? (
                   <Link to={"/dashboard"}> لوحة التحكم </Link>
@@ -253,6 +353,100 @@ const Navbar = () => {
             </Link>
           </div>
         </div>
+      </Modal>
+
+      <Modal
+        open={show}
+        onClose={handleShowClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        {!pay ? (
+          <div className="absolute top-1/2 left-1/2 transform rounded -translate-x-1/2 -translate-y-1/2 bg-light text-center w-[400px] p-5">
+            <h1 className="text-2xl m-10">إشترك للإستفادة من هذه الخدمة</h1>
+            <div>
+              <button
+                onClick={() => {
+                  setPay(true);
+                }}
+                className="px-6 py-2 text-md sm:text-lg bg-background rounded-lg hover:bg-accent duration-200 text-light"
+              >
+                الإشتراك
+              </button>
+            </div>
+          </div>
+        ) : (
+          <Box sx={style}>
+            <div>
+              <h1 className="mb-8 text-3xl font-bold">اختر طريقة الدفع</h1>
+              <div className="flex w-full mb-5 justify-evenly">
+                <div
+                  className={` ${
+                    selected.includes("dhahabiya")
+                      ? `border-black`
+                      : "border-white"
+                  }  duration-200 border-2  hover:border-black p-1 rounded-xl`}
+                  onClick={() => setSelected("dhahabiya")}
+                >
+                  <img
+                    className="h-20 rounded-xl"
+                    src="https://estorm.ooredoo.dz/e-payment/assets/img/EI.png"
+                    alt="truck"
+                  />
+                </div>
+
+                <div
+                  className={` ${
+                    selected.includes("CIB") ? `border-black` : "border-white"
+                  }  duration-200 border-2  hover:border-black p-1 rounded-xl`}
+                  onClick={() => setSelected("CIB")}
+                >
+                  <img
+                    className="h-20 rounded-xl"
+                    src="https://estorm.ooredoo.dz/e-payment/assets/img/CIB.png"
+                    alt="truck"
+                  />
+                </div>
+              </div>
+              <div className="mb-5">
+                <h1 className="text-lg mb-2">رقم البطاقة</h1>
+                <input
+                  type="text"
+                  dir="rtl"
+                  className="bg-whit mb-5 border border-gray-300 text-background sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                />
+                <div className="flex w-full justify-between">
+                  <div className="w-[48%]">
+                    <h1 className="text-lg mb-2">تاريخ نهاية الصلاحية</h1>
+                    <input
+                      type="text"
+                      dir="rtl"
+                      className="bg-whit  border border-gray-300 text-background sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                    />
+                  </div>
+                  <div className="w-[48%]">
+                    <h1 className="text-lg mb-2 ">CVV</h1>
+                    <input
+                      type="text"
+                      dir="rtl"
+                      className="bg-whit  border border-gray-300 text-background sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                    />
+                  </div>
+                </div>
+              </div>
+              <div className="w-full flex justify-center">
+                <button
+                  onClick={() => {
+                    AddAbonner();
+                  }}
+                  className="w-full text-light bg-background hover:bg-accent duration-300 text-lg focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg  px-5 py-2.5 text-center "
+                >
+                  تأكيد الدفع
+                </button>
+              </div>
+            </div>{" "}
+          </Box>
+        )}
       </Modal>
     </>
   );

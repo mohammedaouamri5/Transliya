@@ -10,19 +10,15 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import Box from "@mui/material/Box";
 import { RentPrice } from "../fetch/Price";
-
 import dayjs from "dayjs";
-import DFM from "../assets/DFM.jpg";
-import jac5 from "../assets/jac5ton.jpg";
-import jac3 from "../assets/jac3ton.jpg";
-import cam20 from "../assets/camion20ton.jpg";
-import cam10 from "../assets/camion10ton.jpg";
 import axios from "axios";
+import cam20 from "../assets/camion20ton.jpg";
 
 const trucks = [
   {
-    id_car_type: 3,
+    id_car_type: 8,
     name: "Camion 20 ton",
+    subName: "Camion",
     weight: 20,
     photo: cam20,
   },
@@ -43,17 +39,12 @@ const style = {
 };
 
 const ProductCardRent = ({ userData, token, types }) => {
-  console.log(userData);
+  const user = JSON.parse(localStorage.getItem("user"));
+  console.log(userData.id_car_type)
 
   const [info, setInfo] = useState();
   const [days, setDays] = useState(0);
   const [months, setMonths] = useState(0);
-  const [isChecked, setIsChecked] = useState(false);
-
-
-  const user = JSON.parse(localStorage.getItem("user"));
-  console.log(userData.id_employer.id_employer.username);
-
   const [open, setOpen] = useState(false);
   const [show, setShow] = useState(false);
   const [selected, setSelected] = useState("");
@@ -61,13 +52,11 @@ const ProductCardRent = ({ userData, token, types }) => {
   const [end, setEnd] = useState(dayjs());
   const [comment, setComment] = useState("");
   const [price, setPrice] = useState(0);
+  const [carType, setCarType] = useState("");
+  const [truck, setTruck] = useState("");
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
-  const handleDownload = () => {
-    DownloadPDF(username, employer_username, "Rent", price);
-  };
 
   const generateKeryaPDF = async () => {
     try {
@@ -89,21 +78,12 @@ const ProductCardRent = ({ userData, token, types }) => {
       );
       const pdfUrl = `http://127.0.0.1:8000/${response.data.path}`;
 
-      // Use useNavigate for navigation (React Router v6+)
-      window.open(pdfUrl, "_blank"); // Navigate to the generated PDF URL
+      window.open(pdfUrl, "_blank");
     } catch (error) {
       console.error("Error generating tawsila PDF:", error);
     }
   };
 
-  const handleCheckboxChange = () => {
-    setIsChecked((prevChecked) => !prevChecked); // Toggle checkbox state
-    if (isChecked) {
-      setPrice(price - 2000);
-    } else {
-      setPrice(price + 2000);
-    }
-  };
 
   useEffect(() => {
     const info = JSON.stringify({
@@ -160,23 +140,27 @@ const ProductCardRent = ({ userData, token, types }) => {
   };
 
   useEffect(() => {
-    console.log(price);
     RentPrice(days, months, setPrice);
-    console.log(price);
   }, [days, months]);
+
+  useEffect(() => {
+    if (types && trucks) {    
+      const truck = trucks.find((truck) => truck.id_car_type === userData.id_car_type);
+      const carType = types.find(
+        (type) => type.id_car_type === truck.id_car_type
+      );
+      setCarType(carType);
+      setTruck(truck);
+    }
+  }, [types, trucks]);
 
   const username = user.username;
   const employer_username = userData.id_employer.id_employer.username;
   const id_employer = userData.id_employer.id_employer.id;
   const phone = userData.id_employer.id_employer.phonenumberp;
-  const id_car_type = userData.id_car_type;
-
-  const truck = trucks.find((truck) => truck.id_car_type === id_car_type);
-  const carType = types.find((type) => type.id_car_type === truck.id_car_type);
-
-  console.log(months, days);
 
   return (
+    userData &&
     <>
       <div className="h-auto w-auto   bg-light p-2 text-background m-5 rounded-lg text-end shadow-md shadow-light">
         <div className={`h-[45%] w-full`}>
@@ -188,7 +172,7 @@ const ProductCardRent = ({ userData, token, types }) => {
                 : truck.photo
             }
             alt=""
-            className="h-auto max-w-full"
+            className="h-auto md:min-h-[170px] sm:min-h-[190px] min-h-[250px] lg:min-h-[220px] max-w-full"
           />{" "}
         </div>
         <div className="p-4  w-full text-xl h-[55%]">
@@ -197,16 +181,15 @@ const ProductCardRent = ({ userData, token, types }) => {
           </h2>
           <div className="flex flex-wrap w-full justify-end h-fit border-b border-background pb-4">
             <span className="mr-5 flex gap-2 items-center">
-              {carType ? carType.name_car_type : "اسم الشاحنة"}
+              {truck ? truck.subName : "اسم الشاحنة"}
               <FaTruck />
             </span>
             <span className=" flex gap-2 items-center">
-              {carType ? `${carType.car_poitds} kg` : "وزن الشاحنة"}
+              {truck ? `${truck.weight}` : "وزن الشاحنة"}
               <FaWeightHanging />
             </span>
           </div>
           <div className="flex w-full flex-col mt-2">
-            <p className="opacity-70 mb-2text-sm md:text-md">السعر</p>
 
             <div className="flex justify-between">
               <button
@@ -215,7 +198,6 @@ const ProductCardRent = ({ userData, token, types }) => {
               >
                 كراء
               </button>
-              <h1 className="text-xl lg:text-2xl text-center p-1">2000 DZD</h1>
             </div>
           </div>
         </div>
@@ -309,9 +291,13 @@ const ProductCardRent = ({ userData, token, types }) => {
             ) : (
               <>
                 <LongCard
-                  photo={truck ? truck.photo : defaultImage}
-                  name={carType ? carType.name_car_type : "اسم الشاحنة"}
-                  weight={carType ? `${carType.car_poitds} kg` : "وزن الشاحنة"}
+                  photo={
+                    userData.image
+                      ? `http://127.0.0.1:8000${userData.image}`
+                      : truck.photo
+                  }
+                  name={truck ? truck.subName : "اسم الشاحنة"}
+                  weight={truck ? `${truck.weight} ton` : "وزن الشاحنة"}
                 />
                 <form className="space-y-4 px-5 md:space-y-6 w-full">
                   <div className="flex gap-2 justify-between">
@@ -352,16 +338,6 @@ const ProductCardRent = ({ userData, token, types }) => {
                       }}
                     />
                   </div>
-                  {phone && (
-                    <div>
-                      <label className="block mb-2 text-lg font-medium text-background ">
-                        رقم هاتف صاحب الشاحنة
-                      </label>
-                      <div className="bg-gray-50 border border-gray-300 text-background sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 ">
-                        {phone}
-                      </div>
-                    </div>
-                  )}
                   <div>
                     <label className="block my-2 text-lg font-medium text-background ">
                       أضف ملاحظة
@@ -375,19 +351,11 @@ const ProductCardRent = ({ userData, token, types }) => {
                       onChange={(e) => {
                         setComment(e.target.value);
                       }}
-                      placeholder="اختر نقطة بداية التوصيل"
+                      placeholder="أضف معلومات قد يحتاجها العامل"
                       className="bg-gray-50 border border-gray-300 text-background sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 h-[100px] block w-full p-2.5 "
                     />
                   </div>
-                  <div className="flex flex-col w-full justify-between items-end mb-5">
-                    <div className="w-full flex justify-end">
-                      <h1 className="text-xl font-bold my-5"> أضف رافعة</h1>
-                      <Checkbox
-                        checked={isChecked}
-                        onChange={handleCheckboxChange}
-                      />
-                    </div>
-                  </div>
+              
                   <button
                     type="button"
                     onClick={() => {

@@ -16,6 +16,7 @@ const Rent = () => {
     {
       id_car_type: 3,
       name: "Camion 20 ton",
+      subName: "Camion",
       weight: 20,
       photo: cam20,
     },

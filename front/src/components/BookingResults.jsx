@@ -6,8 +6,6 @@ import axios from "axios";
 
 const BookingResults = () => {
   const token = localStorage.getItem("token");
-  console.log(token);
-
   const { ids } = useParams();
   const idsArray = ids.split(",").map((id) => parseInt(id.trim()));
 
@@ -21,7 +19,6 @@ const BookingResults = () => {
           "http://127.0.0.1:8000/API/get_all_car_type"
         );
         setTypes(response.data.car_type);
-        console.log(response.data.car_type);
       } catch (error) {
         console.error("Error fetching car types:", error);
       }
@@ -59,7 +56,7 @@ const BookingResults = () => {
         <div className="w-full h-[30vh] flex items-center justify-center sm:h-[40vh] bg-white">
           <h1 className="text-4xl font-bold">نتائج البحث</h1>
         </div>
-        <div className={`w-full p-10 bg-background flex items-center`}>
+        <div className={`w-full px-10 py-20 bg-background flex items-center`}>
           {trucks.length > 0 ? (
             <Grid container columns={{ xs: 1, sm: 8, md: 12 }}>
               {trucks.map((truck, index) => (
@@ -69,7 +66,9 @@ const BookingResults = () => {
               ))}
             </Grid>
           ) : (
-            "Loading"
+            <>
+              <div className="w-full text-center text-light text-3xl">لا يوجد مركبات من هذا النوع حاليا جرب اختيار نوع أو أنواع أخرى</div>
+            </>
           )}
         </div>
       </div>

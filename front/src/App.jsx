@@ -11,7 +11,7 @@ import ScrollToTop from "./components/ScrollToTop.jsx";
 import BookingResults from "./components/BookingResults.jsx";
 import Dashboard from "./components/Dashboard.jsx";
 import Plan from "./components/Plan.jsx";
-
+import Footer from "./components/Footer.jsx";
 function App() {
    
   return (
@@ -31,6 +31,7 @@ function App() {
         <Route path="/rent" element={<Rent />} />
         <Route path="/plan" element={<Plan />} />
       </Routes>
+      <Footer />
     </>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -9,37 +9,42 @@ import cam20 from "../assets/camion20ton.jpg";
 import cam10 from "../assets/camion10ton.jpg";
 
 const MyLongCard = ({ truckData, types }) => {
-  
   const [state, setState] = useState("");
+  const [carType, setCarType] = useState("");
+  const [truck, setTruck] = useState("");
+
   const trucks = [
     {
-      id_car_type: 2,
+      id_car_type: 5,
       name: "JAC 3 ton",
+      subName: "JAC",
       weight: 3,
       photo: jac3,
     },
     {
-      id_car_type: 3,
-  
+      id_car_type: 6,
       name: "JAC 5 ton",
+      subName: "JAC",
       weight: 5,
       photo: jac5,
     },
     {
-      id_car_type: 1,
+      id_car_type: 4,
       name: "DFM",
-      weight: 1,
+      subName: "DFM",
       photo: DFM,
     },
     {
-      id_car_type: 4,
+      id_car_type: 7,
       name: "Camion 10 ton",
+      subName: "Camion",
       weight: 10,
       photo: cam10,
     },
     {
-      id_car_type: 5,
+      id_car_type: 8,
       name: "Camion 20 ton",
+      subName: "Camion",
       weight: 20,
       photo: cam20,
     },
@@ -87,12 +92,20 @@ const MyLongCard = ({ truckData, types }) => {
     },
   });
 
-  const id_car_type = truckData.id_car_type;
-  const truck = trucks.find((truck) => truck.id_car_type === id_car_type);
-  const carType = types.find((type) => type.id_car_type === truck.id_car_type)
-  console.log("truck: ", truck )
- 
+  useEffect(() => {
+    if (trucks && types) {
+      const truck = trucks.find((truck) => truck.id_car_type === id_car_type);
+      const carType = types.find(
+        (type) => type.id_car_type === truck.id_car_type
+      );
+      setCarType(carType);
+      setTruck(truck);
+    }
+  }, [types]);
 
+  const id_car_type = truckData.id_car_type;
+
+  console.log("truck: ", truck);
 
   return (
     <>
@@ -121,14 +134,18 @@ const MyLongCard = ({ truckData, types }) => {
           <div className="p-2 flex items-center">
             <div>
               <h1 className="text-xl mb-2 w-fit">
-                {carType ? carType.name_car_type : "اسم الشاحنة"} : النوع 
+                {truck ? truck.subName : "اسم الشاحنة"} : النوع
               </h1>
-              <h1>{carType ? `${carType.car_poitds} kg` : "اسم الشاحنة"} : الوزن</h1>
+              <h1>{truck ? `${truck.weight} ton` : "اسم الشاحنة"} : الوزن</h1>
             </div>
             <div className="h-[100px] w-[200px] rounded-md ml-2">
               <img
                 className="w-full h-full rounded-md"
-                src={truckData.image ? `http://127.0.0.1:8000${truckData.image}` : truck.photo}
+                src={
+                  truckData.image
+                    ? `http://127.0.0.1:8000${truckData.image}`
+                    : truck.photo
+                }
                 alt="truck"
               />
             </div>

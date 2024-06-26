@@ -26,33 +26,36 @@ const style = {
 
 const trucks = [
   {
-    id_car_type: 2,
+    id_car_type: 5,
     name: "JAC 3 ton",
+    subName: "JAC",
     weight: 3,
     photo: jac3,
   },
   {
-    id_car_type: 3,
-
+    id_car_type: 6,
     name: "JAC 5 ton",
+    subName: "JAC",
     weight: 5,
     photo: jac5,
   },
   {
-    id_car_type: 1,
+    id_car_type: 4,
     name: "DFM",
-    weight: 1,
+    subName: "DFM",
     photo: DFM,
   },
   {
-    id_car_type: 4,
+    id_car_type: 7,
     name: "Camion 10 ton",
+    subName: "Camion",
     weight: 10,
     photo: cam10,
   },
   {
-    id_car_type: 5,
+    id_car_type: 8,
     name: "Camion 20 ton",
+    subName: "Camion",
     weight: 20,
     photo: cam20,
   },

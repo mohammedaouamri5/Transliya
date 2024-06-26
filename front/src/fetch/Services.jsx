@@ -9,12 +9,11 @@ export const AddRent = async (
   token,
   id_employer,
   notification,
-  info
+  info,
+  price
 ) => {
-
   try {
-    console.log("info: ",info);
-
+    console.log("info: ", info);
     const res = await axios.post(
       "http://127.0.0.1:8000/API/create_kerya",
       {
@@ -27,14 +26,12 @@ export const AddRent = async (
       {
         headers: { Authorization: `Token ${token}` },
       }
-
     );
-    console.log("info: ",info);
-
+    console.log("info: ", info);
 
     if (res.status >= 200 && res.status <= 300) {
       try {
-        console.log("info: ",info);
+        console.log("info: ", info);
 
         const response = await axios.post(
           "http://127.0.0.1:8000/API/create_notification",
@@ -58,38 +55,52 @@ export const AddBooking = async (
   token,
   userId,
   id_employer,
-  notification, 
-  info
+  notification,
+  info,
+  price
 ) => {
   try {
     const res = await axios.post(
       "http://127.0.0.1:8000/API/create_tewsila",
-      {
-        ...form,
-      },
+      { ...form },
       {
         headers: { Authorization: `Token ${token}` },
       }
     );
 
-    if (res.status >= 200 && res.status <= 300) {
-      console.log(res);
-      try {
-        const response = await axios.post(
-          "http://127.0.0.1:8000/API/create_notification",
-          {
-            id_from: userId,
-            id_to: id_employer,
-            id_notification_type: notification,
-            info: info,
-          },
-          {
-            headers: { Authorization: `Token ${token}` },
-          }
-        );
-      } catch (error) {}
+    if (res.status >= 200 && res.status < 300) {
+      const response = await axios.post(
+        "http://127.0.0.1:8000/API/create_notification",
+        {
+          id_from: userId,
+          id_to: id_employer,
+          id_notification_type: notification,
+          info: info,
+        },
+        {
+          headers: { Authorization: `Token ${token}` },
+        }
+      );
+
+      if (response.status >= 200 && response.status < 300) {
+        try {
+          const ress = await axios.post(
+            "http://127.0.0.1:8000/API/get-pay",
+            {
+              prix: price,
+              id_employer: id_employer,
+            },
+            {
+              headers: {Authorization: `Token ${token}`}
+            }
+          );
+          console.log(ress);
+        } catch (error) {
+          console.log("Error in get-pay request:", error);
+        }
+      }
     }
   } catch (error) {
-    console.log(error);
+    console.log("Error in create_tewsila or create_notification request:", error);
   }
 };
