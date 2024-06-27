@@ -193,7 +193,7 @@ const ReviewCard = () => {
                   </div>
 
                   <p className="mt-0.5 text-lg font-medium text-gray-900">
-                  سيلونة رائد 
+                  حدادة اسلام 
                   </p>
                 </div>
               </div>
