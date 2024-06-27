@@ -1,14 +1,23 @@
 import { useRef, useEffect, useState } from "react";
-import { Geocoder } from "@mapbox/search-js-react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css";
 import { FaLocationArrow } from "react-icons/fa";
 import "./mapbox.css";
-import axios from "axios";
+import { Checkbox, TextField } from "@mui/material";
+import { Price } from "../fetch/Price";
 
-const MapboxComponent = ({ user, userData, setShow, setForm }) => {
+const MapboxComponent = ({
+  user,
+  userData,
+  setShow,
+  setForm,
+  id_car_type,
+  setForma,
+  setPrice1
+}) => {
+  const [price, setPrice] = useState(0);
   const accessToken =
     "pk.eyJ1IjoiYXppemtoYWxlZCIsImEiOiJjbHhobmsxM2UxYTRoMm5yMmNncng5c3doIn0.Ybgma2XqB2-Nfn-VvLkATQ";
 
@@ -21,11 +30,21 @@ const MapboxComponent = ({ user, userData, setShow, setForm }) => {
   const [current, setcurrent] = useState();
   const [startPoint, setStartPoint] = useState(null);
   const [endPoint, setEndPoint] = useState(null);
+  const [startText, setStartText] = useState("");
+  const [endText, setEndText] = useState("");
   const [startGeo, setStartGeo] = useState();
-  const [distance, setDistance] = useState();
-  const [startPointText, setStartPointText] = useState("");
+  const [distance, setDistance] = useState(0);
+  const [isChecked, setIsChecked] = useState(false);
   const startMarkerRef = useRef(null);
   const endMarkerRef = useRef(null);
+
+  useEffect(() => {
+    Price(distance, id_car_type, setPrice);
+  }, [distance]);
+
+  useEffect(() => {
+    setPrice1(price)
+  }, [price])
 
   useEffect(() => {
     mapboxgl.accessToken = accessToken;
@@ -35,7 +54,6 @@ const MapboxComponent = ({ user, userData, setShow, setForm }) => {
         const { latitude, longitude } = position.coords;
         const data = [longitude, latitude];
         setcurrent(data);
-        console.log("Start Point set to current location:", data);
 
         if (data && mapContainerRef.current) {
           // Create the map instance
@@ -110,7 +128,6 @@ const MapboxComponent = ({ user, userData, setShow, setForm }) => {
   useEffect(() => {
     const handleDirections = () => {
       if (startPoint && endPoint) {
-        console.log("entered");
         const profile = "driving";
         const startCoords = `${startPoint[0]},${startPoint[1]}`;
         const endCoords = `${endPoint[0]},${endPoint[1]}`;
@@ -120,7 +137,7 @@ const MapboxComponent = ({ user, userData, setShow, setForm }) => {
           .then((response) => response.json())
           .then((data) => {
             if (data.routes && data.routes.length > 0) {
-              setDistance(data.routes[0].distance);
+              setDistance(Math.round(data.routes[0].distance / 1000));
               const route = data.routes[0];
               const routeGeoJSON = {
                 type: "Feature",
@@ -160,28 +177,20 @@ const MapboxComponent = ({ user, userData, setShow, setForm }) => {
                 new mapboxgl.LngLatBounds(coordinates[0], coordinates[0])
               );
               mapInstanceRef.current.fitBounds(bounds, { padding: 20 });
-
-              console.log("Route added to map:", routeGeoJSON);
-            } else {
-              console.warn("No route found between these points");
             }
           })
           .catch((error) => console.error("Error fetching directions:", error));
-      } else {
-        console.warn("Please select both start and end points for directions");
       }
     };
     handleDirections();
   }, [startPoint, endPoint]);
 
   const handleGeocoderSelection = (selected, type) => {
-    console.log(`Geocoder selected result for ${type}:`, selected);
     if (selected && selected.geometry && selected.geometry.coordinates) {
       const coordinates = selected.geometry.coordinates;
 
       if (type === "start") {
         setStartPoint(coordinates);
-        console.log("Start Point set to:", coordinates);
 
         if (startMarkerRef.current) {
           startMarkerRef.current.remove();
@@ -197,7 +206,6 @@ const MapboxComponent = ({ user, userData, setShow, setForm }) => {
         });
       } else if (type === "end") {
         setEndPoint(coordinates);
-        console.log("End Point set to:", coordinates);
 
         if (endMarkerRef.current) {
           endMarkerRef.current.remove();
@@ -226,28 +234,52 @@ const MapboxComponent = ({ user, userData, setShow, setForm }) => {
       .then((data) => {
         if (data.features && data.features.length > 0) {
           const address = data.features[0].properties.place_formatted;
-          setStartPointText(address);
-          startGeo.setInput(startPointText);
-        } else {
-          console.warn("Unable to get address from coordinates");
+          setStartText(address);
+          startGeo.setInput(startText);
         }
       })
       .catch((error) => console.error("Error fetching address:", error));
   };
+
+  const reverseLocationA = async (longitude, latitude, type) => {
+    try {
+      const response = await fetch(
+        `https://api.mapbox.com/search/geocode/v6/reverse?longitude=${longitude}&latitude=${latitude}&access_token=${accessToken}`
+      );
+      const data = await response.json();
+      if (data.features && data.features.length > 0) {
+        const address = data.features[0].properties.place_formatted;
+        return address;
+      } else {
+        return null;
+      }
+    } catch (error) {
+      console.error("Error fetching address:", error);
+      return null;
+    }
+  };
+
+  useEffect(() => {
+    if (startPoint && endPoint) {
+      const fetchAdresses = async () => {
+        const start = await reverseLocationA(startPoint[0], startPoint[1], 1);
+        const end = await reverseLocationA(endPoint[0], endPoint[1], 2);
+        setStartText(start);
+        setEndText(end);
+      };
+
+      fetchAdresses();
+    }
+  }, [endPoint, startPoint]);
 
   const setCurrentLocationAsStartPoint = () => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const { latitude, longitude } = position.coords;
         reverseLocation(longitude, latitude);
-        console.log("Start Point set to current location:", [
-          longitude,
-          latitude,
-        ]);
 
         if (current) {
           setStartPoint(current);
-          console.log("Start Point set to:", current);
           if (startMarkerRef.current) {
             startMarkerRef.current.remove();
           }
@@ -266,69 +298,111 @@ const MapboxComponent = ({ user, userData, setShow, setForm }) => {
       }
     );
 
-    if (startPointText) {
-      startGeo.setInput(startPointText);
+    if (startText) {
+      startGeo.setInput(startText);
     }
   };
-  
-  const handleSubmit = async () => {
-    const distanceInKm = Math.round(distance / 1000);
 
+  const handleSubmit = async () => {
     setForm((prevState) => ({
       ...prevState,
       from_lon: startPoint[0],
       from_lat: startPoint[1],
       to_lon: endPoint[0],
       to_lat: endPoint[1],
-      distention: distanceInKm,
+      distention: distance,
       id_zaboun: user.id,
+    }));
+
+    setForma((prevState) => ({
+      ...prevState,
+      start: startText,
+      end: endText,
     }));
 
     setShow(true);
   };
 
+  const handleCheckboxChange = () => {
+    setIsChecked((prevChecked) => !prevChecked); // Toggle checkbox state
+    if (isChecked) {
+      setPrice(price - 2000);
+    } else {
+      setPrice(price + 2000);
+    }
+  };
+
   return (
     <>
-      <div className=" w-full m-auto bg-background p-4 rounded">
-        {phone && (
-          <div className="mb-5 w-full">
-            <label className="block mb-2 text-lg font-medium text-light ">
-              رقم هاتف صاحب الشاحنة
-            </label>
-            <div className="bg-gray-50 border border-gray-300 text-background sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 ">
-              {phone}
-            </div>
+      <div className=" w-full bg-white rounded">
+        <div className="flex flex-col w-full justify-between items-end mb-5">
+          <div className="w-full flex justify-end">
+            <h1 className="text-xl font-bold my-5"> أضف رافعة</h1>
+            <Checkbox checked={isChecked} onChange={handleCheckboxChange} />
           </div>
-        )}
+        </div>
         <div className="text-end flex w-full justify-between">
-          <div className="w-[48%]">
-            <label className="block mb-2 text-lg font-medium  text-light ">
+          <div className="w-[40%]">
+            <label className="block mb-2 text-lg font-medium text-background ">
               الى
             </label>
             <div
               ref={endId}
+              dir="rtl"
               id="end-point-geocoder"
-              className="w-full p-2 text-background flex justify-center"
+              className="w-full p-2 text-background"
             ></div>
           </div>
 
-          <div className="w-[48%]">
-            <label className="block mb-2 text-lg font-medium text-light ">
-              من
-            </label>
-            <div className="flex items-center mb-5 ">
-              <FaLocationArrow
-                className="text-xl cursor-pointer text-light hover:text-white duration-200"
-                onClick={setCurrentLocationAsStartPoint}
-              />
-
-              <div
-                ref={startId}
-                id="start-point-geocoder"
-                className="w-full p-2 text-background flex justify-center"
-              ></div>
+          <div className="w-[40%] flex flex-col items-center justify-center">
+            <div className="w-full">
+              <label className=" mb-2 text-lg font-medium text-background ">
+                من
+              </label>
+              <div className="flex items-center text-end mb-5 ">
+                <FaLocationArrow
+                  className="text-xl cursor-pointer text-background hover:text-accent duration-200"
+                  onClick={setCurrentLocationAsStartPoint}
+                />
+                <div
+                  ref={startId}
+                  dir="rtl"
+                  id="start-point-geocoder"
+                  className="w-full p-2 text-background"
+                ></div>
+              </div>
             </div>
           </div>
+        </div>
+
+        <div className="mb-5">
+          <label className="block my-2 text-lg font-medium text-background ">
+            السعر
+          </label>
+          <TextField
+            className="w-full bg-white rounded-lg"
+            id="outlined-read-only-input"
+            dir="rtl"
+            value={price}
+            InputProps={{
+              readOnly: true,
+            }}
+          />
+        </div>
+
+        <div className="mb-5">
+          <label className="block my-2 text-lg font-medium text-background ">
+            المسافة
+          </label>
+          <TextField
+            className="w-full mb-5 bg-white rounded-lg"
+            id="outlined-read-only-input"
+            dir="rtl"
+            value={distance}
+            InputProps={{
+              readOnly: true,
+            }}
+          />
         </div>
 
         <div
@@ -339,7 +413,7 @@ const MapboxComponent = ({ user, userData, setShow, setForm }) => {
 
         <button
           onClick={handleSubmit}
-          className="w-full text-background bg-white hover:bg-light duration-300 text-lg focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg my-5 px-5 py-2.5 text-center "
+          className="w-full text-light bg-background hover:bg-accent duration-300 text-lg focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg my-5 px-5 py-2.5 text-center "
         >
           الانتقال الى الدفع
         </button>

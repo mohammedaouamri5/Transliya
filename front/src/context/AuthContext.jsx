@@ -14,7 +14,7 @@ const AuthContext = createContext({
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(() => {
     const storedUser = localStorage.getItem("user");
-    return storedUser ? JSON.parse(storedUser): null;
+    return storedUser ? JSON.parse(storedUser) : null;
     //
   });
   const [employer, setEmployer] = useState(() => {
@@ -38,6 +38,21 @@ export const AuthProvider = ({ children }) => {
         password,
       });
       if (res.status >= 200 && res.status <= 300) {
+
+        try {
+          const response = await axios.get(
+            `http://127.0.0.1:8000/API/employer/${res.data.user.id}/`
+          );
+          if (response.status >= 200 && response.status <= 300) {
+            console.log("employer: ", response.data);
+            const employer = response.data;
+            localStorage.setItem("employer", JSON.stringify(employer));
+            setEmployer(employer);
+          }
+        } catch (error) {
+          console.log(error)
+        }
+        
         setUser(JSON.stringify(res.data.user));
         setIsAuthenticated(true);
         setAccessToken(res.data["token"]);
@@ -66,7 +81,7 @@ export const AuthProvider = ({ children }) => {
         const response = await axios.post(
           "http://127.0.0.1:8000/API/signup",
           {
-            ...person,
+            ...person
           },
           {
             headers: { "Content-Type": "application/json" },

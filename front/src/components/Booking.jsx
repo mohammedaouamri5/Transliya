@@ -8,13 +8,11 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const Booking = () => {
-  const user = JSON.parse(localStorage.getItem("user"));
-  const id = user.id;
-  const token = localStorage.getItem("token");
+  const user = JSON.parse(localStorage.getItem("user"))
 
   const navigate = useNavigate();
-
   const [selected, setSelected] = useState([]);
+  const [types, setTypes] = useState()
   const [truckData, setTruckData] = useState([]);
 
   const handleSelected = (index) => {
@@ -31,33 +29,42 @@ const Booking = () => {
     navigate(`/bookingresults/${selected.join(", ")}`);
   };
 
-  const [trucks, setTrucks] = useState([
+  const trucks = [
     {
+      id_car_type: 5,
       name: "JAC 3 ton",
+      subName: "JAC",
       weight: 3,
       photo: jac3,
     },
     {
+      id_car_type: 6,
       name: "JAC 5 ton",
+      subName: "JAC",
       weight: 5,
       photo: jac5,
     },
     {
-      name: "DFM 1 ton",
-      weight: 1,
+      id_car_type: 4,
+      name: "DFM",
+      subName: "DFM",
       photo: DFM,
     },
     {
+      id_car_type: 7,
       name: "Camion 10 ton",
+      subName: "Camion",
       weight: 10,
       photo: cam10,
     },
     {
+      id_car_type: 8,
       name: "Camion 20 ton",
+      subName: "Camion",
       weight: 20,
       photo: cam20,
     },
-  ]);
+  ];
 
   useEffect(() => {
     const fetchCarTypes = async () => {
@@ -65,11 +72,11 @@ const Booking = () => {
         const response = await axios.get(
           "http://127.0.0.1:8000/API/get_all_car_type"
         );
-        const carTypes = response.data.car_type;
+        const types = response.data.car_type;
 
         // Merge fetched data with the trucks array
         const updatedTrucks = trucks.map((truck) => {
-          const matchedCarType = carTypes.find((car) =>
+          const matchedCarType = types.find((car) =>
             truck.name.includes(car.name_car_type)
           );
           return {
@@ -94,7 +101,7 @@ const Booking = () => {
           التوصيل
         </div>
         <div
-          className={`  flex-col flex items-center justify-evenly w-full bg-background text-light text-end p-5`}
+          className={`  flex-col flex items-center justify-evenly w-full bg-background text-light text-end px-10 py-20`}
         >
           <h1 className="text-center text-3xl my-10">إختر نوع المركبة</h1>
           <div className="flex w-full p-8 flex-wrap justify-center">
@@ -121,7 +128,7 @@ const Booking = () => {
           <button
             type="button"
             onClick={handleSubmit}
-            className="w-[80%] text-background bg-white hover:bg-light duration-300 text-lg focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg mb-5  px-5 py-2.5 text-center "
+            className="w-[80%] text-background bg-white hover:bg-accent duration-300 text-lg focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg mb-5  px-5 py-2.5 text-center "
           >
             إظهار النتائج
           </button>{" "}

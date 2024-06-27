@@ -3,6 +3,7 @@ import Grid from "@mui/material/Grid";
 import ProductCardRent from "./ProductCardRent";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import { fetchCarTypes } from "../fetch/Data";
 
 const RentResults = () => {
   const token = localStorage.getItem("token");
@@ -14,19 +15,7 @@ const RentResults = () => {
   const [types, setTypes] = useState();
 
   useEffect(() => {
-    const fetchCarTypes = async () => {
-      try {
-        const response = await axios.get(
-          "http://127.0.0.1:8000/API/get_all_car_type"
-        );
-        setTypes(response.data.car_type);
-        console.log(response.data.car_type);
-      } catch (error) {
-        console.error("Error fetching car types:", error);
-      }
-    };
-
-    fetchCarTypes();
+    fetchCarTypes(setTypes)
   }, []);
 
   useEffect(() => {
@@ -55,11 +44,11 @@ const RentResults = () => {
 
   return (
     <>
-      <div className="w-full">
+      <div className="w-full ">
         <div className="w-full h-[30vh] flex items-center justify-center sm:h-[40vh] bg-white">
           <h1 className="text-4xl font-bold">نتائج البحث</h1>
         </div>
-        <div className={`w-full p-10 bg-background flex items-center`}>
+        <div className={`w-full py-20 px-10 bg-background flex items-center`}>
           {trucks.length > 0 ? (
             <Grid container columns={{ xs: 1, sm: 8, md: 12 }}>
               {trucks.map((truck, index) => (

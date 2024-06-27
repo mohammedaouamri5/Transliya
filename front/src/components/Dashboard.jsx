@@ -21,11 +21,11 @@ const Dashboard = () => {
   return (
     <>
       <div className="text-center flex justify-center text-4xl h-[40vh] items-center w-full ">
-        <h1>حسابي</h1>
+        <h1>لوحة التحكم</h1>
       </div>
 
       <div className=" w-full flex items-center justify-center bg-background pt-24">
-        <div className="flex-col lg:flex-row flex w-full mx-5 px-5">
+        <div className="flex-col lg:flex-row flex w-full lg:mx-5 px-5">
           <div className="px-2">
             <div className="p-8 rounded-lg bg-white lg:w-[250px] w-full mb-8">
               <div className="w-full flex items-center justify-center">
@@ -41,66 +41,73 @@ const Dashboard = () => {
               </div>
               <div className="mt-5">
                 <div
-                  className={`flex p-2 rounded ${
+                  className={`flex p-2 cursor-pointer rounded ${
                     show === 0
                       ? "bg-background text-light"
                       : "bg-white text-background"
-                  } items-center justify-center duration-200`}
+                  } justify-end items-center duration-200`}
                   onClick={() => {
                     setShow(0);
                   }}
                 >
                   {" "}
-                  <span className="text-sm font-bold ml-2">حسابي</span>
-                  <IoPerson className="text-md ml-4" />{" "}
+                  <span className="text-md font-bold">حسابي</span>
+                  <IoPerson className="text-lg ml-4" />{" "}
                 </div>
+
+                {employer && (
+                  <>
+                    <div
+                      className={`flex items-center cursor-pointer justify-end p-2 rounded ${
+                        show === 1
+                          ? "bg-background text-light"
+                          : "bg-white text-background"
+                      }  duration-200 text-end`}
+                      onClick={() => {
+                        setShow(1);
+                      }}
+                    >
+                      <h1 className="text-md font-bold">شاحناتي</h1>
+                      <FaTruck className="text-lg ml-4" />
+                    </div>
+
+                    <div
+                      className={`flex items-center cursor-pointer p-2 rounded ${
+                        show === 3
+                          ? "bg-background text-light"
+                          : "bg-white text-background"
+                      } justify-end duration-200`}
+                      onClick={() => {
+                        setShow(3);
+                      }}
+                    >
+                      {" "}
+                      <span className="text-md font-bold">اضافة شاحنة</span>
+                      <ImBoxAdd className="text-lg ml-4" />{" "}
+                    </div>
+                  </>
+                )}
+
                 <div
-                  className={`flex p-2 rounded ${
-                    show === 1
-                      ? "bg-background text-light"
-                      : "bg-white text-background"
-                  } items-center justify-center duration-200`}
-                  onClick={() => {
-                    setShow(1);
-                  }}
-                >
-                  <span className="text-sm font-bold ml-2">شاحناتي</span>{" "}
-                  <FaTruck className="text-md ml-4" />{" "}
-                </div>
-                <div
-                  className={`flex p-2 rounded ${
-                    show === 3
-                      ? "bg-background text-light"
-                      : "bg-white text-background"
-                  } items-center justify-center duration-200`}
-                  onClick={() => {
-                    setShow(3);
-                  }}
-                >
-                  {" "}
-                  <span className="text-sm font-bold ml-2">اضافة شاحنة</span>
-                  <ImBoxAdd className="text-md ml-4" />{" "}
-                </div>
-                <div
-                  className={`flex p-2 rounded ${
+                  className={`flex items-center cursor-pointer p-2 rounded ${
                     show === 2
                       ? "bg-background text-light"
                       : "bg-white text-background"
-                  } items-center justify-center duration-200`}
+                  } justify-end duration-200`}
                   onClick={() => {
                     setShow(2);
                   }}
                 >
                   {" "}
-                  <span className="text-sm font-bold ml-2">الاشعارات</span>
-                  <IoMdNotifications className="text-md ml-4" />{" "}
+                  <span className="text-md font-bold">الاشعارات</span>
+                  <IoMdNotifications className="text-lg ml-4" />{" "}
                 </div>
               </div>
             </div>
           </div>
 
           <div className="px-4 w-full">
-            <div className="w-full p-8 bg-white rounded-lg mb-8 ">
+            <div className="w-full lg:p-8 p-4 bg-white rounded-lg mb-8 ">
               {show === 3 ? (
                 <AddTruck employer={user} />
               ) : show === 2 ? (
