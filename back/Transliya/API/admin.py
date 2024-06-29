@@ -5,10 +5,19 @@ from API import models
 
 
 
+# class Person(admin.ModelAdmin):
+#     list_display = ('username', 'email', 'phonenumberp', 'is_deleted_p', 'first_name', 'last_name', 'is_staff', 'is_active', 'date_joined')
+#     list_editable = (  'email', 'phonenumberp', 'is_deleted_p', 'first_name', 'last_name', 'is_staff', 'is_active')
+#     search_fields = ('username', 'email', 'phonenumberp', 'first_name', 'last_name')
 class Person(admin.ModelAdmin):
-    list_display = ('username', 'email', 'phonenumberp', 'is_deleted_p', 'first_name', 'last_name', 'is_staff', 'is_active', 'date_joined')
-    list_editable = (  'email', 'phonenumberp', 'is_deleted_p', 'first_name', 'last_name', 'is_staff', 'is_active')
+    list_display = ('username', 'email', 'phonenumberp', 'first_name', 'last_name', 'full_name', 'date_joined')
+    list_editable = ('email', 'phonenumberp',  'first_name', 'last_name')
     search_fields = ('username', 'email', 'phonenumberp', 'first_name', 'last_name')
+    
+    def full_name(self, obj):
+        return models.Tewsila.objects.filter(id_zaboun=obj.id).count() +  models.Kerya.objects.filter(id_zaboun=obj.id).count() 
+    full_name.short_description = 'total transactions'
+
 
 class Employer(admin.ModelAdmin):
     list_display = ('id_employer', 'driving_license', 'ta9yim_employer', 'is_allowed', 'is_working', 'created_at')
