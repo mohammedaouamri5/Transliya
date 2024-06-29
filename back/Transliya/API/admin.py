@@ -20,13 +20,13 @@ class Person(admin.ModelAdmin):
 
 
 class Employer(admin.ModelAdmin):
-    list_display = ('id_employer', 'driving_license', 'ta9yim_employer', 'is_allowed', 'is_working', 'created_at')
-    list_editable = ('ta9yim_employer', 'is_allowed', 'is_working')
+    list_display = ('id_employer', 'driving_license', 'ta9yim_employer',  'created_at')
+    list_editable = ('ta9yim_employer',)
     search_fields = ('id_employer__username', 'driving_license')
 
 class CarType(admin.ModelAdmin):
-    list_display = ('id_car_type', 'name_car_type', 'Kerya_prix_car_type', 'Tewsila_prix_car_type')
-    list_editable = ('Kerya_prix_car_type', 'Tewsila_prix_car_type')
+    list_display = ('id_car_type', 'name_car_type', 'Kerya_prix_car_type', 'Tewsila_prix_car_type' , "car_poitds")
+    list_editable = ('Kerya_prix_car_type', 'Tewsila_prix_car_type', "car_poitds")
     search_fields = ('name_car_type',)
 
 class Service(admin.ModelAdmin):
@@ -35,7 +35,7 @@ class Service(admin.ModelAdmin):
     search_fields = ('name_service',)
 
 class CarEmployer(admin.ModelAdmin):
-    list_display = ('id_employer', 'id_car_type', 'matricule_car', 'is_deleted_CarEmployer')
+    list_display = ('id_employer', 'id_car_type', 'matricule_car')
     search_fields = ('id_employer__id_employer__username', 'id_car_type__name_car_type', 'matricule_car')
     
 class Tewsila(admin.ModelAdmin):
