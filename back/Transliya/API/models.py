@@ -30,6 +30,7 @@ class CarType(models.Model):
     Kerya_prix_car_type = models.FloatField()
     Tewsila_prix_car_type = models.FloatField()
     car_poitds = models.IntegerField(default=100)
+    image = models.ImageField(upload_to='images')
 
 
 class CarEmployer(models.Model):

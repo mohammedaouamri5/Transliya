@@ -1,13 +1,12 @@
 
 
-POST http://127.0.0.1:8000/API/create_kerya
+GET http://127.0.0.1:8000/API/get_all_car_type
 Content-Type: application/json
 
+
 { 
-"t_started" : "2024-06-17T20:10:48.04", 
-"t_ended" : "2024-06-17T20:10:48.04", 
-"matricule_car" : 1, 
-"id_zaboun" : 2
+
+
 }
 
 ###
