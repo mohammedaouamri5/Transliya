@@ -45,6 +45,23 @@ export const AddRent = async (
             headers: { Authorization: `Token ${token}` },
           }
         );
+        if (response.status >= 200 && response.status < 300) {
+          try {
+            const ress = await axios.post(
+              "http://127.0.0.1:8000/API/get-pay",
+              {
+                prix: price,
+                id_employer: id_employer,
+              },
+              {
+                headers: { Authorization: `Token ${token}` },
+              }
+            );
+            console.log(ress);
+          } catch (error) {
+            console.log("Error in get-pay request:", error);
+          }
+        }
       } catch (error) {}
     }
   } catch (error) {}
@@ -91,7 +108,7 @@ export const AddBooking = async (
               id_employer: id_employer,
             },
             {
-              headers: {Authorization: `Token ${token}`}
+              headers: { Authorization: `Token ${token}` },
             }
           );
           console.log(ress);
@@ -101,6 +118,9 @@ export const AddBooking = async (
       }
     }
   } catch (error) {
-    console.log("Error in create_tewsila or create_notification request:", error);
+    console.log(
+      "Error in create_tewsila or create_notification request:",
+      error
+    );
   }
 };

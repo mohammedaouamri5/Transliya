@@ -71,7 +71,7 @@ const AddTruck = ({ employer }) => {
         {
           headers: {
             "Content-Type": "multipart/form-data", // Important for file uploads
-            Authorization: `token ${token}`,
+            Authorization: `Token ${token}`,
           },
         }
       );

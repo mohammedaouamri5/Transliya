@@ -1,8 +1,7 @@
 import { FaTruck } from "react-icons/fa";
 import { FaWeightHanging } from "react-icons/fa";
 import { AddRent } from "../fetch/Services";
-import { DownloadPDF } from "../fetch/DownloadPDF";
-import { Checkbox, Modal, TextField } from "@mui/material";
+import { Modal, TextField } from "@mui/material";
 import { useCallback, useEffect, useState } from "react";
 import LongCard from "./LongCard";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
@@ -12,17 +11,7 @@ import Box from "@mui/material/Box";
 import { RentPrice } from "../fetch/Price";
 import dayjs from "dayjs";
 import axios from "axios";
-import cam20 from "../assets/camion20ton.jpg";
 
-const trucks = [
-  {
-    id_car_type: 8,
-    name: "Camion 20 ton",
-    subName: "Camion",
-    weight: 20,
-    photo: cam20,
-  },
-];
 
 const style = {
   position: "absolute",
@@ -53,10 +42,14 @@ const ProductCardRent = ({ userData, token, types }) => {
   const [comment, setComment] = useState("");
   const [price, setPrice] = useState(0);
   const [carType, setCarType] = useState("");
-  const [truck, setTruck] = useState("");
+  const [subName, setSubName] = useState("")
+
 
   const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClose = () => {
+    setOpen(false)
+    setShow(false)
+  };
 
   const generateKeryaPDF = async () => {
     try {
@@ -122,7 +115,7 @@ const ProductCardRent = ({ userData, token, types }) => {
         comment,
         token,
         id_employer,
-        6,
+        2,
         info
       );
       handleClose();
@@ -144,15 +137,16 @@ const ProductCardRent = ({ userData, token, types }) => {
   }, [days, months]);
 
   useEffect(() => {
-    if (types && trucks) {    
-      const truck = trucks.find((truck) => truck.id_car_type === userData.id_car_type);
+    if (types) {
       const carType = types.find(
-        (type) => type.id_car_type === truck.id_car_type
+        (type) => type.id_car_type === userData.id_car_type
       );
+      if (carType) {
+        setSubName(carType.name_car_type.split(' ')[0])
+      }
       setCarType(carType);
-      setTruck(truck);
     }
-  }, [types, trucks]);
+  }, [types]);
 
   const username = user.username;
   const employer_username = userData.id_employer.id_employer.username;
@@ -169,7 +163,7 @@ const ProductCardRent = ({ userData, token, types }) => {
             src={
               userData.image
                 ? `http://127.0.0.1:8000${userData.image}`
-                : truck.photo
+                : `http://127.0.0.1:8000${carType.image}`
             }
             alt=""
             className="h-auto md:min-h-[170px] sm:min-h-[190px] min-h-[250px] lg:min-h-[220px] max-w-full"
@@ -181,16 +175,15 @@ const ProductCardRent = ({ userData, token, types }) => {
           </h2>
           <div className="flex flex-wrap w-full justify-end h-fit border-b border-background pb-4">
             <span className="mr-5 flex gap-2 items-center">
-              {truck ? truck.subName : "اسم الشاحنة"}
+              {subName ? subName : "اسم الشاحنة"}
               <FaTruck />
             </span>
             <span className=" flex gap-2 items-center">
-              {truck ? `${truck.weight}` : "وزن الشاحنة"}
+              {carType ? `${carType.car_poitds}` : "وزن الشاحنة"}
               <FaWeightHanging />
             </span>
           </div>
           <div className="flex w-full flex-col mt-2">
-
             <div className="flex justify-between">
               <button
                 onClick={handleOpen}
@@ -294,10 +287,10 @@ const ProductCardRent = ({ userData, token, types }) => {
                   photo={
                     userData.image
                       ? `http://127.0.0.1:8000${userData.image}`
-                      : truck.photo
+                      : `http://127.0.0.1:8000${carType.image}`
                   }
-                  name={truck ? truck.subName : "اسم الشاحنة"}
-                  weight={truck ? `${truck.weight} ton` : "وزن الشاحنة"}
+                  name={subName ? subName : "اسم الشاحنة"}
+                  weight={carType ? `${carType.car_poitds} ton` : "وزن الشاحنة"}
                 />
                 <form className="space-y-4 px-5 md:space-y-6 w-full">
                   <div className="flex gap-2 justify-between">

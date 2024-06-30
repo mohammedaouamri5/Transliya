@@ -37,7 +37,7 @@ const Dashboard = () => {
               </div>
               <div className="mt-5 text-center">
                 <h3>{user.username}</h3>
-                <p className="text-secondary opacity-50">{user.email}</p>
+                <p className="text-background opacity-50">{user.email}</p>
               </div>
               <div className="mt-5">
                 <div

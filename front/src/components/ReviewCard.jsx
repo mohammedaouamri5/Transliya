@@ -13,7 +13,7 @@ const ReviewCard = () => {
             <blockquote className="rounded-lg bg-gray-50 p-6 shadow-sm sm:p-8 text-end">
               <div className="flex items-center gap-4 justify-end">
                 <div>
-                  <div className="flex justify-center gap-0.5 text-green-500">
+                  <div className="flex justify-center gap-0.5 text-accent">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       className="h-5 w-5"
@@ -78,7 +78,7 @@ const ReviewCard = () => {
         
 
                 <div>
-                  <div className="flex justify-center gap-0.5 text-green-500">
+                  <div className="flex justify-center gap-0.5 text-accent">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       className="h-5 w-5"
@@ -144,7 +144,7 @@ const ReviewCard = () => {
                
 
                 <div>
-                  <div className="flex justify-center gap-0.5 text-green-500">
+                  <div className="flex justify-center gap-0.5 text-accent">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       className="h-5 w-5"

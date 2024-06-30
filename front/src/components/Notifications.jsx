@@ -53,6 +53,8 @@ const Notifications = () => {
     }
   }, [Notifications]);
 
+
+
   return (
     <>
       <div className="w-full justify-end flex mb-5">

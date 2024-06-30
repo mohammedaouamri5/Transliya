@@ -101,7 +101,7 @@ const NotificationsCardRes = ({ notify }) => {
                   setComment(e.target.value);
                 }}
                 placeholder="أضف مراجعة للخدمة"
-                className="bg-gray-50 border border-gray-300 text-light sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 h-[100px] block w-full p-2.5 "
+                className="bg-gray-50 border border-gray-300 text-background sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 h-[100px] block w-full p-2.5 "
               />
             </div>
 

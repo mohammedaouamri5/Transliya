@@ -24,65 +24,23 @@ const style = {
   p: 4,
 };
 
-const trucks = [
-  {
-    id_car_type: 5,
-    name: "JAC 3 ton",
-    subName: "JAC",
-    weight: 3,
-    photo: jac3,
-  },
-  {
-    id_car_type: 6,
-    name: "JAC 5 ton",
-    subName: "JAC",
-    weight: 5,
-    photo: jac5,
-  },
-  {
-    id_car_type: 4,
-    name: "DFM",
-    subName: "DFM",
-    photo: DFM,
-  },
-  {
-    id_car_type: 7,
-    name: "Camion 10 ton",
-    subName: "Camion",
-    weight: 10,
-    photo: cam10,
-  },
-  {
-    id_car_type: 8,
-    name: "Camion 20 ton",
-    subName: "Camion",
-    weight: 20,
-    photo: cam20,
-  },
-];
-
 const NotificationCard = ({ notify }) => {
-  console.log("notify: ", notify);
   const [types, setTypes] = useState();
   const [truck, setTruck] = useState();
-  const [defaultTruck, setDefaultTruck] = useState();
-
   const [open, setOpen] = useState(false);
+  const [carType, setCarType] = useState("");
+  const token = localStorage.getItem("token")
+  const [isLoading, setLoading] = useState(false)
   const handleClose = () => {
     setOpen(false);
   };
   const handleOpen = () => {
     setOpen(true);
   };
-
   const info = JSON.parse(notify.info);
   const start = info.start.split("T")[0];
   const end = info.end.split("T")[0];
-  const comment = info.comment;
-
   const matricule = info.matricule;
-
-  console.log(info);
 
   useEffect(() => {
     const fetchCarTypes = async () => {
@@ -91,7 +49,6 @@ const NotificationCard = ({ notify }) => {
           "http://127.0.0.1:8000/API/get_all_car_type"
         );
         setTypes(response.data.car_type);
-        console.log(response.data.car_type);
       } catch (error) {
         console.error("Error fetching car types:", error);
       }
@@ -110,14 +67,13 @@ const NotificationCard = ({ notify }) => {
   }, [notify.id_notify]);
 
   useEffect(() => {
-    if (truck && types) {
-      const type = types.find((type) => type.id_car_type === truck.id_car_type);
-      const defaultTruck = trucks.find(
-        (truckk) => type.id_car_type === truckk.id_car_type
+    if (types && truck) {
+      const carType = types.find(
+        (type) => type.id_car_type === truck.id_car_type
       );
-      setDefaultTruck(defaultTruck);
+      setCarType(carType);
     }
-  }, [truck, types]);
+  }, [types, truck]);
 
   const handleNotification = async (type) => {
     try {
@@ -132,10 +88,6 @@ const NotificationCard = ({ notify }) => {
           headers: { Authorization: `Token ${token}` },
         }
       );
-      console.log("entered hh");
-
-      console.log(response);
-
       if (response.status >= 200 && response.status < 300) {
         try {
           const res = await axios.post(
@@ -148,7 +100,6 @@ const NotificationCard = ({ notify }) => {
               headers: { Authorization: `Token ${token}` },
             }
           );
-          console.log(res);
         } catch (error) {
           console.log(error);
         }
@@ -158,9 +109,19 @@ const NotificationCard = ({ notify }) => {
     }
   };
 
+  useEffect(() => {
+    if (carType && truck && notify) {
+      setLoading(true)
+    }
+  }, [carType, truck])
+
+  console.log("type: ",carType)
+  console.log("truck: ",truck)
+  console.log("notify: ",notify)
+  console.log("loading: ", isLoading)
+
   return (
-    truck &&
-    defaultTruck && (
+    isLoading && (
       <>
         <div className="p-3 w-full bg-background rounded-lg mb-5 flex text-end items-center justify-between text-light">
           <button
@@ -174,7 +135,7 @@ const NotificationCard = ({ notify }) => {
           </div>
           <div className="p-2 flex items-center">
             <div>
-              <h1 className="text-xl mb-2 w-fit">{defaultTruck.name}</h1>
+              <h1 className="text-xl mb-2 w-fit">{carType.name_car_type}</h1>
               <h1> {matricule} </h1>
             </div>
             <div className="h-[75px] w-[150px] rounded-md ml-2">
@@ -183,7 +144,7 @@ const NotificationCard = ({ notify }) => {
                 src={
                   truck.image
                     ? `http://127.0.0.1:8000/${truck.image}`
-                    : defaultTruck.photo
+                    : `http://127.0.0.1:8000/${carType.image}`
                 }
                 alt="truck"
               />
@@ -202,16 +163,16 @@ const NotificationCard = ({ notify }) => {
               photo={
                 truck.image
                   ? `http://127.0.0.1:8000/${truck.image}`
-                  : defaultTruck.photo
+                  : `http://127.0.0.1:8000/${carType.image}`
               }
               price={2000}
-              name={defaultTruck.name}
+              name={carType.name_car_type}
               matricule={matricule}
             />
             <div>
               <h1 className="text-4xl font-bold my-7">
                 {" "}
-                 نوع العملية: {notify.name_notification_type} {" "}
+                نوع العملية: {notify.name_notification_type}{" "}
               </h1>
               <div className="flex gap-2 justify-between mb-4">
                 <div className="w-[48%]">
@@ -240,21 +201,21 @@ const NotificationCard = ({ notify }) => {
                   029348345
                 </div>
               </div>
-              {notify.comment &&
-              <div>
-                <label className="block my-2 text-lg font-medium text-background">
-                  ملاحظة من عند الزبون
-                </label>
-                <div className="bg-gray-50 border border-gray-300 text-background sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 h-fit block w-full p-2.5">
-                  {notify.comment}
+              {notify.comment && (
+                <div>
+                  <label className="block my-2 text-lg font-medium text-background">
+                    ملاحظة من عند الزبون
+                  </label>
+                  <div className="bg-gray-50 border border-gray-300 text-background sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 h-fit block w-full p-2.5">
+                    {notify.comment}
+                  </div>
                 </div>
-              </div>
-              }
+              )}
               <div className="flex w-full items-center justify-center">
                 <div className="flex w-auto">
                   <button
                     onClick={() => {
-                      handleNotification(8);
+                      handleNotification(4);
                     }}
                     className="px-4 py-2 m-2 rounded flex bg-background text-light text-xs md:text-xl font-bold hover:bg-accent  duration-200"
                   >
@@ -262,7 +223,7 @@ const NotificationCard = ({ notify }) => {
                   </button>
                   <button
                     onClick={() => {
-                      handleNotification(7);
+                      handleNotification(3);
                     }}
                     className="px-4 py-2 m-2 rounded flex bg-background text-light text-xs md:text-xl font-bold hover:bg-accent  duration-200"
                   >
