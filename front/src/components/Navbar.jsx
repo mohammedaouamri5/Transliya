@@ -228,10 +228,11 @@ const Navbar = () => {
                     >
                       {isAbonner ||
                       (setting.name !== "كراء" && setting.name !== "توصيل") ? (
-                        <Link to={`/${setting.link}`} className="w-full text-end text-md flex justify-end">
-                          <h1>
-                            {setting.name}
-                          </h1>
+                        <Link
+                          to={`/${setting.link}`}
+                          className="w-full text-end text-md flex justify-end"
+                        >
+                          <h1>{setting.name}</h1>
                           {setting.icon}
                         </Link>
                       ) : (
@@ -290,13 +291,7 @@ const Navbar = () => {
               </li>
               <li className="hover:text-accent duration-300">
                 {isAuthenticated ? (
-                  isAbonner ? (
-                    <Link to="/booking">التوصيل</Link>
-                  ) : (
-                    <div onClick={handleShowOpen} className="cursor-pointer">
-                      التوصيل
-                    </div>
-                  )
+                  <Link to="/booking">التوصيل</Link>
                 ) : (
                   <div onClick={handleOpen} className="cursor-pointer">
                     التوصيل

@@ -8,7 +8,6 @@ import { Box, Modal } from "@mui/material";
 import { useAuth } from "../context/AuthContext";
 import axios from "axios";
 
-
 const style = {
   position: "absolute",
   top: "50%",
@@ -23,17 +22,15 @@ const style = {
   p: 4,
 };
 
-
 const Home = () => {
   const user = JSON.parse(localStorage.getItem("user"));
-  console.log(user)
+  console.log(user);
   const [open, setOpen] = useState(false);
   const { isAuthenticated } = useAuth();
   const [isAbonner, setAbonner] = useState(false);
   const [show, setShow] = useState(false);
   const [pay, setPay] = useState(false);
   const [selected, setSelected] = useState("");
-
 
   const handleClose = () => {
     setOpen(false);
@@ -65,7 +62,6 @@ const Home = () => {
   const handleShowOpen = () => {
     setShow(true);
   };
-
 
   const AddAbonner = async () => {
     const res = await axios.post(
@@ -106,23 +102,12 @@ const Home = () => {
                 <br />
 
                 {isAuthenticated ? (
-                  isAbonner ? (
-                    <Link
-                      to={"/booking"}
-                      className="px-8 py-3 text-light text-lg hover:bg-accent duration-200 rounded bg-background"
-                    >
-                      احجز الآن
-                    </Link>
-                  ) : (
-                    <div className="w-full flex justify-end">
-                      <div
-                        onClick={handleShowOpen}
-                        className="px-8 py-3 w-fit text-light text-lg hover:bg-accent duration-200 rounded bg-background cursor-pointer"
-                      >
-                        احجز الآن
-                      </div>
-                    </div>
-                  )
+                  <Link
+                    to={"/booking"}
+                    className="px-8 py-3 text-light text-lg hover:bg-accent duration-200 rounded bg-background"
+                  >
+                    احجز الآن
+                  </Link>
                 ) : (
                   <div className="w-full flex justify-end">
                     <div

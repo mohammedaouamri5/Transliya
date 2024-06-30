@@ -18,11 +18,8 @@ const MapboxComponent = ({
   setPrice1
 }) => {
   const [price, setPrice] = useState(0);
-  const accessToken =
-    "pk.eyJ1IjoiYXppemtoYWxlZCIsImEiOiJjbHhobmsxM2UxYTRoMm5yMmNncng5c3doIn0.Ybgma2XqB2-Nfn-VvLkATQ";
-
+  const accessToken = "pk.eyJ1IjoiYXppemtoYWxlZCIsImEiOiJjbHhobmsxM2UxYTRoMm5yMmNncng5c3doIn0.Ybgma2XqB2-Nfn-VvLkATQ";
   const phone = userData.id_employer.id_employer.phonenumberp;
-
   const mapContainerRef = useRef(null);
   const mapInstanceRef = useRef(null);
   const startId = useRef(null);
