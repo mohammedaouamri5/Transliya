@@ -32,7 +32,6 @@ const Signup = () => {
     setType("employee");
   };
 
-  console.log(Type);
 
   const [errorMessage, setErrorMessage] = useState(null);
 
@@ -43,7 +42,6 @@ const Signup = () => {
         try {
           const { driving_license, ...userData } = formData;
           signup(userData, Type);
-          console.log("userData: ", userData);
           navigate("/");
         } catch (error) {
           setErrorMessage(error);

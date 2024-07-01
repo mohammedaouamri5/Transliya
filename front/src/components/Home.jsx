@@ -24,7 +24,6 @@ const style = {
 
 const Home = () => {
   const user = JSON.parse(localStorage.getItem("user"));
-  console.log(user);
   const [open, setOpen] = useState(false);
   const { isAuthenticated } = useAuth();
   const [isAbonner, setAbonner] = useState(false);
@@ -70,11 +69,9 @@ const Home = () => {
         id: user.id,
       }
     );
-    console.log(res);
     if (res.status >= 200 && res.status < 300) {
       setAbonner(true);
       setShow(false);
-      console.log(isAbonner);
     }
   };
 

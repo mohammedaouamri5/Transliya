@@ -31,7 +31,6 @@ const RentResults = () => {
             },
           }
         );
-        console.log(response)
         setTrucks(response.data);
       } catch (error) {
         console.error("Error fetching results:", error);

@@ -135,8 +135,6 @@ const ProductCard = ({ userData, token, types }) => {
     }
   }, [types]);
 
-  console.log(types)
-  console.log(userData)
 
   const phone = userData.id_employer.id_employer.phonenumberp;
 

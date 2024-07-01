@@ -5,10 +5,8 @@ const MyAccount = () => {
     
   const string_user = localStorage.getItem("user");
   const string_employer = localStorage.getItem("employer");
-  console.log(string_employer)
   const user = JSON.parse(string_user);
   const employer = JSON.parse(string_employer);
-  console.log(employer)
 
 
   return (

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { IoMdNotifications } from "react-icons/io";
-import { Box, Link, Modal, Rating } from "@mui/material";
+import { Box, Modal, Rating } from "@mui/material";
+import { Link } from "react-router-dom"
 import axios from "axios";
 
 const style = {
@@ -17,7 +18,6 @@ const style = {
 };
 
 const NotificationsCardResNo = ({ notify }) => {
-  console.log(notify);
   const [open, setOpen] = useState(false);
   const [comment, setComment] = useState("");
   const [rating, setRating] = useState(0);
@@ -35,7 +35,6 @@ const NotificationsCardResNo = ({ notify }) => {
         const res = await axios.get(
           `http://127.0.0.1:8000/API/employer/${notify.id_from}/`
         );
-        console.log(res);
       } catch (error) {
         console.log(error);
       }
@@ -53,9 +52,9 @@ const NotificationsCardResNo = ({ notify }) => {
       <div className="p-3 w-full bg-background rounded-lg mb-5 flex text-end items-center justify-between text-light ">
         <Link
           to={"/rent"}
-          className="px-4 py-2  rounded flex bg-light text-background text-xs md:text-sm font-bold hover:bg-white  duration-200"
+          className="px-4 py-2 rounded flex bg-light text-background text-xs md:text-sm font-bold hover:bg-white  duration-200"
         >
-          كراء{" "}
+          كراء
         </Link>
         <div className="flex items-center">
           <h1>تم رفض طلبك للكراء حاول مع عامل اخر </h1>{" "}

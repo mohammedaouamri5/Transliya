@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { IoMenu } from "react-icons/io5";
 import logo from "../assets/logo5.png";
 import { useAuth } from "../context/AuthContext";
 import Modal from "@mui/material/Modal";
@@ -37,7 +36,7 @@ const Navbar = () => {
   const [notify, setNotify] = useState([]);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const [anchorElUser, setAnchorElUser] = useState(null);
+  const [anchorElUser, setAnchorElUser] = useState(false);
   const { isAuthenticated, logout } = useAuth();
   const [notifications, setNotifications] = useState([]);
   const [user, setUser] = useState(null);
@@ -67,9 +66,10 @@ const Navbar = () => {
           : handleShowOpen
         : handleOpen,
     },
+
     {
       name: "توصيل",
-      link: isAuthenticated && isAbonner ? "booking" : "#",
+      link: "booking",
       icon: <TbTruckDelivery className="ml-4 text-2xl" />,
       onClick: isAuthenticated
         ? isAbonner
@@ -77,6 +77,7 @@ const Navbar = () => {
           : handleShowOpen
         : handleOpen,
     },
+
     {
       name: "لوحة التحكم",
       link: "dashboard",
@@ -89,7 +90,7 @@ const Navbar = () => {
   };
 
   const handleCloseUserMenu = () => {
-    setAnchorElUser(null);
+    setAnchorElUser(false);
   };
 
   const AddAbonner = async () => {
@@ -99,7 +100,6 @@ const Navbar = () => {
         id: user.id,
       }
     );
-    console.log(res);
     if (res.status >= 200 && res.status < 300) {
       setAbonner(true);
       setShow(false);
@@ -403,6 +403,7 @@ const Navbar = () => {
                 <input
                   type="text"
                   dir="rtl"
+                  required
                   className="bg-whit mb-5 border border-gray-300 text-background sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                 />
                 <div className="flex w-full justify-between">
@@ -411,6 +412,7 @@ const Navbar = () => {
                     <input
                       type="text"
                       dir="rtl"
+                      required
                       className="bg-whit  border border-gray-300 text-background sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                     />
                   </div>
@@ -419,6 +421,7 @@ const Navbar = () => {
                     <input
                       type="text"
                       dir="rtl"
+                      required
                       className="bg-whit  border border-gray-300 text-background sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                     />
                   </div>

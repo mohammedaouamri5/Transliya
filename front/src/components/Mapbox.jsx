@@ -316,6 +316,7 @@ const MapboxComponent = ({
       ...prevState,
       start: startText,
       end: endText,
+      distance: distance
     }));
 
     setShow(true);
@@ -324,9 +325,9 @@ const MapboxComponent = ({
   const handleCheckboxChange = () => {
     setIsChecked((prevChecked) => !prevChecked); // Toggle checkbox state
     if (isChecked) {
-      setPrice(price - 2000);
+      setPrice(price - 800);
     } else {
-      setPrice(price + 2000);
+      setPrice(price + 800);
     }
   };
 

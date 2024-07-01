@@ -29,8 +29,8 @@ const NotificationCard = ({ notify }) => {
   const [truck, setTruck] = useState();
   const [open, setOpen] = useState(false);
   const [carType, setCarType] = useState("");
-  const token = localStorage.getItem("token")
-  const [isLoading, setLoading] = useState(false)
+  const token = localStorage.getItem("token");
+  const [isLoading, setLoading] = useState(false);
   const handleClose = () => {
     setOpen(false);
   };
@@ -111,14 +111,9 @@ const NotificationCard = ({ notify }) => {
 
   useEffect(() => {
     if (carType && truck && notify) {
-      setLoading(true)
+      setLoading(true);
     }
-  }, [carType, truck])
-
-  console.log("type: ",carType)
-  console.log("truck: ",truck)
-  console.log("notify: ",notify)
-  console.log("loading: ", isLoading)
+  }, [carType, truck]);
 
   return (
     isLoading && (
@@ -211,26 +206,28 @@ const NotificationCard = ({ notify }) => {
                   </div>
                 </div>
               )}
-              <div className="flex w-full items-center justify-center">
-                <div className="flex w-auto">
-                  <button
-                    onClick={() => {
-                      handleNotification(4);
-                    }}
-                    className="px-4 py-2 m-2 rounded flex bg-background text-light text-xs md:text-xl font-bold hover:bg-accent  duration-200"
-                  >
-                    رفض
-                  </button>
-                  <button
-                    onClick={() => {
-                      handleNotification(3);
-                    }}
-                    className="px-4 py-2 m-2 rounded flex bg-background text-light text-xs md:text-xl font-bold hover:bg-accent  duration-200"
-                  >
-                    تأكيد
-                  </button>
+              {!notify.is_readed && (
+                <div className="flex w-full items-center justify-center">
+                  <div className="flex w-auto">
+                    <button
+                      onClick={() => {
+                        handleNotification(4);
+                      }}
+                      className="px-4 py-2 m-2 rounded flex bg-background text-light text-xs md:text-xl font-bold hover:bg-accent duration-200"
+                    >
+                      رفض
+                    </button>
+                    <button
+                      onClick={() => {
+                        handleNotification(3);
+                      }}
+                      className="px-4 py-2 m-2 rounded flex bg-background text-light text-xs md:text-xl font-bold hover:bg-accent  duration-200"
+                    >
+                      تأكيد
+                    </button>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           </Box>
         </Modal>

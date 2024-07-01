@@ -18,7 +18,6 @@ const AddTruck = ({ employer }) => {
   });
 
   const token = localStorage.getItem("token");
-  console.log(token);
 
 
 
@@ -40,7 +39,6 @@ const AddTruck = ({ employer }) => {
           "http://127.0.0.1:8000/API/get_all_car_type"
         );
         setTruckData(response.data.car_type);
-        console.log(response.data.car_type);
       } catch (error) {
         console.error("Error fetching car types:", error);
       }
@@ -54,7 +52,6 @@ const AddTruck = ({ employer }) => {
     const id_employer = employer.id;
     const { matricule_car, id_car_type, image } = formData;
 
-    console.log("image: ", image); // This should log the correct File object
 
     // Create a FormData object to handle file upload
     const formData2 = new FormData();
@@ -76,7 +73,6 @@ const AddTruck = ({ employer }) => {
         }
       );
 
-      console.log("Response:", response.data);
     } catch (error) {
       console.log(error);
     }

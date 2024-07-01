@@ -18,7 +18,6 @@ const style = {
 };
 
 const NotificationsCardRes = ({ notify }) => {
-  console.log(notify);
   const [open, setOpen] = useState(false);
   const [comment, setComment] = useState("");
   const [rating, setRating] = useState(0);
@@ -36,7 +35,6 @@ const NotificationsCardRes = ({ notify }) => {
         const res = await axios.get(
           `http://127.0.0.1:8000/API/employer/${notify.id_from}/`
         );
-        console.log(res);
       } catch (error) {
         console.log(error);
       }

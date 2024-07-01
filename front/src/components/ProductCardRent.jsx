@@ -29,7 +29,6 @@ const style = {
 
 const ProductCardRent = ({ userData, token, types }) => {
   const user = JSON.parse(localStorage.getItem("user"));
-  console.log(userData.id_car_type)
 
   const [info, setInfo] = useState();
   const [days, setDays] = useState(0);
@@ -116,7 +115,8 @@ const ProductCardRent = ({ userData, token, types }) => {
         token,
         id_employer,
         2,
-        info
+        info,
+        price
       );
       handleClose();
     } catch (error) {
