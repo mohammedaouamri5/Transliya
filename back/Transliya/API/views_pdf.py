@@ -32,7 +32,7 @@ class KeryaPDF():
         self.end = end
         self.prix = prix
         self.poids = poids
-        self.tax = 10 / 100
+        self.tax = 0 / 100
         self.prix_final = prix * (1 + self.tax)
         self.employer_id = employer_id
         self.person_id = person_id
@@ -105,7 +105,7 @@ class KeryaPDF():
                     <p><strong>نهاية التأجير:</strong> {self.end}</p>
                     <p><strong>سعر التأجير:</strong> {self.prix} دز</p>
                     <p><strong>الضريبة :</strong> {self.tax * 100 } %</p>
-                    <p><strong>السعر النهائي للتأجير :</strong> {self.prix_final} دز</p>
+                    <p><strong>السعر النهائي للتأجير :</strong> {self.prix_final:.2f} دز</p>
                 </div>
                 <div class="date-id">
                     <p><strong>التاريخ:</strong> [2024-06-22]</p>
