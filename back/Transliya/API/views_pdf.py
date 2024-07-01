@@ -155,7 +155,7 @@ class TawsilaPDF():
         self.poids = poids
         self.employer_id = employer_id
         self.person_id = person_id
-        self.tax = 10 / 100
+        self.tax = 0 / 100
         self.prix = float(prix)  # Ensure prix is a float
         self.prix_apres = self.prix * (1 + self.tax)
 
@@ -195,9 +195,9 @@ class TawsilaPDF():
                 .date-id {
                 text-align: right;
                 font-size: 0.8em;
-                top: 54%;
+                top: 53%;
                 position: fixed;
-                left: 26%;
+                left: 34%;
                 }
                 .info-box {
                     margin: 20px 0;
@@ -247,7 +247,7 @@ class TawsilaPDF():
                         <p><strong>وزن الشحنة:</strong> {self.poids}</p>
                         <p><strong>السعر:</strong> {self.prix} دز</p>
                         <p><strong>الضريبة:</strong> {self.tax * 100 } % </p>
-                        <p><strong>السعر النهائي:</strong> {self.prix_apres} دز</p>
+                        <p><strong>السعر النهائي:</strong> {self.prix_apres:.2f} دز</p>
                     </div>
                     <h2>المادة المنقولة :</h2>
                     <ul class="item-list">
