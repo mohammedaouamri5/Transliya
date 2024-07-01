@@ -77,7 +77,7 @@ const Booking = () => {
           <button
             type="button"
             onClick={handleSubmit}
-            className="w-[80%] text-background bg-white hover:bg-accent duration-300 text-lg focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg mb-5  px-5 py-2.5 text-center "
+            className="w-[80%] text-background bg-white hover:text-light hover:bg-accent duration-300 text-lg focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg mb-5  px-5 py-2.5 text-center "
           >
             إظهار النتائج
           </button>{" "}

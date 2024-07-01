@@ -296,13 +296,7 @@ const Navbar = () => {
 
               <li className="hover:text-accent duration-300">
                 {isAuthenticated ? (
-                  isAbonner ? (
-                    <Link to={"/plan"}> مخطط الموقع </Link>
-                  ) : (
-                    <div onClick={handleShowOpen} className="cursor-pointer">
-                      مخطط الموقع
-                    </div>
-                  )
+                  <Link to={"/plan"}> مخطط الموقع </Link>
                 ) : (
                   <div onClick={handleOpen} className="cursor-pointer">
                     مخطط الموقع
