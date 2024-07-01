@@ -103,7 +103,6 @@ const Navbar = () => {
     if (res.status >= 200 && res.status < 300) {
       setAbonner(true);
       setShow(false);
-      console.log(isAbonner);
     }
   };
 
@@ -215,10 +214,7 @@ const Navbar = () => {
                     <MenuItem
                       key={setting.name}
                       onClick={() => {
-                        if (
-                          !isAbonner &&
-                          (setting.name === "كراء" || setting.name === "توصيل")
-                        ) {
+                        if (!isAbonner && setting.name === "كراء") {
                           handleShowOpen();
                         } else {
                           handleCloseUserMenu();
@@ -226,8 +222,7 @@ const Navbar = () => {
                       }}
                       className="text-end"
                     >
-                      {isAbonner ||
-                      (setting.name !== "كراء" && setting.name !== "توصيل") ? (
+                      {isAbonner || setting.name !== "كراء" ? (
                         <Link
                           to={`/${setting.link}`}
                           className="w-full text-end text-md flex justify-end"
@@ -301,7 +296,13 @@ const Navbar = () => {
 
               <li className="hover:text-accent duration-300">
                 {isAuthenticated ? (
-                  <Link to={"/plan"}> مخطط الموقع </Link>
+                  isAbonner ? (
+                    <Link to={"/plan"}> مخطط الموقع </Link>
+                  ) : (
+                    <div onClick={handleShowOpen} className="cursor-pointer">
+                      مخطط الموقع
+                    </div>
+                  )
                 ) : (
                   <div onClick={handleOpen} className="cursor-pointer">
                     مخطط الموقع

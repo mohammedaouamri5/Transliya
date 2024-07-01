@@ -111,6 +111,7 @@ const Notifications = () => {
       ) : (
         <h1>please select a type of notifications</h1>
       )}
+      
     </>
   );
 };
