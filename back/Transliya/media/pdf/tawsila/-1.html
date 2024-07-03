@@ -1,0 +1,96 @@
+
+        
+            <!DOCTYPE html>
+            <html lang="ar" dir="rtl">
+            <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>فاتورة ترانزليا</title>
+            <style>
+            
+                body {
+                    font-family: Arial, sans-serif;
+                    margin: 0;
+                    padding: 0;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    height: 100vh;
+                    background-color: #f8f9fa;
+                }
+
+                .container {
+                    width: 80%;
+                    max-width: 600px;
+                    background-color: #ffffff;
+                    padding: 20px;
+                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                }
+
+                .header {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: flex-start;
+                }
+
+                h1 {
+                    text-align: center;
+                    flex: 1;
+                }
+
+                .date-id {
+                text-align: right;
+                font-size: 0.8em;
+                top: 53%;
+                position: fixed;
+                left: 34%;
+                }
+                .info-box {
+                    margin: 20px 0;
+                }
+
+                .info-box p {
+                    margin: 5px 0;
+                }
+
+                .item-list {
+                    list-style-type: none;
+                    padding: 0;
+                }
+
+                .item-list li {
+                    background-color: #e9ecef;
+                    padding: 10px;
+                    margin: 5px 0;
+                }
+        
+            </style>
+            </head>
+            <body>
+                <div class="container">
+                    <div class="header">
+                        <h1>فاتورة ترانزليا</h1>
+                        <div class="date-id">
+                            <p><strong>التاريخ:</strong> <span id="current-date">[2024-07-01]</span></p>
+                            <p><strong>رقم حساب الناقل:</strong> -1</p>
+                            <p><strong>رقم حساب الزبون:</strong> -1</p>
+                        </div>
+                    </div>
+                    <div class="info-box">
+                        <p><strong>اسم الناقل:</strong> جاك جونسون</p>
+                        <p><strong>اسم الزبون:</strong> ترانزليا لتأجير الشاحنات</p>
+                        <p><strong>المسافة:</strong> 106 كم</p>
+                        <p><strong>وزن الشحنة:</strong> 200 كج</p>
+                        <p><strong>السعر:</strong> 200.0 دز</p>
+                        <p><strong>الضريبة:</strong> 0.0 % </p>
+                        <p><strong>السعر النهائي:</strong> 200.00 دز</p>
+                    </div>
+                    <h2>المادة المنقولة :</h2>
+                    <ul class="item-list">
+                        <li>رمل</li>
+                    </ul>
+                </div>
+                </body>
+                </html>
+
+            

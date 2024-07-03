@@ -1,9 +1,8 @@
 from django.http import HttpResponse
 from reportlab.pdfgen import canvas
-from datetime import datetime 
+from datetime import datetime
 from django.http import HttpResponse
 import os
-from weasyprint import HTML
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.request import Request
@@ -11,43 +10,42 @@ from rest_framework import status
 import os
 from datetime import datetime
 
+
 class KeryaPDF():
     def __init__(self,
-                id_ = -1,
-                employer = "جاك جونسون",
-                person = "ترانزليا لتأجير الشاحنات",
-                matricule = 106,
-                start = "2024-06-22",
-                end = "2024-06-25",
-                prix = 200  , 
-                poids = "100" ,
-                employer_id = -1 , 
-                person_id = -1 
-                ) -> None:
+                 id_=-1,
+                 employer="جاك جونسون",
+                 person="ترانزليا لتأجير الشاحنات",
+                 matricule=106,
+                 start="2024-06-22",
+                 end="2024-06-25",
+                 prix=200,
+                 poids="100",
+                 employer_id=-1,
+                 person_id=-1
+                 ) -> None:
         self.id = id_
         self.employer = employer
         self.person = person
         self.matricule = matricule
         self.start = start
         self.end = end
-        self.prix = prix 
-        self.poids = poids 
-        self.tax = 10  / 100
-        self.prix_final = prix * (1 + self.tax) 
+        self.prix = prix
+        self.poids = poids
+        self.tax = 0 / 100
+        self.prix_final = prix * (1 + self.tax)
         self.employer_id = employer_id
         self.person_id = person_id
+
     def create(self):
 
-
-
-
         style = """
-            body { 
+            body {
                 font-family: Arial, sans-serif;
                 margin: 20px;
                 background-color: #f9f9f9;
             }
-            .container { 
+            .container {
                 max-width: 600px;
                 margin: 0 auto;
                 padding: 20px;
@@ -56,23 +54,23 @@ class KeryaPDF():
                 box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
                 position: relative;
             }
-            h1, h2, p { 
+            h1, h2, p {
                 margin-bottom: 10px;
             }
-            .info-box { 
-                border-left: 4px solid #3498db;
+            .info-box {
+                border-left: 4px solid #0000;
                 padding-left: 10px;
                 margin-bottom: 20px;
             }
-            .info-box strong { 
+            .info-box strong {
                 font-weight: bold;
                 color: #333;
             }
-            .item-list { 
+            .item-list {
                 list-style-type: none;
                 padding-left: 0;
             }
-            .item-list li { 
+            .item-list li {
                 margin-bottom: 5px;
             }
             .date-id {
@@ -81,8 +79,8 @@ class KeryaPDF():
                 left: 20px;
                 text-align: left;
                 font-size: 0.8em;
-            }            
-            
+            }
+
             """
         __html = f"""
             <!DOCTYPE html>
@@ -107,7 +105,7 @@ class KeryaPDF():
                     <p><strong>نهاية التأجير:</strong> {self.end}</p>
                     <p><strong>سعر التأجير:</strong> {self.prix} دز</p>
                     <p><strong>الضريبة :</strong> {self.tax * 100 } %</p>
-                    <p><strong>السعر النهائي للتأجير :</strong> {self.prix_final} دز</p>
+                    <p><strong>السعر النهائي للتأجير :</strong> {self.prix_final:.2f} دز</p>
                 </div>
                 <div class="date-id">
                     <p><strong>التاريخ:</strong> [2024-06-22]</p>
@@ -129,46 +127,38 @@ class KeryaPDF():
         else:
             os.makedirs("./media/pdf/kerya/", exist_ok=True)
             path = f'media/pdf/kerya/{self.id}.html'
-        with open(path, "w") as file:
-            # Write the string to the file
-            file.write(__html)        
+            with open(path, "w", encoding="utf-8") as file:
+                # Write the string to the file
+                file.write(__html)
         print(f'PDF generated: {path}')
         return path
 
 
-
-
-
-
-
-
-
-
- 
-
 class TawsilaPDF():
     def __init__(self,
-                id_ = -1,
-                employer = "جاك جونسون",
-                person = "ترانزليا لتأجير الشاحنات",
-                distance = 106,
-                produit = "رمل",
-                prix = 200 ,
-                poids = "200 كج" , 
-                employer_id = -1 , 
-                person_id = -1 , 
-                ) -> None:
+                 id_=-1,
+                 employer="جاك جونسون",
+                 person="ترانزليا لتأجير الشاحنات",
+                 distance=106,
+                 produit="رمل",
+                 prix=200,
+                 poids="200 كج",
+                 employer_id=-1,
+                 person_id=-1,
+                 ) -> None:
+        
         self.id = id_
         self.employer = employer
         self.person = person
         self.distance = distance
-        self.prix = prix
         self.produit = produit
         self.poids = poids
         self.employer_id = employer_id
-        self.person_id = person_id    
-        self.tax = 10 /100
-        self.prix_apres = prix * (1 + self.tax)  
+        self.person_id = person_id
+        self.tax = 0 / 100
+        self.prix = float(prix)  # Ensure prix is a float
+        self.prix_apres = self.prix * (1 + self.tax)
+
     def create(self):
 
         style = """
@@ -205,9 +195,9 @@ class TawsilaPDF():
                 .date-id {
                 text-align: right;
                 font-size: 0.8em;
-                top: 54%;
+                top: 53%;
                 position: fixed;
-                left: 26%;
+                left: 34%;
                 }
                 .info-box {
                     margin: 20px 0;
@@ -257,7 +247,7 @@ class TawsilaPDF():
                         <p><strong>وزن الشحنة:</strong> {self.poids}</p>
                         <p><strong>السعر:</strong> {self.prix} دز</p>
                         <p><strong>الضريبة:</strong> {self.tax * 100 } % </p>
-                        <p><strong>السعر النهائي:</strong> {self.prix_apres} دز</p>
+                        <p><strong>السعر النهائي:</strong> {self.prix_apres:.2f} دز</p>
                     </div>
                     <h2>المادة المنقولة :</h2>
                     <ul class="item-list">
@@ -278,51 +268,45 @@ class TawsilaPDF():
             path = f'media/pdf/tawsila/{self.id}.html'
         with open(path, "w", encoding="utf-8") as file:
             # Write the string to the file
-            file.write(__html)        
+            file.write(__html)
         return path
 
 
-
-
-
 @api_view(["POST"])
-def tawsila_pdf(request:Request):
-    
+def tawsila_pdf(request: Request):
+
     PDF = TawsilaPDF(
-        id_ = request.data['id_'] , 
-        employer = request.data['employer'] , 
-        person = request.data['person'] , 
-        distance = request.data['distance'] , 
-        produit = request.data['produit'] , 
-        prix = request.data['prix'] , 
-        poids = request.data['poids'] , 
-        employer_id = request.data['employer_id'] , 
-        person_id = request.data['person_id'] 
+        id_=request.data['id_'],
+        employer=request.data['employer'],
+        person=request.data['person'],
+        distance=request.data['distance'],
+        produit=request.data['produit'],
+        prix=request.data['prix'],
+        poids=request.data['poids'],
+        employer_id=request.data['employer_id'],
+        person_id=request.data['person_id']
     )
     path = PDF.create()
-    return Response({"path":path } , status=status.HTTP_200_OK)
+    return Response({"path": path}, status=status.HTTP_200_OK)
+
 
 @api_view(["POST"])
-def kerya_pdf(request:Request):
-    
-    PDF:KeryaPDF = KeryaPDF(
-        id_ = request.data['id_'],
-        employer = request.data['employer'],
-        person = request.data['person'],
-        matricule = request.data['matricule'],
-        start = request.data['start'],
-        end = request.data['end'],
-        prix = request.data['prix'],
-        poids = request.data['poids'],
-        employer_id = request.data['employer_id'],
-        person_id = request.data['person_id']  
+def kerya_pdf(request: Request):
+
+    PDF: KeryaPDF = KeryaPDF(
+        id_=request.data['id_'],
+        employer=request.data['employer'],
+        person=request.data['person'],
+        matricule=request.data['matricule'],
+        start=request.data['start'],
+        end=request.data['end'],
+        prix=request.data['prix'],
+        poids=request.data['poids'],
+        employer_id=request.data['employer_id'],
+        person_id=request.data['person_id']
     )
     path = PDF.create()
-    return Response({"path":path } , status=status.HTTP_200_OK)
-
-
-
-
+    return Response({"path": path}, status=status.HTTP_200_OK)
 
 
 print(TawsilaPDF().create())

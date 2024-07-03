@@ -5,19 +5,28 @@ from API import models
 
 
 
+# class Person(admin.ModelAdmin):
+#     list_display = ('username', 'email', 'phonenumberp', 'is_deleted_p', 'first_name', 'last_name', 'is_staff', 'is_active', 'date_joined')
+#     list_editable = (  'email', 'phonenumberp', 'is_deleted_p', 'first_name', 'last_name', 'is_staff', 'is_active')
+#     search_fields = ('username', 'email', 'phonenumberp', 'first_name', 'last_name')
 class Person(admin.ModelAdmin):
-    list_display = ('username', 'email', 'phonenumberp', 'is_deleted_p', 'first_name', 'last_name', 'is_staff', 'is_active', 'date_joined')
-    list_editable = (  'email', 'phonenumberp', 'is_deleted_p', 'first_name', 'last_name', 'is_staff', 'is_active')
+    list_display = ('username', 'email', 'phonenumberp', 'first_name', 'last_name', 'full_name', 'date_joined')
+    list_editable = ('email', 'phonenumberp',  'first_name', 'last_name')
     search_fields = ('username', 'email', 'phonenumberp', 'first_name', 'last_name')
+    
+    def full_name(self, obj):
+        return models.Tewsila.objects.filter(id_zaboun=obj.id).count() +  models.Kerya.objects.filter(id_zaboun=obj.id).count() 
+    full_name.short_description = 'total transactions'
+
 
 class Employer(admin.ModelAdmin):
-    list_display = ('id_employer', 'driving_license', 'ta9yim_employer', 'is_allowed', 'is_working', 'created_at')
-    list_editable = ('ta9yim_employer', 'is_allowed', 'is_working')
+    list_display = ('id_employer', 'driving_license', 'ta9yim_employer',  'created_at')
+    list_editable = ('ta9yim_employer',)
     search_fields = ('id_employer__username', 'driving_license')
 
 class CarType(admin.ModelAdmin):
-    list_display = ('id_car_type', 'name_car_type', 'Kerya_prix_car_type', 'Tewsila_prix_car_type')
-    list_editable = ('Kerya_prix_car_type', 'Tewsila_prix_car_type')
+    list_display = ('id_car_type', 'name_car_type', 'Kerya_prix_car_type', 'Tewsila_prix_car_type' , "car_poitds")
+    list_editable = ('Kerya_prix_car_type', 'Tewsila_prix_car_type', "car_poitds")
     search_fields = ('name_car_type',)
 
 class Service(admin.ModelAdmin):
@@ -26,7 +35,7 @@ class Service(admin.ModelAdmin):
     search_fields = ('name_service',)
 
 class CarEmployer(admin.ModelAdmin):
-    list_display = ('id_employer', 'id_car_type', 'matricule_car', 'is_deleted_CarEmployer')
+    list_display = ('id_employer', 'id_car_type', 'matricule_car')
     search_fields = ('id_employer__id_employer__username', 'id_car_type__name_car_type', 'matricule_car')
     
 class Tewsila(admin.ModelAdmin):

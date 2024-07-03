@@ -22,6 +22,8 @@ import API
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('API/', include('API.urls')),
+    path('admin_tools_stats/', include('admin_tools_stats.urls')),
+    path('API/', include('API.urls')),
 ]
 
 if settings.DEBUG:
