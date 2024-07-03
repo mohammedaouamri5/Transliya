@@ -1,30 +1,15 @@
 import { useEffect, useState } from "react";
-import DFM from "../assets/DFM.jpg";
-import jac5 from "../assets/jac5ton.jpg";
-import jac3 from "../assets/jac3ton.jpg";
-import cam20 from "../assets/camion20ton.jpg";
-import cam10 from "../assets/camion10ton.jpg";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const Rent = () => {
   const user = JSON.parse(localStorage.getItem("user"));
-
   const navigate = useNavigate();
 
-  const trucks = [
-    {
-      id_car_type: 3,
-      name: "Camion 20 ton",
-      subName: "Camion",
-      weight: 20,
-      photo: cam20,
-    },
-  ];
-
-
+  const [types, setTypes] = useState()
   const [selected, setSelected] = useState([]);
-  const [truckData, setTruckData] = useState([]);
+  const [carType, setCarType] = useState("");
+
 
   const handleSelected = (index) => {
     setSelected((prevSelected) => {
@@ -46,20 +31,9 @@ const Rent = () => {
         const response = await axios.get(
           "http://127.0.0.1:8000/API/get_all_car_type"
         );
-        const carTypes = response.data.car_type;
-
+        const types = response.data.car_type;
         // Merge fetched data with the trucks array
-        const updatedTrucks = trucks.map((truck) => {
-          const matchedCarType = carTypes.find((car) =>
-            truck.name.includes(car.name_car_type)
-          );
-          return {
-            ...truck,
-            ...matchedCarType,
-          };
-        });
-
-        setTruckData(updatedTrucks);
+        setTypes(types)
       } catch (error) {
         console.error("Error fetching car types:", error);
       }
@@ -67,6 +41,15 @@ const Rent = () => {
 
     fetchCarTypes();
   }, [user.id]);
+
+  useEffect(() => {
+    if (types) {
+      const carType = types.find(
+        (type) => type.name_car_type === "Camion 20 ton"
+      );
+      setCarType(carType);
+    }
+  }, [types]);
 
   return (
     <>
@@ -80,31 +63,31 @@ const Rent = () => {
           <h1 className="text-center text-3xl my-10">إختر نوع المركبة</h1>
           <div className="flex w-full p-8 flex-wrap justify-center">
 
-            {truckData.map((truck, index) => (
-              <div key={index} className={`flex-col p-3 w-[200px]`}>
+            
+              <div className={`flex-col p-3 w-[200px]`}>
                 <div
                   className={`w-full ${
-                    selected.includes(truck.id_car_type)
+                    selected.includes(carType.id_car_type)
                       ? `border-white`
                       : "border-black"
                   }  duration-200 border-2  hover:border-white p-1 rounded-xl`}
-                  onClick={() => handleSelected(truck.id_car_type)}
+                  onClick={() => handleSelected(carType.id_car_type)}
                 >
                   <img
                     className="w-full h-[100px] rounded-xl"
-                    src={truck.photo}
+                    src={`http://127.0.0.1:8000/${carType.image}`}
                     alt="truck"
                   />
                 </div>
-                <p className="text-center text-light text-xl"> {truck.name}</p>
+                <p className="text-center text-light text-xl"> {carType.name_car_type}</p>
               </div>
-            ))}
+            
             
           </div>
           <button
             type="button"
             onClick={handleSubmit}
-            className="w-[80%] text-background bg-light hover:bg-accent duration-300 text-lg focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg mb-5  px-5 py-2.5 text-center "
+            className="w-[80%] text-background bg-light hover:bg-accent hover:text-light duration-200 text-lg focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg mb-5  px-5 py-2.5 text-center "
           >
             إظهار النتائج
           </button>

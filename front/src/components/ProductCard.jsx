@@ -4,11 +4,6 @@ import { Checkbox, Modal } from "@mui/material";
 import { useEffect, useState } from "react";
 import LongCard from "./LongCard";
 import axios from "axios";
-import DFM from "../assets/DFM.jpg";
-import jac3 from "../assets/jac3ton.jpg";
-import jac5 from "../assets/jac5ton.jpg";
-import cam20 from "../assets/camion20ton.jpg";
-import cam10 from "../assets/camion10ton.jpg";
 import { MenuItem, Select, TextField } from "@mui/material";
 import Box from "@mui/material/Box";
 import MapboxComponent from "./Mapbox";
@@ -40,11 +35,11 @@ const ProductCard = ({ userData, token, types }) => {
   const [info, setInfo] = useState();
   const [comment, setComment] = useState("");
   const [carType, setCarType] = useState("");
-  const [truck, setTruck] = useState("");
   const [open, setOpen] = useState(false);
   const [show, setShow] = useState(false);
   const [selected, setSelected] = useState([]);
   const [price, setPrice] = useState(0);
+  const [subName, setSubName] = useState("")
 
 
   const [form, setForm] = useState({
@@ -72,46 +67,6 @@ const ProductCard = ({ userData, token, types }) => {
     { name: "rmel", value: "rmel" },
     { name: "sabl", value: "sabl" },
   ];
-
-  const trucks = [
-    {
-      id_car_type: 5,
-      name: "JAC 3 ton",
-      subName: "JAC",
-      weight: 3,
-      photo: jac3,
-    },
-    {
-      id_car_type: 6,
-      name: "JAC 5 ton",
-      subName: "JAC",
-      weight: 5,
-      photo: jac5,
-    },
-    {
-      id_car_type: 4,
-      name: "DFM",
-      subName: "DFM",
-      photo: DFM,
-    },
-    {
-      id_car_type: 7,
-      name: "Camion 10 ton",
-      subName: "Camion",
-      weight: 10,
-      photo: cam10,
-    },
-    {
-      id_car_type: 8,
-      name: "Camion 20 ton",
-      subName: "Camion",
-      weight: 20,
-      photo: cam20,
-    },
-  ];
-
-  
-
 
   const generateTawsilaPDF = async () => {
     try {
@@ -146,7 +101,7 @@ const ProductCard = ({ userData, token, types }) => {
 
   const handleBooking = async () => {
     try {
-      AddBooking(form, token, user.id, id_employer, 5, info, price);
+      AddBooking(form, token, user.id, id_employer, 1, info, price);
       handleClose();
     } catch (error) {
       console.log(error);
@@ -169,17 +124,17 @@ const ProductCard = ({ userData, token, types }) => {
   }, [form1, material, weight, price, form]);
 
   useEffect(() => {
-    if (types && trucks) {
-      const truck = trucks.find(
-        (truck) => truck.id_car_type === userData.id_car_type
-      );
+    if (types) {
       const carType = types.find(
-        (type) => type.id_car_type === truck.id_car_type
+        (type) => type.id_car_type === userData.id_car_type
       );
+      if (carType) {
+        setSubName(carType.name_car_type.split(' ')[0])
+      }
       setCarType(carType);
-      setTruck(truck);
     }
   }, [types]);
+
 
   const phone = userData.id_employer.id_employer.phonenumberp;
 
@@ -193,7 +148,7 @@ const ProductCard = ({ userData, token, types }) => {
               src={
                 userData.image
                   ? `http://127.0.0.1:8000${userData.image}`
-                  : truck.photo
+                  : `http://127.0.0.1:8000${carType.image}`
               }
               alt=""
               className="h-auto md:min-h-[170px] sm:min-h-[190px] min-h-[250px] lg:min-h-[220px] max-w-full"
@@ -205,11 +160,11 @@ const ProductCard = ({ userData, token, types }) => {
             </h2>
             <div className="flex flex-wrap w-full justify-end h-fit border-b border-background pb-4">
               <span className="mr-5 flex gap-2 items-center">
-                {truck ? truck.subName : "اسم الشاحنة"}
+                {subName ? subName : "اسم الشاحنة"}
                 <FaTruck />
               </span>
               <span className=" flex gap-2 items-center">
-                {truck ? `${truck.weight}` : "وزن الشاحنة"}
+                {carType ? `${carType.car_poitds}` : "وزن الشاحنة"}
                 <FaWeightHanging />
               </span>
             </div>
@@ -323,11 +278,10 @@ const ProductCard = ({ userData, token, types }) => {
                     photo={
                       userData.image
                         ? `http://127.0.0.1:8000${userData.image}`
-                        : truck.photo
+                        : `http://127.0.0.1:8000${carType.image}`
                     }
-                    name={truck ? truck.subName : "اسم الشاحنة"}
-                    weight={truck ? `${truck.weight}  ton` : "وزن الشاحنة"}
-                    price={price}
+                    name={subName ? subName : "اسم الشاحنة"}
+                    weight={carType ? `${carType.car_poitds}  ton` : "وزن الشاحنة"}
                   />
 
                   <div className="flex flex-col w-full justify-between items-end mb-5">

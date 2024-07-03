@@ -15,14 +15,12 @@ const MapboxComponent = ({
   setForm,
   id_car_type,
   setForma,
-  setPrice1
+  setPrice1,
 }) => {
   const [price, setPrice] = useState(0);
   const accessToken =
     "pk.eyJ1IjoiYXppemtoYWxlZCIsImEiOiJjbHhobmsxM2UxYTRoMm5yMmNncng5c3doIn0.Ybgma2XqB2-Nfn-VvLkATQ";
-
   const phone = userData.id_employer.id_employer.phonenumberp;
-
   const mapContainerRef = useRef(null);
   const mapInstanceRef = useRef(null);
   const startId = useRef(null);
@@ -43,8 +41,8 @@ const MapboxComponent = ({
   }, [distance]);
 
   useEffect(() => {
-    setPrice1(price)
-  }, [price])
+    setPrice1(price);
+  }, [price]);
 
   useEffect(() => {
     mapboxgl.accessToken = accessToken;
@@ -318,6 +316,7 @@ const MapboxComponent = ({
       ...prevState,
       start: startText,
       end: endText,
+      distance: distance
     }));
 
     setShow(true);
@@ -326,9 +325,9 @@ const MapboxComponent = ({
   const handleCheckboxChange = () => {
     setIsChecked((prevChecked) => !prevChecked); // Toggle checkbox state
     if (isChecked) {
-      setPrice(price - 2000);
+      setPrice(price - 800);
     } else {
-      setPrice(price + 2000);
+      setPrice(price + 800);
     }
   };
 
@@ -377,21 +376,6 @@ const MapboxComponent = ({
 
         <div className="mb-5">
           <label className="block my-2 text-lg font-medium text-background ">
-            السعر
-          </label>
-          <TextField
-            className="w-full bg-white rounded-lg"
-            id="outlined-read-only-input"
-            dir="rtl"
-            value={price}
-            InputProps={{
-              readOnly: true,
-            }}
-          />
-        </div>
-
-        <div className="mb-5">
-          <label className="block my-2 text-lg font-medium text-background ">
             المسافة
           </label>
           <TextField
@@ -410,6 +394,21 @@ const MapboxComponent = ({
           ref={mapContainerRef}
           className="w-full h-[50vh]"
         ></div>
+
+        <div className="mb-5">
+          <label className="block my-2 text-lg font-medium text-background ">
+            السعر
+          </label>
+          <TextField
+            className="w-full bg-white rounded-lg"
+            id="outlined-read-only-input"
+            dir="rtl"
+            value={price}
+            InputProps={{
+              readOnly: true,
+            }}
+          />
+        </div>
 
         <button
           onClick={handleSubmit}

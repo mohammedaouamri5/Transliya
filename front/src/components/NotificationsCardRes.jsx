@@ -18,7 +18,6 @@ const style = {
 };
 
 const NotificationsCardRes = ({ notify }) => {
-  console.log(notify);
   const [open, setOpen] = useState(false);
   const [comment, setComment] = useState("");
   const [rating, setRating] = useState(0);
@@ -36,7 +35,6 @@ const NotificationsCardRes = ({ notify }) => {
         const res = await axios.get(
           `http://127.0.0.1:8000/API/employer/${notify.id_from}/`
         );
-        console.log(res);
       } catch (error) {
         console.log(error);
       }
@@ -101,7 +99,7 @@ const NotificationsCardRes = ({ notify }) => {
                   setComment(e.target.value);
                 }}
                 placeholder="أضف مراجعة للخدمة"
-                className="bg-gray-50 border border-gray-300 text-light sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 h-[100px] block w-full p-2.5 "
+                className="bg-gray-50 border border-gray-300 text-background sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 h-[100px] block w-full p-2.5 "
               />
             </div>
 

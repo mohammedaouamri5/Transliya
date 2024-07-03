@@ -1,9 +1,4 @@
 import { useEffect, useState } from "react";
-import DFM from "../assets/DFM.jpg";
-import jac5 from "../assets/jac5ton.jpg";
-import jac3 from "../assets/jac3ton.jpg";
-import cam20 from "../assets/camion20ton.jpg";
-import cam10 from "../assets/camion10ton.jpg";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -13,7 +8,6 @@ const Booking = () => {
   const navigate = useNavigate();
   const [selected, setSelected] = useState([]);
   const [types, setTypes] = useState()
-  const [truckData, setTruckData] = useState([]);
 
   const handleSelected = (index) => {
     setSelected((prevSelected) => {
@@ -29,43 +23,6 @@ const Booking = () => {
     navigate(`/bookingresults/${selected.join(", ")}`);
   };
 
-  const trucks = [
-    {
-      id_car_type: 5,
-      name: "JAC 3 ton",
-      subName: "JAC",
-      weight: 3,
-      photo: jac3,
-    },
-    {
-      id_car_type: 6,
-      name: "JAC 5 ton",
-      subName: "JAC",
-      weight: 5,
-      photo: jac5,
-    },
-    {
-      id_car_type: 4,
-      name: "DFM",
-      subName: "DFM",
-      photo: DFM,
-    },
-    {
-      id_car_type: 7,
-      name: "Camion 10 ton",
-      subName: "Camion",
-      weight: 10,
-      photo: cam10,
-    },
-    {
-      id_car_type: 8,
-      name: "Camion 20 ton",
-      subName: "Camion",
-      weight: 20,
-      photo: cam20,
-    },
-  ];
-
   useEffect(() => {
     const fetchCarTypes = async () => {
       try {
@@ -73,19 +30,8 @@ const Booking = () => {
           "http://127.0.0.1:8000/API/get_all_car_type"
         );
         const types = response.data.car_type;
-
         // Merge fetched data with the trucks array
-        const updatedTrucks = trucks.map((truck) => {
-          const matchedCarType = types.find((car) =>
-            truck.name.includes(car.name_car_type)
-          );
-          return {
-            ...truck,
-            ...matchedCarType,
-          };
-        });
-
-        setTruckData(updatedTrucks);
+        setTypes(types)
       } catch (error) {
         console.error("Error fetching car types:", error);
       }
@@ -95,6 +41,7 @@ const Booking = () => {
   }, [user.id]);
 
   return (
+    types &&
     <>
       <div className="w-full h-fit flex flex-col items-center justify-center relative">
         <div className="h-[30vh] sm:h-[40vh] w-full bg-white text-center flex items-center justify-center text-4xl text-bold">
@@ -105,7 +52,8 @@ const Booking = () => {
         >
           <h1 className="text-center text-3xl my-10">إختر نوع المركبة</h1>
           <div className="flex w-full p-8 flex-wrap justify-center">
-            {truckData.map((truck, index) => (
+
+            {types.map((truck, index) => (
               <div key={index} className={`flex-col p-3 w-[200px]`}>
                 <div
                   className={`w-full ${
@@ -117,18 +65,19 @@ const Booking = () => {
                 >
                   <img
                     className="w-full h-[100px] rounded-xl"
-                    src={truck.photo}
+                    src={`http://127.0.0.1:8000/${truck.image}`}
                     alt="truck"
                   />
                 </div>
-                <p className="text-center text-xl"> {truck.name}</p>
+                <p className="text-center text-xl"> {truck.name_car_type}</p>
               </div>
             ))}
+
           </div>
           <button
             type="button"
             onClick={handleSubmit}
-            className="w-[80%] text-background bg-white hover:bg-accent duration-300 text-lg focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg mb-5  px-5 py-2.5 text-center "
+            className="w-[80%] text-background bg-white hover:text-light hover:bg-accent duration-300 text-lg focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg mb-5  px-5 py-2.5 text-center "
           >
             إظهار النتائج
           </button>{" "}

@@ -23,7 +23,6 @@ const Login = () => {
     }
   };
 
-  console.log("auth: ", isAuthenticated);
 
   return (
     <>

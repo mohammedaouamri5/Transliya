@@ -6,11 +6,10 @@ import axios from "axios";
 import { fetchCarTypes } from "../fetch/Data";
 
 const RentResults = () => {
-  const token = localStorage.getItem("token");
 
+  const token = localStorage.getItem("token");
   const { ids } = useParams();
   const idsArray = ids.split(",").map((id) => parseInt(id.trim()));
-
   const [trucks, setTrucks] = useState([]);
   const [types, setTypes] = useState();
 
@@ -32,7 +31,6 @@ const RentResults = () => {
             },
           }
         );
-        console.log(response)
         setTrucks(response.data);
       } catch (error) {
         console.error("Error fetching results:", error);
@@ -58,7 +56,7 @@ const RentResults = () => {
               ))}
             </Grid>
           ) : (
-            "Loading"
+              <div className="w-full text-center text-light text-3xl">لا يوجد مركبات من هذا النوع حاليا جرب اختيار نوع أو أنواع أخرى</div>
           )}
         </div>
       </div>

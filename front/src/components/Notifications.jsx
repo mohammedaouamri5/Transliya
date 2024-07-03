@@ -25,7 +25,6 @@ const Notifications = () => {
           }
         );
         if (response.status >= 200 && response.status <= 300) {
-          console.log(response);
           setNotifications(response.data.notification);
         }
       } catch (error) {
@@ -33,6 +32,8 @@ const Notifications = () => {
       }
     };
     getNotifications();
+    const intervalId = setInterval(getNotifications, 10000);
+    return () => clearInterval(intervalId);
   }, [token, userId]);
 
   useEffect(() => {

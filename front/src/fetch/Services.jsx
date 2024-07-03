@@ -13,7 +13,7 @@ export const AddRent = async (
   price
 ) => {
   try {
-    console.log("info: ", info);
+
     const res = await axios.post(
       "http://127.0.0.1:8000/API/create_kerya",
       {
@@ -27,12 +27,10 @@ export const AddRent = async (
         headers: { Authorization: `Token ${token}` },
       }
     );
-    console.log("info: ", info);
+
 
     if (res.status >= 200 && res.status <= 300) {
       try {
-        console.log("info: ", info);
-
         const response = await axios.post(
           "http://127.0.0.1:8000/API/create_notification",
           {
@@ -45,10 +43,33 @@ export const AddRent = async (
             headers: { Authorization: `Token ${token}` },
           }
         );
-      } catch (error) {}
+
+        if (response.status >= 200 && response.status < 300) {
+          try {
+            const ress = await axios.post(
+              "http://127.0.0.1:8000/API/get-pay",
+              {
+                prix: price,
+                id_employer: id_employer,
+              },
+              {
+                headers: { Authorization: `Token ${token}` },
+              }
+            );
+
+          } catch (error) {
+            console.log("Error in get-pay request:", error);
+          }
+        }
+      } catch (error) {
+        console.log("Error in create_notification request:", error);
+      }
     }
-  } catch (error) {}
+  } catch (error) {
+    console.log("Error in create_kerya request:", error);
+  }
 };
+
 
 export const AddBooking = async (
   form,
@@ -91,16 +112,18 @@ export const AddBooking = async (
               id_employer: id_employer,
             },
             {
-              headers: {Authorization: `Token ${token}`}
+              headers: { Authorization: `Token ${token}` },
             }
           );
-          console.log(ress);
         } catch (error) {
           console.log("Error in get-pay request:", error);
         }
       }
     }
   } catch (error) {
-    console.log("Error in create_tewsila or create_notification request:", error);
+    console.log(
+      "Error in create_tewsila or create_notification request:",
+      error
+    );
   }
 };

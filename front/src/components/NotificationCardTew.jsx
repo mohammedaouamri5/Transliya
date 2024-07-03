@@ -4,11 +4,6 @@ import { Modal } from "@mui/material";
 import LongCard from "./LongCard";
 import Box from "@mui/material/Box";
 import axios from "axios";
-import DFM from "../assets/DFM.jpg";
-import jac5 from "../assets/jac5ton.jpg";
-import jac3 from "../assets/jac3ton.jpg";
-import cam20 from "../assets/camion20ton.jpg";
-import cam10 from "../assets/camion10ton.jpg";
 
 const style = {
   position: "absolute",
@@ -24,52 +19,13 @@ const style = {
   p: 4,
 };
 
-const trucks = [
-  {
-    id_car_type: 5,
-    name: "JAC 3 ton",
-    subName: "JAC",
-    weight: 3,
-    photo: jac3,
-  },
-  {
-    id_car_type: 6,
-    name: "JAC 5 ton",
-    subName: "JAC",
-    weight: 5,
-    photo: jac5,
-  },
-  {
-    id_car_type: 4,
-    name: "DFM",
-    subName: "DFM",
-    photo: DFM,
-  },
-  {
-    id_car_type: 7,
-    name: "Camion 10 ton",
-    subName: "Camion",
-    weight: 10,
-    photo: cam10,
-  },
-  {
-    id_car_type: 8,
-    name: "Camion 20 ton",
-    subName: "Camion",
-    weight: 20,
-    photo: cam20,
-  },
-];
-
 const NotificationCardTew = ({ notify }) => {
-  console.log("notify: ", notify);
-  const token = localStorage.getItem("token")
+  const token = localStorage.getItem("token");
   const [open, setOpen] = useState(false);
   const [types, setTypes] = useState();
   const [truck, setTruck] = useState();
-  const [defaultTruck, setDefaultTruck] = useState();
-
-
+  const [carType, setCarType] = useState("");
+  const [isLoading, setLoading] = useState(false);
 
   const handleClose = () => {
     setOpen(false);
@@ -79,7 +35,6 @@ const NotificationCardTew = ({ notify }) => {
   };
 
   const info = JSON.parse(notify.info);
-  console.log(info);
   const { weight, phone, start, end, material, matricule, price } = info;
 
   useEffect(() => {
@@ -89,7 +44,6 @@ const NotificationCardTew = ({ notify }) => {
           "http://127.0.0.1:8000/API/get_all_car_type"
         );
         setTypes(response.data.car_type);
-        console.log(response.data.car_type);
       } catch (error) {
         console.error("Error fetching car types:", error);
       }
@@ -108,17 +62,15 @@ const NotificationCardTew = ({ notify }) => {
   }, [notify.id_notify]);
 
   useEffect(() => {
-    if (truck && types) {
-      const type = types.find((type) => type.id_car_type === truck.id_car_type);
-      const defaultTruck = trucks.find(
-        (truckk) => type.id_car_type === truckk.id_car_type
+    if (types && truck) {
+      const carType = types.find(
+        (type) => type.id_car_type === truck.id_car_type
       );
-      setDefaultTruck(defaultTruck);
+      setCarType(carType);
     }
-  }, [truck, types]);
+  }, [types]);
 
   const handleNotification = async (type) => {
-    
     try {
       const response = await axios.post(
         "http://127.0.0.1:8000/API/create_notification",
@@ -131,10 +83,6 @@ const NotificationCardTew = ({ notify }) => {
           headers: { Authorization: `Token ${token}` },
         }
       );
-      console.log("entered hh")
-
-      console.log(response);
-
       if (response.status >= 200 && response.status < 300) {
         try {
           const res = await axios.post(
@@ -144,22 +92,26 @@ const NotificationCardTew = ({ notify }) => {
               id_notification: notify.id_notify,
             },
             {
-              headers: {Authorization: `Token ${token}`}
+              headers: { Authorization: `Token ${token}` },
             }
           );
-          console.log(res);
         } catch (error) {
-          console.log(error)
+          console.log(error);
         }
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   };
 
+  useEffect(() => {
+    if (carType && truck && notify) {
+      setLoading(true);
+    }
+  }, [carType, truck]);
+
   return (
-    truck &&
-    defaultTruck && (
+    isLoading && (
       <>
         <div className="p-3 w-full bg-background rounded-lg mb-5 flex text-end items-center justify-between text-light">
           <button
@@ -173,7 +125,7 @@ const NotificationCardTew = ({ notify }) => {
           </div>
           <div className="p-2 flex items-center">
             <div>
-              <h1 className="text-xl mb-2 w-fit">{defaultTruck.name}</h1>
+              <h1 className="text-xl mb-2 w-fit">{carType.name_car_type}</h1>
               <h1>{matricule}</h1>
             </div>
             <div className="h-[75px] w-[150px] rounded-md ml-2">
@@ -182,7 +134,7 @@ const NotificationCardTew = ({ notify }) => {
                 src={
                   truck.image
                     ? `http://127.0.0.1:8000/${truck.image}`
-                    : defaultTruck.photo
+                    : `http://127.0.0.1:8000/${carType.image}`
                 }
                 alt="truck"
               />
@@ -197,18 +149,17 @@ const NotificationCardTew = ({ notify }) => {
           aria-describedby="modal-modal-description"
         >
           <Box sx={style}>
-            {truck && defaultTruck && (
-              <LongCard
-                photo={
-                  truck.image
-                    ? `http://127.0.0.1:8000/${truck.image}`
-                    : defaultTruck.photo
-                }
-                price={price}
-                name={defaultTruck.name}
-                matricule={matricule}
-              />
-            )}
+            <LongCard
+              photo={
+                truck.image
+                  ? `http://127.0.0.1:8000/${truck.image}`
+                  : `http://127.0.0.1:8000/${carType.image}`
+              }
+              price={price}
+              name={carType.name_car_type}
+              matricule={matricule}
+            />
+
             <div>
               <h1 className="text-4xl font-bold my-7">
                 نوع العملية : {notify.name_notification_type}
@@ -256,29 +207,32 @@ const NotificationCardTew = ({ notify }) => {
                   {`${weight} kg`}
                 </div>
               </div>
-              <div className="flex w-full items-center justify-center">
-                <div className="flex w-auto">
-                  <button
-                    onClick={() => {
-                      handleNotification(8);
-                    }}
-                    className="px-4 py-2 m-2 rounded flex bg-background text-light text-xs md:text-xl font-bold hover:bg-accent  duration-200"
-                  >
-                    رفض
-                  </button>
+              {!notify.id_readed && (
+                <div className="flex w-full items-center justify-center">
+                  <div className="flex w-auto">
+                    <button
+                      onClick={() => {
+                        handleNotification(4);
+                        handleClose()
+                      }}
+                      className="px-4 py-2 m-2 rounded flex bg-background text-light text-xs md:text-xl font-bold hover:bg-accent duration-200"
+                    >
+                      رفض
+                    </button>
 
-                  <button
-                  type="button"
-                    onClick={() => {
-                     handleNotification(7);
-                    }}
-                    className="px-4 py-2 m-2 rounded flex bg-background text-light text-xs md:text-xl font-bold hover:bg-accent  duration-200"
-                  >
-                    تأكيد
-                  </button>
-
+                    <button
+                      type="button"
+                      onClick={() => {
+                        handleNotification(3);
+                        handleClose()
+                      }}
+                      className="px-4 py-2 m-2 rounded flex bg-background text-light text-xs md:text-xl font-bold hover:bg-accent duration-200"
+                    >
+                      تأكيد
+                    </button>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           </Box>
         </Modal>
